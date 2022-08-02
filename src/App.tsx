@@ -123,7 +123,11 @@ function App() {
             setChamadoSelecionado={setChamadoSelecionado}
           />
         </div>
-        <div className="tab-pane fade" id="v-pills-dashboard" role="tabpanel" aria-labelledby="v-pills-dashboard-tab" tabIndex={0}><Dashboard /></div>
+        <div className="tab-pane fade" id="v-pills-dashboard" role="tabpanel" aria-labelledby="v-pills-dashboard-tab" tabIndex={0}>
+          <Dashboard
+          clientes={clientes}
+          chamados={chamados}/>
+          </div>
 
         <div className="tab-pane fade" id="v-pills-formchamados" role="tabpanel" aria-labelledby="v-pills-formchamados-tab" tabIndex={0}>
           <FormChamados

@@ -1,7 +1,7 @@
 import React from 'react'
 import MenuSuperior from './MenuSuperior'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTableList, faChartPie, faArrowRotateRight, faPlus, faBuilding, faEdit } from '@fortawesome/free-solid-svg-icons'
+import { faTableList, faEdit } from '@fortawesome/free-solid-svg-icons'
 import URIS from '../../services/uris.json'
 import moment from 'moment'
 import classNames from 'classnames'

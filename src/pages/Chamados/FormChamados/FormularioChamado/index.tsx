@@ -42,6 +42,7 @@ export default function FormularioChamado(props: Props) {
               <CampoForm
                 key={campo.Id}
                 campo={campo}
+                chamadoSelecionado={props.chamadoSelecionado}
               />))}
               <button type="submit" className="btn btn-primary">Submit</button>
           </form>

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import FormularioChamado from './FormularioChamado'
-// import {obterCamposLista} from 'services/SPRequest'
 
 interface Props {
   setChamadoSelecionado: any
