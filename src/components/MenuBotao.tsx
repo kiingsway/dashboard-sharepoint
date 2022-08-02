@@ -6,10 +6,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 interface Props {
   internalname: string
   titulo: string
-  contagem?: number
+  contagem?: number | string
   mostrarContador: boolean
   menuSelecionado: boolean
   icon: IconDefinition
+  chamadoSelecionado?: any
 }
 
 export default function MenuBotao(props: Props) {
