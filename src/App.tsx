@@ -8,7 +8,8 @@ import Clientes from './pages/Clientes';
 import Dashboard from './pages/Dashboard';
 import FormChamados from './pages/Chamados/FormChamados';
 import MenuBotao from './components/MenuBotao';
-import { obterClientes, obterChamados } from './services/SPRequest';
+import { obterClientes, obterChamados, obterFeriados } from './services/SPRequest';
+import moment from 'moment';
 
 function App() {
 
@@ -22,41 +23,120 @@ function App() {
     })
   });
 
+
   const [chamados, setChamados] = useState<any>([]);
   const [clientes, setClientes] = useState<any>([]);
-  const [chamadoSelecionado, setChamadoSelecionado] = useState({ Id: 0, Cliente: "Teste" });
-  const [atualizar, setAtualizar] = useState(false)
- 
+  const [chamadoSelecionado, setChamadoSelecionado] = useState({ Id: 0, Cliente: "" });
+  const [feriados, setFeriados] = useState<any>()
 
-  useEffect(() => {
-    obterClientes().then(cls => {
+  function computarFeriados() {
 
+    const feriadosLocalStorage = JSON.parse(localStorage.getItem('dashboard.feriados') || '{}')
+
+    const hoje = moment().format('YYYY-MM-DD')
+    const dataRequisicao = moment(feriadosLocalStorage.DataRequisicao, 'YYYY-MM-DD').format('YYYY-MM-DD')
+
+    if (dataRequisicao === hoje) {
+      setFeriados(feriadosLocalStorage)
+    }
+
+    else obterFeriados().then((listferiados: any) => {
+
+      const itensFeriados = listferiados.data.value
+
+      const apenasDataFeriados = itensFeriados.map((item: any) => moment(item.Data).format('YYYY-MM-DD'))
+
+      const feriadosData = {
+        DataRequisicao: moment().format('YYYY-MM-DD'),
+        Datas: apenasDataFeriados,
+      }
+
+      localStorage.setItem('dashboard.feriados', JSON.stringify(feriadosData))
+      setFeriados(feriadosData)
+
+    })
+
+  }
+
+  function obterChamadosEClientes() {
+
+    obterClientes().then(listClientes => {
+
+      // Zerando chamados
       setChamados([]);
 
-      const clientesData: any = cls.data.value
+      const itensClientes: any = listClientes.data.value
 
-      setClientes(clientesData);
+      setClientes(itensClientes);
 
-      for (let cliente of clientesData.slice(0, 5000)) {
+      for (let itemCliente of itensClientes.slice(0, 5)) {
 
-        obterChamados(cliente).then((c: any) => {
+        obterChamados(itemCliente).then((listChamados: any) => {
 
-          const chamadosData: any = c.data.value.map((o: any) => ({
-            ...o,
-            Cliente: cliente.Title,
-            ClienteInternalName: cliente.ClienteInternalName,
-            InternalNameSubsite: cliente.InternalNameSubsite,
-            InternalNameSubsiteList: cliente.InternalNameSubsiteList
-          }));
 
-          setChamados((prevChamados: any) => [...prevChamados, ...chamadosData]);
+          const itensChamados: any = listChamados.data.value.map((itemChamado: any) => {
+
+            function diferencaDias(dataAnterior: any) {
+              // Enviar em MOMENT.JS: moment()
+              const duracao = moment.duration(moment().diff(dataAnterior));
+              return parseFloat((Math.round(duracao.asDays() * 100) / 100).toFixed(1));
+            }
+            
+            const ymd = 'YYYY-MM-DD'
+
+            const hoje = moment();
+            const inicioHoje = hoje.startOf('date')
+            const modified = moment(itemChamado.Modified).format(ymd);
+
+            let dataAtual = moment();
+            let contDiasSubtrair: number = 0.0;
+            let icontLimit: number = 0;
+
+            try {
+              do {
+
+                // Se a data atual estiver na lista de feriados, for sábado ou domingo, conta +1 dia para remover
+                if (feriados.Datas.includes(dataAtual.format(ymd)) || dataAtual.day() === 6 || dataAtual.day() === 0)
+                contDiasSubtrair += dataAtual.isSame(hoje) ? diferencaDias(inicioHoje) : 1
+
+                // Decrementar Data Atual
+                dataAtual = dataAtual.subtract(1, 'days')
+                icontLimit++
+
+              } while (dataAtual.isSameOrAfter(modified) || icontLimit === 20);
+            } catch (e) {
+              console.error('Não foi possível fazer o cálculo de dias úteis...')
+            }
+
+            const diasCorridosSemAtualizar = diferencaDias(itemChamado.Modified);
+            // Contagem de dias úteis apenas
+            const diasUteisSemAtualizar = ((diasCorridosSemAtualizar * 10) - (contDiasSubtrair * 10)) / 10
+
+            return {
+              ...itemChamado,
+              Cliente: itemCliente.Title,
+              diasCorridosSemAtualizar: diasCorridosSemAtualizar,
+              diasUteisSemAtualizar: diasUteisSemAtualizar,
+              ClienteInternalName: itemCliente.ClienteInternalName,
+              InternalNameSubsite: itemCliente.InternalNameSubsite,
+              InternalNameSubsiteList: itemCliente.InternalNameSubsiteList
+            }
+          });
+
+          setChamados((prevChamados: any) => [...prevChamados, ...itensChamados]);
 
         });
 
       }
 
     });
-  }, [atualizar]);
+
+  }
+
+  useEffect(() => {
+    computarFeriados();
+    obterChamadosEClientes();
+  }, [])
 
   return (
     <div className="d-flex align-items-start m-2">
@@ -89,13 +169,13 @@ function App() {
         />
 
         <hr className='my-4' />
-
+        
         <MenuBotao
-          titulo={chamadoSelecionado.Id !== 0 ? `Editando` : 'Novo chamado'}
+          titulo={chamadoSelecionado?.Id !== 0 ? `Editando` : 'Novo chamado'}
           internalname='formchamados'
-          icon={chamadoSelecionado.Id !== 0 ? faEdit : faPlus}
-          contagem={chamadoSelecionado.Id !== 0 ? `#${chamadoSelecionado.Id} ${chamadoSelecionado.Cliente}` : ""}
-          mostrarContador={chamadoSelecionado.Id !== 0}
+          icon={chamadoSelecionado?.Id !== 0 ? faEdit : faPlus}
+          contagem={chamadoSelecionado?.Id !== 0 ? `#${chamadoSelecionado?.Id} ${chamadoSelecionado?.Cliente}` : ""}
+          mostrarContador={chamadoSelecionado?.Id !== 0}
           menuSelecionado={false}
         />
 
@@ -105,13 +185,13 @@ function App() {
           type="button"
           className="btn btn-outline-light d-flex justify-content-between align-items-center"
           title='Atualizar chamados e clientes'
-          onClick={() => setAtualizar(prev => !prev)}
+          onClick={obterChamadosEClientes}
         >
           <div>
-
             <FontAwesomeIcon icon={faArrowRotateRight} className='me-2' />
             Atualizar
           </div>
+
           <span className="badge rounded-pill text-bg-light">00:00</span>
         </button>
       </div>
@@ -120,14 +200,15 @@ function App() {
         <div className="tab-pane fade show active" id="v-pills-chamados" role="tabpanel" aria-labelledby="v-pills-chamados-tab" tabIndex={0}>
           <Chamados
             chamados={chamados}
+            feriados={feriados}
             setChamadoSelecionado={setChamadoSelecionado}
           />
         </div>
         <div className="tab-pane fade" id="v-pills-dashboard" role="tabpanel" aria-labelledby="v-pills-dashboard-tab" tabIndex={0}>
           <Dashboard
-          clientes={clientes}
-          chamados={chamados}/>
-          </div>
+            clientes={clientes}
+            chamados={chamados} />
+        </div>
 
         <div className="tab-pane fade" id="v-pills-formchamados" role="tabpanel" aria-labelledby="v-pills-formchamados-tab" tabIndex={0}>
           <FormChamados

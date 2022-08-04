@@ -13,8 +13,9 @@ export default function FormChamados(props: Props) {
   const [chamadosCliente, setChamadosCliente] = useState<any>([{Id:0}])
 
   useEffect(() => {
-
-    filtrarChamados(props.chamadoSelecionado.ClienteInternalName)
+    // props.chamadoSelecionado?.
+    // props.chamadoSelecionado?.
+    props.chamadoSelecionado?.Id && filtrarChamados(props.chamadoSelecionado?.ClienteInternalName)
 
   },[props.chamadoSelecionado])
 
@@ -46,19 +47,13 @@ export default function FormChamados(props: Props) {
 
   return (
     <>
-      {
-        props.chamadoSelecionado.Id !== 0 ?
-          <button type="button" className="btn btn-outline-danger" onClick={handleCancelarEdicao}>Cancelar edição</button>
-          :
-          null
-      }
       <div className="col-md-4">
         <label htmlFor="slcClientes" className="form-label text-white">Cliente</label>
         <select id="slcClientes" onChange={handleFiltrarChamados} className="form-select">
-          <option selected={props.chamadoSelecionado.Id === 0}>Selecione o cliente...</option>
+          <option selected={props.chamadoSelecionado?.Id === 0}>Selecione o cliente...</option>
           {
             props.clientes.map((cliente: any) => (
-              <option value={cliente.ClienteInternalName} selected={props.chamadoSelecionado.ClienteInternalName === cliente.ClienteInternalName}>{cliente.Title}</option>
+              <option key={cliente.Id} value={cliente.ClienteInternalName} selected={props.chamadoSelecionado?.ClienteInternalName === cliente.ClienteInternalName}>{cliente.Title}</option>
             ))
           }
         </select>
@@ -67,15 +62,16 @@ export default function FormChamados(props: Props) {
       <div className="col-md-4">
         <label htmlFor="slcChamados" className="form-label text-white">Chamado</label>
         <select id="slcChamados" className="form-select" onChange={handleSelecionarChamado}>
-          <option value="" selected={props.chamadoSelecionado.Id === 0}>+ Novo chamado ({chamadosCliente.length} encontrado{chamadosCliente.length > 1 ? 's' : ''})</option>
+          <option value="" selected={props.chamadoSelecionado?.Id === 0}>+ Novo chamado ({chamadosCliente.length} encontrado{chamadosCliente.length > 1 ? 's' : ''})</option>
           {
             chamadosCliente.map((chamado: any) => (
-              <option value={chamado.Id + '#' + chamado.Cliente} selected={props.chamadoSelecionado.Id === chamado.Id}>{`#${chamado.Id} | ${chamado.Title}`}</option>
+              <option key={chamado.Id + '#' + chamado.Cliente} value={chamado.Id + '#' + chamado.Cliente} selected={props.chamadoSelecionado?.Id === chamado.Id}>{`#${chamado.Id} | ${chamado.Title}`}</option>
             ))
           }
         </select>
       </div>
       <FormularioChamado
+        setChamadoSelecionado={props.setChamadoSelecionado}
         chamadoSelecionado={props.chamadoSelecionado}
       />
     </>

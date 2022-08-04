@@ -19,7 +19,7 @@ export default function Dashboard(props: Props) {
   return (<div className='row'>
     {
       listaTiles.map((tile: any) => (
-        <div className="card col-3 p-3 m-2" style={{ "width": "18rem" }}>
+        <div key={tile.Title} className="card col-3 p-3 m-2" style={{ "width": "18rem" }}>
           <div className="card-body p-0">
             <h5 className="card-title">{tile.Title}</h5>
             <h6 className="card-subtitle mb-2 text-muted">{tile.Subtitle}</h6>

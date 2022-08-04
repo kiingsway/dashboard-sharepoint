@@ -1,80 +1,53 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTableList, faQuestion, faFont, faRightLeft, faUser, faSquareCheck, faRectangleList, faAlignJustify, IconDefinition, fa1 } from '@fortawesome/free-solid-svg-icons'
+import { faQuestion, faFont, faUser, faSquareCheck, faAlignJustify, IconDefinition, fa1 } from '@fortawesome/free-solid-svg-icons'
 
 interface Props {
   campo: any
   chamadoSelecionado: any
 }
 
-export default function CampoForm(props: any) {
-
-
-  if (props.campo.TypeAsString === 'Choice') {
-    console.log(props.campo)
-    console.log(props.chamadoSelecionado[props.campo.EntityPropertyName])
-  }
-
-  return FieldConstructor(props)
-
-  /*switch (props.campo.TypeAsString) {
-    case 'Text':
-      return FieldText(props)
-    case 'Note':
-      return FieldNote(props)
-    case 'Lookup':
-      return Fieldlookup(props)
-    case 'Choice':
-      return FieldChoice(props)
-    case 'User':
-      return FieldUser(props)
-    case 'Number':
-      return FieldNumber(props)
-    case 'Boolean':
-      return FieldBoolean(props)
-    default:
-      return FieldDefault(props)
-  }*/
-}
-
-function FieldConstructor(props: any) {
-
-  const htmlId = `txtFormChamado${props.campo.InternalName}`;
+export default function CampoForm(props: Props) {
 
   let html: any;
   let icon: IconDefinition | undefined;
 
+  const htmlId = `inputFormChamado${props.campo.EntityPropertyName}`
+  const fieldValue = props.chamadoSelecionado !== 0 ? props.chamadoSelecionado[props.campo.EntityPropertyName] : null
+  const infos = {...props, fieldValue: fieldValue }
+
+
   switch (props.campo.TypeAsString) {
     case 'Text':
-      html = FieldText(props);
+      html = FieldText(infos);
       icon = faFont
       break;
     case 'Note':
-      html = FieldNote(props);
+      html = FieldNote(infos);
       icon = faAlignJustify
       break;
     case 'Lookup':
-      html = Fieldlookup(props);
+      html = Fieldlookup(infos);
       icon = faFont
       break;
     case 'Choice':
-      html = FieldChoice(props);
+      html = FieldChoice(infos);
       icon = faFont
       break;
     case 'User':
-      html = FieldUser(props);
+      html = FieldUser(infos);
       icon = faUser
       break;
     case 'Number':
-      html = FieldNumber(props);
+      html = FieldNumber(infos);
       icon = fa1
       break;
     case 'Boolean':
-      html = FieldBoolean(props);
+      html = FieldBoolean(infos);
       icon = faSquareCheck
       break;
     default:
-      html = FieldDefault(props);
+      html = FieldDefault(infos);
       icon = faQuestion
       break;
   }
@@ -87,28 +60,28 @@ function FieldConstructor(props: any) {
       <label
         htmlFor={htmlId}
         className="col-sm-2 col-form-label"
-        title={props.campo.TypeAsString}
+        
       >
-        <FontAwesomeIcon icon={icon} className='me-2' />
+        <FontAwesomeIcon icon={icon} title={props.campo.TypeShortDescription} className='me-2' />
         {props.campo.Title}
         {props.campo.Required ? <span className='text-danger fw-bold'>*</span> : ''}
       </label>
 
       <div className="col-sm-10">
         {html}
-        <div id={`${htmlId}Help`} className="form-text">{props.campo?.Description}</div>
+        <div id={`${htmlId}Help`} className="form-text">
+          {props.campo?.Description}
+        </div>
       </div>
 
     </div>
   )
-
-
-
 }
+
 
 function FieldDefault(props: any) {
 
-  const htmlId = `txtFormChamado${props.campo.InternalName}`;
+  const htmlId = `inputFormChamado${props.campo.InternalName}`;
 
   return (
     <input
@@ -117,6 +90,7 @@ function FieldDefault(props: any) {
       id={htmlId}
       name={htmlId}
       title={props.campo?.Description}
+      required={props.campo.Required}
     />
   )
 }
@@ -129,9 +103,9 @@ function FieldText(props: any) {
       type="text"
       className="form-control"
       id={htmlId}
-      name={htmlId}
+      name={props.campo.EntityPropertyName}
       title={props.campo?.Description}
-      value={props.chamadoSelecionado[props.campo.EntityPropertyName]}
+      value={props.fieldValue}
     />
   )
 }
@@ -144,18 +118,22 @@ function FieldNote(props: any) {
     <textarea
       className="form-control"
       id={htmlId}
-      value={props.chamadoSelecionado[props.campo.EntityPropertyName]} />
+      name={props.campo.EntityPropertyName}
+      value={props.fieldValue}
+      rows={props.fieldValue ? 5 : 0}
+      />
   )
 }
 
 function FieldChoice(props: any) {
 
   const htmlId = `slcFormChamado${props.campo.InternalName}`;
+  const valorCampo = props.fieldValue
 
   return (
-    <select id={htmlId} className="form-select">
-      {props.campo.Required ? "" : <option value="" selected={props.chamadoSelecionado[props.campo.EntityPropertyName] === ""}>Selecione uma opção...</option>}
-      {props.campo.Choices?.map((c: any) => <option value={c} selected={c === props.chamadoSelecionado[props.campo.EntityPropertyName]}>{c}</option>)}
+    <select id={htmlId} name={props.campo.EntityPropertyName} className="form-select">
+      {props.campo.Required ? "" : <option value="" selected={valorCampo === ""}>Selecione uma opção...</option>}
+      {props.campo.Choices?.map((c: any) => <option key={c} value={c} selected={c === valorCampo}>{c}</option>)}
     </select>
   )
 }
@@ -165,21 +143,24 @@ function FieldBoolean(props: any) {
   const htmlId = `slcFormChamado${props.campo.InternalName}`;
 
   return (
-    <select id={htmlId} className="form-select">
+    <select defaultValue={+ props.fieldValue} id={htmlId} name={props.campo.EntityPropertyName} className="form-select">
       {props.campo.Required ? "" : <option value="" selected>Selecione uma opção...</option>}
-      <option value={0}>Sim</option>
-      <option value={1}>Não</option>
+      <option value={1}>Sim</option>
+      <option value={0}>Não</option>
     </select>
   )
 }
 function FieldUser(props: any) {
 
   const htmlId = `slcFormChamado${props.campo.InternalName}`;
+  const valorCampo = props.fieldValue
 
   return (
-    <select id={htmlId} className="form-select">
+    <select name={props.campo.EntityPropertyName + 'Id'} defaultValue={valorCampo?.Id} id={htmlId} className="form-select">
       {props.campo.Required ? "" : <option value="" selected>Selecione uma opção...</option>}
-      <option value={props.chamadoSelecionado[props.campo.EntityPropertyName]?.Title} selected={props.chamadoSelecionado[props.campo.EntityPropertyName]?.Title}>{props.chamadoSelecionado[props.campo.EntityPropertyName]?.Title}</option>
+      <option
+      value={valorCampo?.Id}
+      selected={valorCampo?.Id}>{valorCampo?.Title} &lt;{valorCampo?.EMail}&gt;</option>
     </select>
   )
 }
@@ -188,9 +169,9 @@ function Fieldlookup(props: any) {
   const htmlId = `slcFormChamado${props.campo.InternalName}`;
 
   return (
-    <select id={htmlId} className="form-select">
+    <select name={props.campo.EntityPropertyName + 'Id'} id={htmlId} className="form-select">
       {props.campo.Required ? "" : <option value="" selected>Selecione uma opção...</option>}
-      {props.campo.Choices?.map((c: any) => <option value={c}>{c}</option>)}
+      {props.campo.Choices?.map((c: any) => <option key={c} value={c}>{c}</option>)}
     </select>
   )
 }
@@ -204,11 +185,12 @@ function FieldNumber(props: any) {
       type="number"
       className="form-control"
       id={htmlId}
+      name={props.campo.EntityPropertyName}
       min={props.campo.MinimumValue}
       max={props.campo.MaximumValue}
       title={props.campo?.Description}
       disabled={props.campo?.ReadOnlyField}
-      value={props.chamadoSelecionado[props.campo.EntityPropertyName]}
+      value={props.fieldValue}
     />
   )
 }

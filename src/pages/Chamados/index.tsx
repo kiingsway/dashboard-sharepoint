@@ -10,6 +10,7 @@ moment.locale('pt-br')
 interface Props {
   setChamadoSelecionado: any
   chamados: any
+  feriados: any
 }
 
 export default function Chamados(props: Props) {
@@ -20,15 +21,10 @@ export default function Chamados(props: Props) {
 
   function tableActions(chamado: any) {
 
-    const uriChamado = `${URIS.PClientes}/${chamado.InternalNameSubsite}/Lists/${chamado.InternalNameSubsiteList}/DispForm.aspx?ID=${chamado.Id}`;
-
-    const duracao = moment.duration(moment().diff(moment(chamado.Modified)));
-    const diffDias = parseFloat((Math.round(duracao.asDays() * 100) / 100).toFixed(1));
-
     const modificadoAlerta = {
-      perigo: diffDias >= 2.5,
-      atencao: diffDias >= 2 && diffDias < 2.5,
-      sucesso: diffDias < 2
+      perigo: chamado.diasUteisSemAtualizar >= 2.5,
+      atencao: chamado.diasUteisSemAtualizar >= 2 && chamado.diasUteisSemAtualizar < 2.5,
+      sucesso: chamado.diasUteisSemAtualizar < 2
     }
 
     const statusAlerta = {
@@ -36,27 +32,34 @@ export default function Chamados(props: Props) {
     }
 
     const atribuidoAlerta = {
-      perigo: Boolean(chamado?.Atribuido?.Title)
+      perigo: !chamado?.Atribuida
     }
 
     const geralAlerta = {
       perigo: modificadoAlerta.perigo || atribuidoAlerta.perigo,
       atencao: modificadoAlerta.atencao || statusAlerta.atencao,
       sucesso: modificadoAlerta.sucesso
-
     }
+
+    // Para evitar que múltiplas classes aparecam, aqui é verificado se algum mais 'forte' está true antes de colocar true.
+    const geralApenasUmTrue = {
+      perigo: geralAlerta.perigo,
+      atencao: geralAlerta.atencao && !geralAlerta.perigo,
+      sucesso: geralAlerta.sucesso && !geralAlerta.atencao && !geralAlerta.perigo
+    }
+
+    const uriChamado = `${URIS.PClientes}/${chamado.InternalNameSubsite}/Lists/${chamado.InternalNameSubsiteList}/DispForm.aspx?ID=${chamado.Id}`;
 
     return {
       Id: <div className="btn-group">
         <a
           href={uriChamado}
           target='__blank'
-          // className="btn btn-sm btn-outline-light"
           className={classNames(
             'btn btn-sm',
-            {'btn-outline-danger': geralAlerta.perigo},
-            {'btn-outline-warning': geralAlerta.atencao},
-            {'btn-outline-success': geralAlerta.sucesso}
+            {'btn-outline-success': geralApenasUmTrue.sucesso},
+            {'btn-outline-warning': geralApenasUmTrue.atencao},
+            {'btn-outline-danger': geralApenasUmTrue.perigo}
           )}
           onClick={() => { handleChamadoSelecionado(chamado) }}
           title='Abrir formulário do chamado'
@@ -73,13 +76,13 @@ export default function Chamados(props: Props) {
         </ul>
       </div>,
 
-      Modified: <span>
+      Modified: <span title={`${chamado.diasCorridosSemAtualizar} dia${chamado.diasCorridosSemAtualizar > 1 ? 's' : ''} corridos sem modificar`}>
         <span className={classNames({
           'text-danger': modificadoAlerta.perigo,
           'text-warning': modificadoAlerta.atencao,
           'text-success': modificadoAlerta.sucesso
-        })}>{diffDias}</span>
-        {` dia${diffDias > 1 ? 's' : ''} sem modificar ${moment(chamado.Modified).format('DD/MM - HH:mm')}`}
+        })}>{chamado.diasUteisSemAtualizar}</span>
+        {` dia${chamado.diasUteisSemAtualizar > 1 ? 's' : ''} sem modificar ${moment(chamado.Modified).format('DD/MM - HH:mm')}`}
         </span>,
 
       Status: <div ><span className={classNames({'text-warning': statusAlerta.atencao})}>{`${chamado.StatusDaQuestao}`}</span></div>
@@ -116,17 +119,23 @@ export default function Chamados(props: Props) {
         </thead>
         <tbody>
           {
-            props.chamados.map((chamado: any) => (
-              <tr key={`${chamado.Id}_${chamado.Cliente}`} >
-                <th scope="row">{tableActions(chamado).Id}</th>
+            props.chamados.map((chamado: any) => {
+              
+              const actions = tableActions(chamado);
+
+              return <tr key={`${chamado.Id}_${chamado.Cliente}`} >
+                <th scope="row">{actions.Id}</th>
                 <td>{chamado.Cliente}</td>
                 <td>{chamado.Title}</td>
-                <td>{tableActions(chamado).Status}</td>
+                <td>{actions.Status}</td>
                 <td className={classNames({'text-danger': !chamado?.Atribuida?.Title})}>{chamado?.Atribuida?.Title ?? "Sem atribuição"}</td>
-                <td dangerouslySetInnerHTML={{ __html: `<div style="max-height:230px;overflow-y:auto;"><span id="DescricaoDemanda">${chamado.DescricaoDemanda}</span></div>` }}></td>
-                <td>{tableActions(chamado).Modified}</td>
+                <td dangerouslySetInnerHTML={{ __html: `
+                <div style="max-height:230px;max-width:400px;overflow-y:auto;color:white !important;word-break: break-all;">
+                  <span id="DescricaoDemanda">${chamado.DescricaoDemanda.replace(/color:#000000;/g, '').replace(/color&#58;#000000;/g, '')}</span>
+                </div>` }}></td>
+                <td>{actions.Modified}</td>
               </tr>
-            ))
+            })
           }
         </tbody>
       </table>

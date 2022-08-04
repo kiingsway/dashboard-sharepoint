@@ -6,6 +6,7 @@
       "dom.iterable",
       "esnext"
     ],
+    "downlevelIteration": true,
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -23,5 +24,11 @@
   },
   "include": [
     "src"
+  ],
+  "lib": [
+    "dom",
+    "es5",
+    "es2015.collection",
+    "es2015.iterable"
   ]
 }
