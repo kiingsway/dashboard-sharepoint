@@ -12,11 +12,11 @@ interface Props {
 export default function FormularioChamado(props: Props) {
 
   const [camposChamado, setcamposChamado] = useState([]);
-  
-  function handleSalvarChamado(e:any) {
+
+  function handleSalvarChamado(e: any) {
     e.preventDefault();
     const formData = new FormData(e.target);
-    let formProps = Object({...Object.fromEntries(formData)});
+    let formProps = Object({ ...Object.fromEntries(formData) });
     const id = formProps?.AtribuidaId ? parseInt(String(formProps.AtribuidaId)) : null
     formProps.AtribuidaId = id
 
@@ -25,9 +25,9 @@ export default function FormularioChamado(props: Props) {
     const urlChamado = URIs.PClientes + '/' + props.chamadoSelecionado?.InternalNameSubsite
 
     props.chamadoSelecionado?.Id ?
-    criarItem(urlChamado, props.chamadoSelecionado?.InternalNameSubsiteList, formProps)
-    :
-    editarItem(urlChamado, props.chamadoSelecionado?.InternalNameSubsiteList, formProps, props.chamadoSelecionado?.Id)
+      criarItem(urlChamado, props.chamadoSelecionado?.InternalNameSubsiteList, formProps)
+      :
+      editarItem(urlChamado, props.chamadoSelecionado?.InternalNameSubsiteList, formProps, props.chamadoSelecionado?.Id)
 
   }
 
@@ -89,14 +89,24 @@ export default function FormularioChamado(props: Props) {
               </div>
             </div>
 
-            {camposChamado.map((campo: any) => (
+            {camposChamado.map((campo: any) => {
+                return <><CampoForm
+                  key={campo.Id}
+                  campo={campo}
+                  chamadoSelecionado={props.chamadoSelecionado}
+                />
+                {campo.EntityPropertyName === 'Comentarios' || true ? 
 
-              <CampoForm
-                key={campo.Id}
-                campo={campo}
-                chamadoSelecionado={props.chamadoSelecionado}
-
-              />))}
+                    <div className="form-check">
+                      <input className="form-check-input" type="checkbox" id="cbEnviarNomeHorario" name='additional.enviarNomeHorario' checked />
+                        <label className="form-check-label" htmlFor="cbEnviarNomeHorario">
+                          Enviar com nome e horário
+                        </label>
+                    </div>
+                    :
+                    ""}
+                </>
+            })}
 
             <div className="row mb-4 w-100">
               <div className="col-8 p-2">

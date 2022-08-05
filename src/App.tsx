@@ -34,26 +34,23 @@ function App() {
     const feriadosLocalStorage = JSON.parse(localStorage.getItem('dashboard.feriados') || '{}')
 
     const hoje = moment().format('YYYY-MM-DD')
-    const dataRequisicao = moment(feriadosLocalStorage.DataRequisicao, 'YYYY-MM-DD').format('YYYY-MM-DD')
 
-    if (dataRequisicao === hoje) {
+    if (feriadosLocalStorage.DataRequisicao === hoje) {
       setFeriados(feriadosLocalStorage)
     }
 
     else obterFeriados().then((listferiados: any) => {
 
       const itensFeriados = listferiados.data.value
-
       const apenasDataFeriados = itensFeriados.map((item: any) => moment(item.Data).format('YYYY-MM-DD'))
 
       const feriadosData = {
-        DataRequisicao: moment().format('YYYY-MM-DD'),
+        DataRequisicao: hoje,
         Datas: apenasDataFeriados,
       }
 
       localStorage.setItem('dashboard.feriados', JSON.stringify(feriadosData))
       setFeriados(feriadosData)
-
     })
 
   }
