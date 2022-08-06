@@ -95,6 +95,10 @@ function App() {
 
       setAtualizacaoPagina(prevAtt => ({ ...prevAtt, clientes: false }))
 
+      const clientesFiltrados = listClientes.data.value.filter((cliente:any) => {
+        return cliente === 'Class' || cliente.includes('st')
+      })
+
       for (let itemCliente of listClientes.data.value.slice(0, 5)) {
 
         obterChamados(itemCliente).then((listChamados: any) => {
@@ -150,12 +154,11 @@ function App() {
           });
 
           setChamados((prevChamados: any) => [...prevChamados, ...itensChamados]);
-          setAtualizacaoPagina(prevAtt => ({ ...prevAtt, chamados: false }))
-
+          
         });
-
+        
       }
-
+      setAtualizacaoPagina(prevAtt => ({ ...prevAtt, chamados: false }))
 
     });
 

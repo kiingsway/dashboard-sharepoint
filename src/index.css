@@ -174,3 +174,15 @@ table {
 #chamadoColModificado {
     width: 10%;
 }
+
+.colFilters {
+    min-width: 130px;
+    width: auto;
+}
+
+.cardFilter {
+    max-height: 200px;
+    overflow: auto;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}

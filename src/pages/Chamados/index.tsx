@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import MenuSuperior from './MenuSuperior'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTableList, faEdit } from '@fortawesome/free-solid-svg-icons'
@@ -16,8 +16,14 @@ interface Props {
 
 export default function Chamados(props: Props) {
 
-  const [chamadosFiltrados, setChamadosFiltrados] = useState(props.chamados)
+  const [chamadosFiltrados, setChamadosFiltrados] = useState([])
 
+  useEffect(() => {
+
+    setChamadosFiltrados(props.chamados)
+
+  }, [props.chamados])
+  
   function handleChamadoSelecionado(chamado: any) {
     props.setChamadoSelecionado(chamado);
   }
@@ -126,15 +132,15 @@ export default function Chamados(props: Props) {
 
               const actions = tableActions(chamado);
 
-              const styleCenter = {textAlign: 'center', verticalAlign: 'middle'}
+              const styleCenter: object = {textAlign: 'center', verticalAlign: 'middle'}
 
               return <tr key={`${chamado.Id}_${chamado.Cliente}`} >
-                <th style={{textAlign: 'center', verticalAlign: 'middle'}} scope="row">{actions.Id}</th>
-                <td style={{textAlign: 'center', verticalAlign: 'middle'}}>{chamado.Cliente}</td>
-                <td style={{textAlign: 'center', verticalAlign: 'middle'}}>{chamado.Title}</td>
-                <td style={{textAlign: 'center', verticalAlign: 'middle'}}>{actions.Status}</td>
-                <td style={{textAlign: 'center', verticalAlign: 'middle'}} className={classNames({ 'text-danger': !chamado?.Atribuida?.Title })}>{chamado?.Atribuida?.Title ?? "Sem atribuição"}</td>
-                <td style={{textAlign: 'center', verticalAlign: 'middle'}} dangerouslySetInnerHTML={{
+                <th style={styleCenter} scope="row">{actions.Id}</th>
+                <td style={styleCenter}>{chamado.Cliente}</td>
+                <td style={styleCenter}>{chamado.Title}</td>
+                <td style={styleCenter}>{actions.Status}</td>
+                <td style={styleCenter} className={classNames({ 'text-danger': !chamado?.Atribuida?.Title })}>{chamado?.Atribuida?.Title ?? "Sem atribuição"}</td>
+                <td style={styleCenter} dangerouslySetInnerHTML={{
                   __html: `
                 <div style="max-height:230px;max-width:400px;overflow-y:auto;color:white !important;word-break: break-word;">
                   <span id="DescricaoDemanda">${chamado.DescricaoDemanda.replace(/color:#000000;/g, '').replace(/color&#58;#000000;/g, '')}</span>
