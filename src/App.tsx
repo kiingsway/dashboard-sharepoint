@@ -1,33 +1,61 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
-import * as bootstrap from 'bootstrap';
+// import * as bootstrap from 'bootstrap';
+import 'mdb-react-ui-kit/dist/css/mdb.min.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTableList, faChartPie, faArrowRotateRight, faPlus, faBuilding, faEdit } from '@fortawesome/free-solid-svg-icons'
 import Chamados from './pages/Chamados';
 import Clientes from './pages/Clientes';
 import Dashboard from './pages/Dashboard';
-import FormChamados from './pages/Chamados/FormChamados';
+import FormChamados from './pages/FormChamados';
 import MenuBotao from './components/MenuBotao';
 import { obterClientes, obterChamados, obterFeriados } from './services/SPRequest';
 import moment from 'moment';
+import {
+  MDBNavbar, MDBContainer, MDBNavbarBrand,
+  MDBNavbarToggler, MDBIcon, MDBNavbarNav,
+  MDBNavbarItem, MDBNavbarLink, MDBBtn,
+  MDBCollapse, MDBTabsItem,
+  MDBTabsLink, MDBTabsContent, MDBTabsPane,
+  MDBBadge
+} from 'mdb-react-ui-kit';
+
+
+import classNames from 'classnames';
+const tempoAtualizacao = 15 * 60 // Tempo (segundos) para atualização dos clientes e chamados.
+const tempoHabilitarAtualizar = 15 // Tempo (segundos) para remover o disabled do botão para evitar muitas requisições feitas pelo usuário.
+
 
 function App() {
 
-  const triggerTabList = document.querySelectorAll('#myTab button')
-  triggerTabList.forEach(triggerEl => {
-    const tabTrigger = new bootstrap.Tab(triggerEl)
-
-    triggerEl.addEventListener('click', event => {
-      event.preventDefault()
-      tabTrigger.show()
-    })
-  });
-
-
   const [chamados, setChamados] = useState<any>([]);
   const [clientes, setClientes] = useState<any>([]);
-  const [chamadoSelecionado, setChamadoSelecionado] = useState({ Id: 0, Cliente: "" });
+  const [chamadoSelecionado, setChamadoSelecionado] = useState({ Id: 0, Cliente: "" })
   const [feriados, setFeriados] = useState<any>()
+  const [basicActive, setBasicActive] = useState('tabFormChamado')
+  const [contadorAtualizar, setContadorAtualizar] = useState(tempoAtualizacao)
+  const [showBasic, setShowBasic] = useState(false);
+  const [atualizacaoPagina, setAtualizacaoPagina] = useState({ clientes: false, chamados: false, campos: false });
+
+  useEffect(() => {
+
+    if (contadorAtualizar > 0) {
+      const timer = setInterval(() => setContadorAtualizar(contadorAtualizar > 0 ? contadorAtualizar - 1 : 0), 1000);
+      return () => clearInterval(timer);
+    } else {
+      setContadorAtualizar(tempoAtualizacao)
+      obterChamadosEClientes()
+    }
+
+  }, [contadorAtualizar]);
+
+  const handleBasicClick = (value: string) => {
+    if (value === basicActive) {
+      return;
+    }
+
+    setBasicActive(value);
+  };
 
   function computarFeriados() {
 
@@ -56,17 +84,18 @@ function App() {
   }
 
   function obterChamadosEClientes() {
+    setAtualizacaoPagina(prevAtt => ({ ...prevAtt, chamados: true, clientes: true }))
 
     obterClientes().then(listClientes => {
 
       // Zerando chamados
       setChamados([]);
 
-      const itensClientes: any = listClientes.data.value
+      setClientes(listClientes.data.value)
 
-      setClientes(itensClientes);
+      setAtualizacaoPagina(prevAtt => ({ ...prevAtt, clientes: false }))
 
-      for (let itemCliente of itensClientes.slice(0, 5)) {
+      for (let itemCliente of listClientes.data.value.slice(0, 5)) {
 
         obterChamados(itemCliente).then((listChamados: any) => {
 
@@ -78,7 +107,7 @@ function App() {
               const duracao = moment.duration(moment().diff(dataAnterior));
               return parseFloat((Math.round(duracao.asDays() * 100) / 100).toFixed(1));
             }
-            
+
             const ymd = 'YYYY-MM-DD'
 
             const hoje = moment();
@@ -89,12 +118,12 @@ function App() {
             let contDiasSubtrair: number = 0.0;
             let icontLimit: number = 0;
 
-            try {
+            /*try {
               do {
 
                 // Se a data atual estiver na lista de feriados, for sábado ou domingo, conta +1 dia para remover
                 if (feriados.Datas.includes(dataAtual.format(ymd)) || dataAtual.day() === 6 || dataAtual.day() === 0)
-                contDiasSubtrair += dataAtual.isSame(hoje) ? diferencaDias(inicioHoje) : 1
+                  contDiasSubtrair += dataAtual.isSame(hoje) ? diferencaDias(inicioHoje) : 1
 
                 // Decrementar Data Atual
                 dataAtual = dataAtual.subtract(1, 'days')
@@ -103,7 +132,7 @@ function App() {
               } while (dataAtual.isSameOrAfter(modified) || icontLimit === 20);
             } catch (e) {
               console.error('Não foi possível fazer o cálculo de dias úteis...')
-            }
+            }*/
 
             const diasCorridosSemAtualizar = diferencaDias(itemChamado.Modified);
             // Contagem de dias úteis apenas
@@ -121,12 +150,21 @@ function App() {
           });
 
           setChamados((prevChamados: any) => [...prevChamados, ...itensChamados]);
+          setAtualizacaoPagina(prevAtt => ({ ...prevAtt, chamados: false }))
 
         });
 
       }
 
+
     });
+
+  }
+
+  function handleTempoAtualizar() {
+
+    setAtualizacaoPagina(prevAtt => ({ ...prevAtt, clientes: true, chamados: true }))
+    setContadorAtualizar(0);
 
   }
 
@@ -134,6 +172,137 @@ function App() {
     computarFeriados();
     obterChamadosEClientes();
   }, [])
+
+
+  return (
+    <>
+      <MDBNavbar expand='lg' sticky dark bgColor='dark' className='navBarDash'>
+        <MDBContainer fluid>
+          <MDBNavbarBrand className='navTitle' style={{ cursor: "default" }}>Dashboard 22</MDBNavbarBrand>
+
+          <MDBNavbarToggler
+            aria-controls='navbarSupportedContent'
+            aria-expanded='false'
+            aria-label='Toggle navigation'
+            onClick={() => setShowBasic(!showBasic)}
+          >
+            <MDBIcon icon='bars' fas />
+          </MDBNavbarToggler>
+
+          <MDBCollapse navbar show={showBasic}>
+            <MDBNavbarNav className='mr-auto mb-2 mb-lg-0'>
+
+              <MDBNavbarItem>
+                <MDBNavbarLink active aria-current='page' href='#'>
+                  <MDBTabsItem>
+                    <MDBTabsLink onClick={() => handleBasicClick('tabFormChamado')} active={basicActive === 'tabFormChamado'}>
+                      <MDBBtn outline={basicActive !== 'tabFormChamado'} className='mx-0 border-0' color='light'>
+                        <FontAwesomeIcon icon={chamadoSelecionado?.Id !== 0 ? faEdit : faPlus} className='me-2' />
+                        {chamadoSelecionado?.Id !== 0 ? 'Editar chamado' : 'Novo chamado'}
+                        <br />
+                        {chamadoSelecionado?.Id !== 0 ? <MDBBadge color='dark' className='ms-2 ' style={{ textTransform: "initial" }}>{`#${chamadoSelecionado.Id} | ${chamadoSelecionado.Cliente}`}</MDBBadge> : <></>}
+                      </MDBBtn>
+                    </MDBTabsLink>
+                  </MDBTabsItem>
+                </MDBNavbarLink>
+              </MDBNavbarItem>
+
+              <MDBNavbarItem>
+                <MDBNavbarLink active aria-current='page' href='#'>
+                  <MDBTabsItem>
+                    <MDBTabsLink onClick={() => handleBasicClick('tabChamados')} active={basicActive === 'tabChamados'}>
+                      <MDBBtn outline={basicActive !== 'tabChamados'} className='mx-0 border-0' color='light' style={{ font: "inherit" }}>
+                        <FontAwesomeIcon icon={faTableList} className='me-2' />
+                        Chamados
+                        <MDBBadge
+                          color='dark'
+                          className='ms-2'>
+                          {chamados.length}
+                          <FontAwesomeIcon
+                            icon={faArrowRotateRight}
+                            spin={atualizacaoPagina.chamados}
+                            className={classNames('ms-2', { 'd-none': !atualizacaoPagina.chamados })} />
+                        </MDBBadge>
+                      </MDBBtn>
+                    </MDBTabsLink>
+                  </MDBTabsItem>
+                </MDBNavbarLink>
+              </MDBNavbarItem>
+
+              <MDBNavbarItem>
+                <MDBNavbarLink active aria-current='page' href='#'>
+                  <MDBTabsItem>
+                    <MDBTabsLink onClick={() => handleBasicClick('tabDashboard')} active={basicActive === 'tabDashboard'}>
+                      <MDBBtn outline={basicActive !== 'tabDashboard'} className='mx-0 border-0' color='light'>
+                        <FontAwesomeIcon icon={faChartPie} className='me-2' />
+                        Dashboard
+                      </MDBBtn>
+                    </MDBTabsLink>
+                  </MDBTabsItem>
+                </MDBNavbarLink>
+              </MDBNavbarItem>
+
+              <MDBNavbarItem>
+                <MDBNavbarLink active aria-current='page' href='#'>
+                  <MDBTabsItem>
+                    <MDBTabsLink onClick={() => handleBasicClick('tabClientes')} active={basicActive === 'tabClientes'}>
+                      <MDBBtn outline={basicActive !== 'tabClientes'} className='mx-0 border-0' color='light'>
+                        <FontAwesomeIcon icon={faBuilding} className='me-2' />
+                        Clientes
+                        <MDBBadge color='dark' className='ms-2'>
+                          {clientes.length}
+                          <FontAwesomeIcon
+                            icon={faArrowRotateRight}
+                            spin={atualizacaoPagina.clientes}
+                            className={classNames('ms-2', { 'd-none': !atualizacaoPagina.clientes })} />
+                        </MDBBadge>
+                      </MDBBtn>
+                    </MDBTabsLink>
+                  </MDBTabsItem>
+                </MDBNavbarLink>
+              </MDBNavbarItem>
+
+            </MDBNavbarNav>
+
+            {/* atualizacaoPagina.clientes || atualizacaoPagina.chamados && contadorAtualizar > tempoAtualizacao - tempoHabilitarAtualizar */}
+            <MDBBtn outline className='mx-0 border-0' color='light' onClick={handleTempoAtualizar}
+              disabled={atualizacaoPagina.clientes || atualizacaoPagina.chamados ? atualizacaoPagina.clientes || atualizacaoPagina.chamados : contadorAtualizar > tempoAtualizacao - tempoHabilitarAtualizar}>
+              <FontAwesomeIcon icon={faArrowRotateRight} spin={atualizacaoPagina.clientes || atualizacaoPagina.chamados} className='me-2' />
+              {atualizacaoPagina.clientes || atualizacaoPagina.chamados ? 'Atualizando...' : 'Atualizar'}
+              <MDBBadge color='dark' className='ms-2'>
+                {String(Math.floor(contadorAtualizar / 60)).padStart(2, '0') + ':' + String(contadorAtualizar % 60).padStart(2, '0')}
+              </MDBBadge>
+            </MDBBtn>
+          </MDBCollapse>
+        </MDBContainer>
+      </MDBNavbar>
+
+      <MDBTabsContent>
+        <MDBTabsPane className='container mt-4' show={basicActive === 'tabFormChamado'}>
+          <FormChamados
+            clientes={clientes}
+            chamados={chamados}
+            chamadoSelecionado={chamadoSelecionado}
+            setChamadoSelecionado={setChamadoSelecionado}
+            />
+        </MDBTabsPane>
+        <MDBTabsPane className='container mt-4' show={basicActive === 'tabChamados'}>
+          <Chamados
+            clientes={clientes}
+            chamados={chamados}
+            feriados={feriados}
+            setChamadoSelecionado={setChamadoSelecionado}
+          />
+        </MDBTabsPane>
+        <MDBTabsPane className='container mt-4' show={basicActive === 'tabDashboard'}>
+          <Dashboard
+            clientes={clientes}
+            chamados={chamados} />
+        </MDBTabsPane>
+        <MDBTabsPane className='container mt-4' show={basicActive === 'tabClientes'}><Clientes clientes={clientes} /></MDBTabsPane>
+      </MDBTabsContent>
+    </>
+  )
 
   return (
     <div className="d-flex align-items-start m-2">
@@ -166,7 +335,7 @@ function App() {
         />
 
         <hr className='my-4' />
-        
+
         <MenuBotao
           titulo={chamadoSelecionado?.Id !== 0 ? `Editando` : 'Novo chamado'}
           internalname='formchamados'
@@ -196,6 +365,7 @@ function App() {
       <div className="tab-content w-100" id="v-pills-tabContent">
         <div className="tab-pane fade show active" id="v-pills-chamados" role="tabpanel" aria-labelledby="v-pills-chamados-tab" tabIndex={0}>
           <Chamados
+            clientes={clientes}
             chamados={chamados}
             feriados={feriados}
             setChamadoSelecionado={setChamadoSelecionado}

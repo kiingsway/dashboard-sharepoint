@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useEffect } from 'react'
-import { criarItem, editarItem, obterCamposLista } from '../../../../services/SPRequest'
-import URIs from '../../../../services/uris.json'
+import { criarItem, editarItem, obterCamposLista } from '../../../services/SPRequest'
+import URIs from '../../../services/uris.json'
 import CampoForm from './CampoForm'
 
 interface Props {
@@ -95,9 +95,9 @@ export default function FormularioChamado(props: Props) {
                   campo={campo}
                   chamadoSelecionado={props.chamadoSelecionado}
                 />
-                {campo.EntityPropertyName === 'Comentarios' || true ? 
+                {campo.EntityPropertyName === 'Comentarios' ? 
 
-                    <div className="form-check">
+                    <div className="form-check text-right">
                       <input className="form-check-input" type="checkbox" id="cbEnviarNomeHorario" name='additional.enviarNomeHorario' checked />
                         <label className="form-check-label" htmlFor="cbEnviarNomeHorario">
                           Enviar com nome e horário

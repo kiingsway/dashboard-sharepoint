@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import MenuSuperior from './MenuSuperior'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTableList, faEdit } from '@fortawesome/free-solid-svg-icons'
@@ -10,10 +10,13 @@ moment.locale('pt-br')
 interface Props {
   setChamadoSelecionado: any
   chamados: any
+  clientes: any
   feriados: any
 }
 
 export default function Chamados(props: Props) {
+
+  const [chamadosFiltrados, setChamadosFiltrados] = useState(props.chamados)
 
   function handleChamadoSelecionado(chamado: any) {
     props.setChamadoSelecionado(chamado);
@@ -57,9 +60,9 @@ export default function Chamados(props: Props) {
           target='__blank'
           className={classNames(
             'btn btn-sm',
-            {'btn-outline-success': geralApenasUmTrue.sucesso},
-            {'btn-outline-warning': geralApenasUmTrue.atencao},
-            {'btn-outline-danger': geralApenasUmTrue.perigo}
+            { 'btn-outline-success': geralApenasUmTrue.sucesso },
+            { 'btn-outline-warning': geralApenasUmTrue.atencao },
+            { 'btn-outline-danger': geralApenasUmTrue.perigo }
           )}
           onClick={() => { handleChamadoSelecionado(chamado) }}
           title='Abrir formulário do chamado'
@@ -83,28 +86,28 @@ export default function Chamados(props: Props) {
           'text-success': modificadoAlerta.sucesso
         })}>{chamado.diasUteisSemAtualizar}</span>
         {` dia${chamado.diasUteisSemAtualizar > 1 ? 's' : ''} sem modificar ${moment(chamado.Modified).format('DD/MM - HH:mm')}`}
-        </span>,
+      </span>,
 
-      Status: <div ><span className={classNames({'text-warning': statusAlerta.atencao})}>{`${chamado.StatusDaQuestao}`}</span></div>
+      Status: <div ><span className={classNames({ 'text-warning': statusAlerta.atencao })}>{`${chamado.StatusDaQuestao}`}</span></div>
     }
 
   }
 
   return (
     <div className="container mt-4">
-      <MenuSuperior />
+      <MenuSuperior clientes={props.clientes} chamadosFiltrados={chamadosFiltrados} setChamadosFiltrados={setChamadosFiltrados} />
 
 
-      <table className="table table-dark w-100 table-hover" style={{"tableLayout": "auto"}}>
+      <table className="table table-dark w-100 table-hover">
 
         <colgroup>
-          <col span={1} style={{"width": "12%"}} />
-          <col span={1} style={{"width": "8%"}} />
-          <col span={1} style={{"width": "10%"}} />
-          <col span={1} style={{"width": "8%"}} />
-          <col span={1} style={{"width": "8%"}} />
-          <col span={1} style={{"width": "30%"}} />
-          <col span={1} style={{"width": "10%"}} />
+          <col span={1} id='chamadosColID' />
+          <col span={1} id='chamadoColCliente' />
+          <col span={1} id='chamadoColTítulo' />
+          <col span={1} id='chamadoColStatus' />
+          <col span={1} id='chamadoColAtribuído' />
+          <col span={1} id='chamadoColDescrição' />
+          <col span={1} id='chamadoColModificado' />
         </colgroup>
         <thead>
           <tr>
@@ -119,21 +122,24 @@ export default function Chamados(props: Props) {
         </thead>
         <tbody>
           {
-            props.chamados.map((chamado: any) => {
-              
+            chamadosFiltrados.map((chamado: any) => {
+
               const actions = tableActions(chamado);
 
+              const styleCenter = {textAlign: 'center', verticalAlign: 'middle'}
+
               return <tr key={`${chamado.Id}_${chamado.Cliente}`} >
-                <th scope="row">{actions.Id}</th>
-                <td>{chamado.Cliente}</td>
-                <td>{chamado.Title}</td>
-                <td>{actions.Status}</td>
-                <td className={classNames({'text-danger': !chamado?.Atribuida?.Title})}>{chamado?.Atribuida?.Title ?? "Sem atribuição"}</td>
-                <td dangerouslySetInnerHTML={{ __html: `
-                <div style="max-height:230px;max-width:400px;overflow-y:auto;color:white !important;word-break: break-all;">
+                <th style={{textAlign: 'center', verticalAlign: 'middle'}} scope="row">{actions.Id}</th>
+                <td style={{textAlign: 'center', verticalAlign: 'middle'}}>{chamado.Cliente}</td>
+                <td style={{textAlign: 'center', verticalAlign: 'middle'}}>{chamado.Title}</td>
+                <td style={{textAlign: 'center', verticalAlign: 'middle'}}>{actions.Status}</td>
+                <td style={{textAlign: 'center', verticalAlign: 'middle'}} className={classNames({ 'text-danger': !chamado?.Atribuida?.Title })}>{chamado?.Atribuida?.Title ?? "Sem atribuição"}</td>
+                <td style={{textAlign: 'center', verticalAlign: 'middle'}} dangerouslySetInnerHTML={{
+                  __html: `
+                <div style="max-height:230px;max-width:400px;overflow-y:auto;color:white !important;word-break: break-word;">
                   <span id="DescricaoDemanda">${chamado.DescricaoDemanda.replace(/color:#000000;/g, '').replace(/color&#58;#000000;/g, '')}</span>
                 </div>` }}></td>
-                <td>{actions.Modified}</td>
+                <td style={{textAlign: 'center', verticalAlign: 'middle'}}>{actions.Modified}</td>
               </tr>
             })
           }

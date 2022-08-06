@@ -15,4 +15,20 @@ hr {
 
 body {
     background-color: #333 !important;
+    font-family: "Roboto", sans-serif !important;
+}
+
+.navTitle {
+    color: white;
+    font-weight: 600;
+}
+
+.navBarDash {
+    min-height: 80px;
+    display: flex;
+    align-items: center;
+}
+
+.navbar-nav {
+    align-items: center;
 }

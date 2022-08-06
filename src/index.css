@@ -146,3 +146,31 @@ table {
     font-size: 12px;
     color: white;
 }
+
+#chamadosColID {
+    width: 10%;
+}
+
+#chamadoColCliente {
+    width: 8%;
+}
+
+#chamadoColTítulo {
+    width: 10%;
+}
+
+#chamadoColStatus {
+    width: 8%;
+}
+
+#chamadoColAtribuído {
+    width: 8%;
+}
+
+#chamadoColDescrição {
+    width: 30%;
+}
+
+#chamadoColModificado {
+    width: 10%;
+}

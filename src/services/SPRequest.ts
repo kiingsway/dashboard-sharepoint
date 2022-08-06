@@ -66,6 +66,20 @@ function obterChamados(cliente: any) {
     }
     return axios.post(uri,body)
 }
+function obterChamado(cliente: any, chamadoId: number) {
+
+    const uri = URIs.UriPostFlow
+    const uriSp = `${URIs.PClientes}/${cliente.InternalNameSubsite}`;
+    const pathSp = `_api/web/Lists/${cliente.InternalNameSubsiteList}List/items(${chamadoId})`;
+    
+    const body = {
+        Method: "GET",
+        Site: uriSp,
+        URI: pathSp,
+        Headers: {Accept: "application/json;odata=nometadata"}
+    }
+    return axios.post(uri,body)
+}
 
 function obterCamposLista(uriSite: any, list: any) {
 
