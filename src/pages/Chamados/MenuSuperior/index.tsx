@@ -42,6 +42,13 @@ export default function MenuSuperior(props: Props) {
     }
   }
 
+  function handleClientesSort(e:any) {
+    // const [name, value] = e.target;
+
+    console.log(e.target)
+
+  }
+
   return (
     <div className="mb-4 d-flex flex-row w-100 justify-content-evenly">
 
@@ -55,9 +62,12 @@ export default function MenuSuperior(props: Props) {
             <MDBCardBody>
               <div>
 
-              {props.clientes.map((cliente: any) => {
-                return <MDBCheckbox key={cliente.Id} name={cliente.EntityPropertyName} id={cliente.EntityPropertyName} label={cliente.Title} />
-              })}
+              {/* {props.clientes?.map((cliente: any) => {
+                return <div>
+                  <input key={cliente.Id} type="checkbox" id={cliente.ClienteInternalName} name={cliente.ClienteInternalName}><label htmlFor={cliente.ClienteInternalName}>{cliente.Title}</label></input>
+              </div>
+                return <MDBCheckbox onChange={handleClientesSort} key={cliente.Id} name={cliente.EntityPropertyName} id={cliente.EntityPropertyName} label={cliente.Title} />
+              })} */}
               </div>
             </MDBCardBody>
           </MDBCard>

@@ -32,3 +32,8 @@ body {
 .navbar-nav {
     align-items: center;
 }
+
+.container,
+.container-xxl {
+    max-width: 1920px !important;
+}

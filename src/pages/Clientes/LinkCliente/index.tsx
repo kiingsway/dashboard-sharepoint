@@ -14,7 +14,6 @@ export default function LinkCliente(props: Props) {
     const urlList = `${urlPortal}/Lists/${props.cliente.InternalNameSubsiteList}`;
     const urlNewForm = `${urlList}/NewForm.aspx`;
 
-
     return (
         <MDBDropdown className='btn-group'>
             <MDBBtn href={urlPortal} target="__blank" color='secondary'>
@@ -30,30 +29,10 @@ export default function LinkCliente(props: Props) {
                 </MDBDropdownItem>
                 <MDBDropdownItem>
                     <MDBDropdownLink target="__blank" href={urlNewForm}>
-                    <FontAwesomeIcon icon={faAdd} className='me-2' />Formulário de novo chamado
+                        <FontAwesomeIcon icon={faAdd} className='me-2' />Formulário de novo chamado
                     </MDBDropdownLink>
                 </MDBDropdownItem>
             </MDBDropdownMenu>
         </MDBDropdown>
     );
-
-    return (
-
-        <div className="btn-group mt-2">
-            <a target="__blank" href={urlPortal} className="btn btn-secondary">
-                <FontAwesomeIcon icon={faTableCellsLarge} className='me-2' />Ir para o portal</a>
-
-            <button type="button" className="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
-                <span className="visually-hidden">Toggle Dropdown</span>
-            </button>
-            <ul className="dropdown-menu dropdown-menu-end">
-                <li>
-                    <a className="dropdown-item" target="__blank" href={urlList}>
-                        <FontAwesomeIcon icon={faList} className='me-2' />Lista de chamados
-                    </a>
-                </li>
-                <li><a className="dropdown-item" target="__blank" href={urlNewForm}><FontAwesomeIcon icon={faAdd} className='me-2' />Formulário de novo chamado</a></li>
-            </ul>
-        </div>
-    )
 }

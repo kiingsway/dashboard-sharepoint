@@ -186,3 +186,10 @@ table {
     white-space: nowrap;
     text-overflow: ellipsis;
 }
+
+.dashprogress {
+    overflow: visible !important;
+    background-color: #BBB !important;
+    color: black !important;
+    font-weight: 500 !important;
+}

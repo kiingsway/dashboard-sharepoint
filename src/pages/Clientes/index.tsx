@@ -22,7 +22,7 @@ export default function Clientes(props: Props) {
     <MDBRow className='row-cols-1 row-cols-md-3 row-cols-lg-3 row-cols-xl-4 g-4'>
       {props.clientes.map((cliente: any) => (
 
-      <MDBCol>
+      <MDBCol key={cliente.Id}>
         <MDBCard className='h-100'>
           <MDBCardImage
             src={cliente?.logo?.Url}
@@ -46,15 +46,4 @@ export default function Clientes(props: Props) {
     </MDBContainer>
   );
   
-  return <>{props.clientes?.map((cliente: any) => (
-    <div className="col" key={`${cliente.Id}_${cliente.Title}`}>
-      <div className="card h-100 text-center">
-        <img src={cliente?.logo?.Url} className="card-img-top img-cliente" alt={`${cliente.Title} logo`} />
-        <div className="card-body">
-          <h5 className="card-title" style={{ height: "50px" }}>{cliente.Title}</h5>
-          <LinkCliente cliente={cliente} />
-        </div>
-      </div>
-    </div>
-  ))}</>
 }
