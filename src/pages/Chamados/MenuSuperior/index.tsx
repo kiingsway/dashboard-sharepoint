@@ -48,6 +48,9 @@ export default function MenuSuperior(props: Props) {
     console.log(e.target)
 
   }
+  
+  // <select multiple={true} value={['B', 'C']}>
+  // https://reactjs.org/docs/forms.html#controlled-components
 
   return (
     <div className="mb-4 d-flex flex-row w-100 justify-content-evenly">

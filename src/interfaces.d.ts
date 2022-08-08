@@ -1,22 +1,28 @@
+export type TAppTabs = 'tabFormChamado' | 'tabChamados' | 'tabDashboard' | 'tabClientes';
+
 export interface IChamado {
   ID: number;
   Id: number;
   Title: string;
   StatusDaQuestao: string | null;
-  DescricaoDemanda: string;
+  DescricaoDemanda?: string;
   Atribuida?: {
     Id: number;
     Title: string;
     EMail: string;
   };
-  Comentarios: string | null;
+  Comentarios?: string | null;
   Modified: string;
   Created: string;
-  Cliente: string;
-  ClienteId: number;
-  ClienteInternalName: string;
-  InternalNameSubsite: string;
-  InternalNameSubsiteList: string;
+  Cliente: {
+    ID: number;
+    Id: number;
+    Title: string;
+    ClienteInternalName: string;
+    InternalNameSubsite: string;
+    InternalNameSubsiteList: string;
+    logo?: HyperlinkSharepoint;
+  }
   diasCorridosSemAtualizar: number;
   diasUteisSemAtualizar: number;
 }
@@ -35,8 +41,16 @@ export interface ICliente {
 }
 
 export interface IChamadoSelecionado {
-  Id: number
-  Cliente?: string
+  Id: number;
+  Cliente?: string;
 }
 
-export type TAppTabs = 'tabFormChamado' | 'tabChamados' | 'tabDashboard' | 'tabClientes';
+export interface IFeriado {
+  DataRequisicao: string;
+  Datas: string[];
+}
+
+interface HyperlinkSharepoint {
+  Description: string;
+  Url: string;
+}

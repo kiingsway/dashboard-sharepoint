@@ -28,15 +28,13 @@ export default function HeaderErrors(props: Props) {
     const erroObject = props.erros.filter((erro:any) => erro.id === modalId)[0];
 
     const erroData = {
-      metodo: erroObject.config.method.toUpperCase(),
-      uri: erroObject.config.url,
-      body: erroObject.config.data,
-      headers: JSON.stringify(erroObject.config.headers, null, 2),
-      response: JSON.stringify(erroObject.response.data, null, 2),
-      message: erroObject.message
+      metodo: erroObject?.config?.method?.toUpperCase(),
+      uri: erroObject?.config?.url,
+      body: JSON.stringify(erroObject?.config?.data, null, 2),
+      headers: JSON.stringify(erroObject?.config?.headers, null, 2),
+      response: JSON.stringify(erroObject?.response?.data, null, 2),
+      message: erroObject?.message
     }
-
-    // console.log(erroData)
 
     setErroSelecionado(erroData);
     toggleModalErro();
@@ -48,13 +46,13 @@ export default function HeaderErrors(props: Props) {
 
     const erroObject = props.erros.filter((erro:any) => erro.id === modalId)[0];
     
-    console.log(props.erros)
+    // console.log(props.erros)
     props.setErros((prevErros:any) => [...prevErros.filter((prevErro:any) => prevErro !== erroObject)])
 
   }
 
 
-  console.log(props.erros)
+  // console.log(props.erros)
   return <>
     {props?.erros.length === 0 ? null : props?.erros?.map((erro: any) => (
       <MDBNavbar key={erro.id} expand='lg' light className='px-4 my-1 shadow border rounded border-light d-flex justify-content-between text-light' bgColor='danger'>
@@ -64,7 +62,7 @@ export default function HeaderErrors(props: Props) {
             <FontAwesomeIcon icon={faBug} />
           </MDBBtn>
 
-          <span style={{fontFamily:'Consolas, monaco, monospace', wordBreak: 'break-all'}}>{erro.message}: {erro?.request?.responseText}</span>
+          <span style={{fontFamily:'Consolas, monaco, monospace', wordBreak: 'break-all'}}>{erro?.message}: {erro?.request?.responseText}</span>
 
         </div>
         <div>
@@ -84,11 +82,11 @@ export default function HeaderErrors(props: Props) {
           </MDBModalHeader>
           <MDBModalBody>
                       
-          <MDBInput label='Method' id='txtErrorMethod' type='text' className='mb-4' value={erroSelecionado?.metodo}/>
-          <MDBInput label='URI' id='txtErrorURI' type='text' className='mb-4' value={erroSelecionado?.uri}/>
-          <MDBTextArea label='Body' id='txtErrorBody' rows={4} className='mb-4' value={erroSelecionado?.body} />
-          <MDBTextArea label='Headers' id='txtErrorHeaders' rows={4} className='mb-4' value={erroSelecionado?.headers} />
-          <MDBTextArea label='Response' id='txtErrorResponse' rows={4} className='mb-4' value={erroSelecionado?.response} />
+          <MDBInput readOnly label='Method' id='txtErrorMethod' type='text' className='mb-4' value={erroSelecionado?.metodo}/>
+          <MDBInput readOnly label='URI' id='txtErrorURI' type='text' className='mb-4' value={erroSelecionado?.uri}/>
+          <MDBTextArea readOnly label='Body' id='txtErrorBody' rows={4} className='mb-4' value={erroSelecionado?.body} />
+          <MDBTextArea readOnly label='Headers' id='txtErrorHeaders' rows={4} className='mb-4' value={erroSelecionado?.headers} />
+          <MDBTextArea readOnly label='Response' id='txtErrorResponse' rows={4} className='mb-4' value={erroSelecionado?.response} />
 
           </MDBModalBody>
 

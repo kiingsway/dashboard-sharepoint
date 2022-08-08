@@ -55,11 +55,11 @@ export default function Dashboard(props: Props) {
     return 0;
   }
 
-  let clientesUnicos = [...new Set(props.chamados.map((ch: any) => ch.Cliente))];
+  let clientesUnicos = [...new Set(props.chamados.map((ch: any) => ch.Cliente.Title))];
   clientesUnicos = clientesUnicos.map((cliente: any) => {
 
     const name = cliente === 'Sturzenegger e Cavalcante' ? 'SCADV' : cliente
-    const value = props.chamados.filter((chamado: IChamado) => chamado.Cliente === cliente).length
+    const value = props.chamados.filter((chamado: IChamado) => chamado.Cliente.Title === cliente).length
 
     return { name: name, value: value }
   })

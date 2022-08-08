@@ -37,7 +37,7 @@ export default function ModalChamados(props: Props) {
           </MDBTableHead>
           <MDBTableBody>
             {props.tileSelecionada?.Values?.map((cliente: any) => (
-              <tr>
+              <tr key={cliente?.name}>
                 <td>{cliente?.name}</td>
                 <td>{cliente?.value}</td>
               </tr>
@@ -58,7 +58,7 @@ export default function ModalChamados(props: Props) {
           </MDBTableHead>
           <MDBTableBody>
             {props.tileSelecionada?.Values?.map((chamado: any) => (
-              <tr>
+              <tr key={`${chamado.Id}#${chamado.Cliente}`}>
                 <td width={'70px'}>
                   <MDBBtn title='Editar chamado' onClick={props.setSelecionarChamado}>
                     <FontAwesomeIcon icon={faPenToSquare} />
