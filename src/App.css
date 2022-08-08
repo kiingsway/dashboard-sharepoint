@@ -21,6 +21,7 @@ body {
 .navTitle {
     color: white;
     font-weight: 600;
+    cursor: default;
 }
 
 .navBarDash {
@@ -36,4 +37,15 @@ body {
 .container,
 .container-xxl {
     max-width: 1920px !important;
+}
+
+.dashprogress {
+    overflow: visible !important;
+    background-color: #BBB !important;
+    color: black !important;
+    font-weight: 500 !important;
+}
+
+.dev {
+    font-family: 'Consolas, monaco, monospace' !important;
 }

@@ -130,6 +130,84 @@ function App() {
     });
 
   }
+  function obterChamadosEClientes1() {
+    // setAtualizacaoPagina(prevAtt => ({ ...prevAtt, chamados: true, clientes: true }))
+
+    obterClientes().then(listClientes => {
+
+      // Zerando chamados
+      setChamados([]);
+
+      setClientes(listClientes.data.value)
+
+      // setAtualizacaoPagina(prevAtt => ({ ...prevAtt, clientes: false }))
+
+      const clientesFiltrados = listClientes.data.value.filter((cliente: any) => {
+        return true
+        return cliente.Title === 'Class' || cliente.Title.includes('st')
+      })
+
+      for (let itemCliente of clientesFiltrados.slice(0, 5)) {
+
+        obterChamados(itemCliente).then((listChamados: any) => {
+          // setAtualizacaoPagina(prevAtt => ({ ...prevAtt, chamados: true }))
+
+          const itensChamados: any = listChamados.data.value.map((itemChamado: any) => {
+
+
+            const ymd = 'YYYY-MM-DD'
+            const hoje = moment();
+            const inicioHoje = hoje.startOf('date')
+            const modified = moment(itemChamado.Modified).format(ymd);
+
+            let dataAtual = moment();
+            let contDiasSubtrair: number = 0.0;
+            let icontLimit: number = 0;
+
+            /*try {
+              do {
+
+                // Se a data atual estiver na lista de feriados, for sábado ou domingo, conta +1 dia para remover
+                if (feriados.Datas.includes(dataAtual.format(ymd)) || dataAtual.day() === 6 || dataAtual.day() === 0)
+                  contDiasSubtrair += dataAtual.isSame(hoje) ? diferencaDias(inicioHoje) : 1
+
+                // Decrementar Data Atual
+                dataAtual = dataAtual.subtract(1, 'days')
+                icontLimit++
+
+              } while (dataAtual.isSameOrAfter(modified) || icontLimit === 20);
+            } catch (e) {
+              console.error('Não foi possível fazer o cálculo de dias úteis...')
+            }*/
+
+            // Contagem de dias úteis apenas
+            const diasUteisSemAtualizar = ((moment().diff(moment(itemChamado.Modified), 'days') * 10) - (contDiasSubtrair * 10)) / 10
+
+            return {
+              ...itemChamado,
+              Cliente: itemCliente.Title,
+              ClienteId: itemCliente.Id,
+              ClienteInternalName: itemCliente.ClienteInternalName,
+              InternalNameSubsite: itemCliente.InternalNameSubsite,
+              InternalNameSubsiteList: itemCliente.InternalNameSubsiteList,
+              diasCorridosSemAtualizar: moment().diff(moment(itemChamado.Modified), 'days'),
+              diasUteisSemAtualizar: diasUteisSemAtualizar,
+            }
+          });
+
+          setChamados((prevChamados: any) => [...prevChamados, ...itensChamados]);
+
+        }).then(() => {
+          // setAtualizacaoPagina(prevAtt => ({ ...prevAtt, chamados: false }))
+
+        });
+
+      }
+
+    })
+
+
+  }
 
   useEffect(() => {
     computarFeriados();

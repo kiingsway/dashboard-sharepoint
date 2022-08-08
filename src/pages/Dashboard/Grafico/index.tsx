@@ -27,7 +27,6 @@ export default function Grafico(props: Props) {
 
     const titleCard = dado.fullName || dado.name || '-'
 
-    console.log(dado)
     const valueBar1 = dado[props.bar1.id] || '';
     const valueBar2 = props?.bar2 ? dado[props.bar2?.id] : 0;
   
@@ -71,7 +70,7 @@ export default function Grafico(props: Props) {
         <Bar dataKey={props.bar1.id} name={props.bar1.title} stackId="a" fill="#00B74A" />
         {
           props?.bar2 ? 
-          <Bar dataKey={props.bar2.id} name={props.bar1.title} stackId="a" fill="#F93154" />
+          <Bar dataKey={props.bar2.id} name={props.bar2.title} stackId="a" fill="#F93154" />
           :
           <></>
         }

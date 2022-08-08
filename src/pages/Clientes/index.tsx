@@ -4,15 +4,15 @@ import {
   MDBCard,
   MDBCardImage,
   MDBCardBody,
-  MDBCardTitle,
   MDBCardText,
   MDBRow,
   MDBCol,
   MDBContainer
 } from 'mdb-react-ui-kit';
+import { ICliente } from 'interfaces';
 
 interface Props {
-  clientes: Array<Props>
+  clientes: ICliente[]
 }
 
 export default function Clientes(props: Props) {
