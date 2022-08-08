@@ -1,3 +1,5 @@
+import { IconDefinition } from "@fortawesome/free-solid-svg-icons";
+
 export type TAppTabs = 'tabFormChamado' | 'tabChamados' | 'tabDashboard' | 'tabClientes';
 
 export interface IChamado {
@@ -27,6 +29,8 @@ export interface IChamado {
   diasUteisSemAtualizar: number;
 }
 
+export interface IChamadoSelecionado extends Partial<IChamado> {}
+
 export interface ICliente {
   Id: number;
   ID: number;
@@ -40,17 +44,38 @@ export interface ICliente {
   InternalNameSubsiteList: string;
 }
 
-export interface IChamadoSelecionado {
-  Id: number;
-  Cliente?: string;
+export interface IFeriado {
+  DataRequisicao?: string;
+  Datas?: string[];
 }
 
-export interface IFeriado {
-  DataRequisicao: string;
-  Datas: string[];
+export interface IAtualizacaoSecao {
+  clientes: boolean;
+  chamados: boolean;
+  campos: boolean;
 }
 
 interface HyperlinkSharepoint {
   Description: string;
   Url: string;
+}
+
+export interface IFiltrosChamados {
+  vencido?: object[]
+  emAberto?: object[]
+  semAtribuido?: object[]
+  criadosHoje?: object[]
+  clientesComChamados?: object[]
+  abertos30dias?: object[]
+  pendentesValidacao?: object[]
+  abertos15dias?: object[]
+}
+export interface ITileObject {
+  Title: string;
+  Subtitle?: string;
+  Count: number;
+  Total: any;
+  Progress: boolean;
+  Values: object[];
+  Icon?: IconDefinition
 }

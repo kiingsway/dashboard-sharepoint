@@ -11,15 +11,16 @@ import {
   MDBTableBody,
   MDBTableHead,
 } from 'mdb-react-ui-kit';
-import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+import { faCircle, faListUl, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { IChamado } from 'interfaces';
 
 interface Props {
   toggleModalChamados: any
   modalChamados: any
   setModalChamados: any
   chamadosFiltrados: Array<any>
-  setSelecionarChamado: any
+  handleSelecionarChamado: any
   tileSelecionada: any
 }
 
@@ -57,15 +58,15 @@ export default function ModalChamados(props: Props) {
             </tr>
           </MDBTableHead>
           <MDBTableBody>
-            {props.tileSelecionada?.Values?.map((chamado: any) => (
-              <tr key={`${chamado.Id}#${chamado.Cliente}`}>
+            {props.tileSelecionada?.Values?.map((chamado: IChamado) => (
+              <tr key={`${chamado.Id}#${chamado.Cliente?.Title}`}>
                 <td width={'70px'}>
-                  <MDBBtn title='Editar chamado' onClick={props.setSelecionarChamado}>
+                  <MDBBtn title={`Editar chamado #${chamado.Id} da ${chamado.Cliente.Title}`} onClick={()=> props.handleSelecionarChamado(chamado)} color='secondary'>
                     <FontAwesomeIcon icon={faPenToSquare} />
                   </MDBBtn>
                 </td>
                 <td>#{chamado?.Id}</td>
-                <td>{chamado?.Cliente}</td>
+                <td>{chamado?.Cliente?.Title}</td>
                 <td>{chamado?.Title}</td>
                 <td>{chamado?.Atribuida?.Title}</td>
               </tr>
@@ -76,13 +77,18 @@ export default function ModalChamados(props: Props) {
 
   }
 
+  // console.log(props.tileSelecionada)
+
   return (
     <MDBModal show={props.modalChamados} setShow={props.setModalChamados} tabIndex='-1'>
       <MDBModalDialog size='lg'>
         <MDBModalContent>
           <MDBModalHeader>
-            <MDBModalTitle>{props.tileSelecionada?.Title}</MDBModalTitle>
-            <MDBBtn className='btn-close' color='none' onClick={props.toggleModalChamados}></MDBBtn>
+            <MDBModalTitle>
+              <FontAwesomeIcon icon={props.tileSelecionada?.Icon || faCircle} className='me-2' />
+              {props.tileSelecionada?.Title}
+            </MDBModalTitle>
+            <MDBBtn className='btn-close' color='none' onClick={() => props.setModalChamados(!props.modalChamados)}></MDBBtn>
           </MDBModalHeader>
           <MDBModalBody>
             {tabelaModal()}

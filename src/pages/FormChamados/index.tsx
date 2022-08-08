@@ -1,11 +1,12 @@
+import { IChamado, IChamadoSelecionado, ICliente } from 'interfaces';
 import React, { useEffect, useState } from 'react'
 import FormularioChamado from './FormularioChamado'
 
 interface Props {
-  setChamadoSelecionado: any
-  chamadoSelecionado: any
-  clientes: any
-  chamados: any
+  chamadoSelecionado: IChamadoSelecionado;
+  clientes: ICliente[];
+  chamados: IChamado[];
+  setChamadoSelecionado: React.Dispatch<React.SetStateAction<IChamadoSelecionado>>;
 }
 
 export default function FormChamados(props: Props) {
@@ -15,7 +16,7 @@ export default function FormChamados(props: Props) {
   useEffect(() => {
     // props.chamadoSelecionado?.
     // props.chamadoSelecionado?.
-    props.chamadoSelecionado?.Id && filtrarChamados(props.chamadoSelecionado?.ClienteInternalName)
+    props.chamadoSelecionado?.Id && filtrarChamados(props.chamadoSelecionado?.Cliente?.ClienteInternalName)
 
   },[props.chamadoSelecionado])
 
@@ -53,7 +54,7 @@ export default function FormChamados(props: Props) {
           <option selected={props.chamadoSelecionado?.Id === 0}>Selecione o cliente...</option>
           {
             props.clientes.map((cliente: any) => (
-              <option key={cliente.Id} value={cliente.ClienteInternalName} selected={props.chamadoSelecionado?.ClienteInternalName === cliente.ClienteInternalName}>{cliente.Title}</option>
+              <option key={cliente.Id} value={cliente.ClienteInternalName} selected={props.chamadoSelecionado?.Cliente?.ClienteInternalName === cliente.ClienteInternalName}>{cliente.Title}</option>
             ))
           }
         </select>

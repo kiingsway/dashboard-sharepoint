@@ -1,29 +1,23 @@
 import React, { useEffect, useState } from 'react'
+import classNames from 'classnames'
+import { IAtualizacaoSecao, IChamadoSelecionado, TAppTabs } from 'interfaces'
 import { faArrowRotateRight, faBars, faBuilding, faChartPie, faEdit, faPlus, faTableList } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
-  MDBBadge, MDBBtn, MDBCollapse,
-  MDBContainer, MDBNavbar, MDBNavbarBrand,
-  MDBNavbarItem, MDBNavbarLink, MDBNavbarNav,
-  MDBNavbarToggler, MDBTabsItem, MDBTabsLink
+  MDBBadge, MDBBtn, MDBCollapse, MDBContainer, MDBNavbar, MDBNavbarBrand,
+  MDBNavbarItem, MDBNavbarLink, MDBNavbarNav, MDBNavbarToggler, MDBTabsItem, MDBTabsLink
 } from 'mdb-react-ui-kit'
-import { IChamadoSelecionado, TAppTabs } from 'interfaces'
-import classNames from 'classnames'
 
 
 interface Props {
   chamadoSelecionado: IChamadoSelecionado;
   qtdChamados: number;
   qtdClientes: number;
-  obterChamadosEClientes: () => void;
-  appTab: TAppTabs
-  setAppTab: React.Dispatch<React.SetStateAction<TAppTabs>>
-}
-
-interface IAtualizacaoSecao {
-  clientes: boolean;
-  chamados: boolean;
-  campos: boolean;
+  appTab: TAppTabs;
+  atualizacaoSecao: IAtualizacaoSecao;
+  handleGetClientesChamados: () => void;
+  setAtualizacaoSecao: React.Dispatch<React.SetStateAction<IAtualizacaoSecao>>;
+  setAppTab: React.Dispatch<React.SetStateAction<TAppTabs>>;
 }
 
 const tempoAtualizacao: number = 15 * 60 // Tempo (segundos) para atualização dos clientes e chamados.
@@ -32,21 +26,33 @@ const tempoHabilitarAtualizar: number = 3 // Tempo (segundos) para remover o dis
 export default function HeaderApp(props: Props) {
 
   const [navMobileExpanded, setNavMobileExpanded] = useState<boolean>(false);
-  const [atualizacaoSecao, setAtualizacaoSecao] = useState<IAtualizacaoSecao>({ clientes: false, chamados: false, campos: false });
-  const [segundosAtualizacao, setSegundosAtualizacao] = useState<number>(tempoAtualizacao)
+  const [segundosAtualizacao, setSegundosAtualizacao] = useState<number>(tempoAtualizacao);
 
+  /**
+   * Altera a guia da aplicação para o texto recebido em parâmetros.
+   * @param { TAppTabs } tab Guia para ser alterada via setAppTab. As opções válidas estão no tipo 'TAppTabs'.
+   * @example handleSetAppTab('tabChamados')
+   * @returns void
+   */
   function handleSetAppTab(tab: TAppTabs) { props.setAppTab(tab); }
 
-  function handleSetSegundosAtualizacao() { setAtualizacaoSecao(prevAtt => ({ ...prevAtt, clientes: true, chamados: true })); setSegundosAtualizacao(0); }
+  /**
+   * Força atualização dos clientes e chamados pelo setSegundosAtualizacao com o parâmetro 0.
+   * Também inicializa ícones de atualização animados próximo ao texto das guias de clientes e chamados.
+   * @returns void
+   */
+  function handleSetSegundosAtualizacao() { setSegundosAtualizacao(0); }
 
   useEffect(() => {
 
+    // Caso tenha mais de 0 segundos da contagem de atualização, execute um timer para reduzir a contagem em 1.
     if (segundosAtualizacao > 0) {
-      const timer = setInterval(() => setSegundosAtualizacao(segundosAtualizacao > 0 ? segundosAtualizacao - 1 : 0), 1000);
-      return () => clearInterval(timer);
-    } else {
+      const timer = setInterval(() => setSegundosAtualizacao(segundosAtualizacao > 0 ? segundosAtualizacao - 1 : 0), 1000)
+      return () => clearInterval(timer)
+
+    } else { // Caso possuir <= 0 segundos para atualização, resete o timer e obtenha os clientes e chamados
       setSegundosAtualizacao(tempoAtualizacao)
-      props.obterChamadosEClientes()
+      props.handleGetClientesChamados()
     }
 
   }, [segundosAtualizacao]);
@@ -73,9 +79,20 @@ export default function HeaderApp(props: Props) {
                     <MDBBtn outline={props.appTab !== 'tabFormChamado'} className='mx-0 border-0' color='light'>
 
                       <FontAwesomeIcon icon={props.chamadoSelecionado.Id !== 0 ? faEdit : faPlus} className='me-2' />
-                      {props.chamadoSelecionado.Id !== 0 ? 'Editar chamado' : 'Novo chamado'}
+                      {props.chamadoSelecionado.Id !== 0 ? 'Editar chamado***' : 'Novo chamado***'}
                       <br />
-                      {props.chamadoSelecionado.Id !== 0 ? <MDBBadge color='dark' className='ms-2 ' style={{ textTransform: "initial" }}>{`#${props.chamadoSelecionado.Id} | ${props.chamadoSelecionado.Cliente}`}</MDBBadge> : <></>}
+                      {
+                        props.chamadoSelecionado.Id !== 0 ?
+                          <>
+                            <MDBBadge
+                              color='dark'
+                              className='ms-2'
+                              style={{ textTransform: "initial" }}>
+                              {`#${props.chamadoSelecionado.Id} | ${props.chamadoSelecionado.Cliente?.Title}`}
+                            </MDBBadge>
+                          </>
+                          : <></>
+                      }
 
                     </MDBBtn>
                   </MDBTabsLink>
@@ -89,18 +106,18 @@ export default function HeaderApp(props: Props) {
                   <MDBTabsLink onClick={() => handleSetAppTab('tabChamados')} active={props.appTab === 'tabChamados'}>
                     <MDBBtn outline={props.appTab !== 'tabChamados'} className='mx-0 border-0' color='light' style={{ font: "inherit" }}>
                       <FontAwesomeIcon icon={faTableList} className='me-2' />
-                      Chamados
+                      Chamados***
                       <MDBBadge
                         color='dark'
                         className='ms-2'
-                        style={{ padding: "4px 6px 1px 6px" }}
+                        style={{ padding: "2px 4px" }}
                       >
 
                         {props.qtdChamados}
                         <FontAwesomeIcon
                           icon={faArrowRotateRight}
-                          spin={atualizacaoSecao.chamados}
-                          className={classNames('ms-2', { 'd-none': !atualizacaoSecao.chamados })} />
+                          spin={props.atualizacaoSecao.chamados}
+                          className={classNames('ms-2', { 'd-none': !props.atualizacaoSecao.chamados })} />
                       </MDBBadge>
                     </MDBBtn>
                   </MDBTabsLink>
@@ -130,12 +147,13 @@ export default function HeaderApp(props: Props) {
                     <MDBBtn outline={props.appTab !== 'tabClientes'} className='mx-0 border-0' color='light'>
                       <FontAwesomeIcon icon={faBuilding} className='me-2' />
                       Clientes
-                      <MDBBadge color='dark' className='ms-2' style={{ padding: "4px 6px 1px 6px" }}>
+                      <MDBBadge color='dark' className='ms-2'
+                        style={{ padding: "2px 4px" }}>
                         {props.qtdClientes}
                         <FontAwesomeIcon
                           icon={faArrowRotateRight}
-                          spin={atualizacaoSecao.clientes}
-                          className={classNames('ms-2', { 'd-none': !atualizacaoSecao.clientes })} />
+                          spin={props.atualizacaoSecao.clientes}
+                          className={classNames('ms-2', { 'd-none': !props.atualizacaoSecao.clientes })} />
                       </MDBBadge>
                     </MDBBtn>
                   </MDBTabsLink>
@@ -151,16 +169,16 @@ export default function HeaderApp(props: Props) {
             color='light'
             onClick={handleSetSegundosAtualizacao}
             disabled={
-              atualizacaoSecao.clientes || atualizacaoSecao.chamados ? true :
-              segundosAtualizacao > tempoAtualizacao - tempoHabilitarAtualizar
+              props.atualizacaoSecao.clientes || props.atualizacaoSecao.chamados ? true :
+                segundosAtualizacao > tempoAtualizacao - tempoHabilitarAtualizar
             }>
 
             <FontAwesomeIcon
               icon={faArrowRotateRight}
-              spin={atualizacaoSecao.clientes || atualizacaoSecao.chamados}
+              spin={props.atualizacaoSecao.clientes || props.atualizacaoSecao.chamados}
               className='me-2' />
 
-            {atualizacaoSecao.clientes || atualizacaoSecao.chamados ? 'Atualizando...' : 'Atualizar'}
+            {props.atualizacaoSecao.clientes || props.atualizacaoSecao.chamados ? 'Atualizando...' : 'Atualizar'}
 
             <MDBBadge
               color='dark'

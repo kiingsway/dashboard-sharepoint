@@ -5,6 +5,7 @@ import { faTableList, faEdit } from '@fortawesome/free-solid-svg-icons'
 import URIS from '../../services/uris.json'
 import moment from 'moment'
 import classNames from 'classnames'
+import { IChamado } from 'interfaces'
 moment.locale('pt-br')
 
 interface Props {
@@ -57,7 +58,7 @@ export default function Chamados(props: Props) {
       sucesso: geralAlerta.sucesso && !geralAlerta.atencao && !geralAlerta.perigo
     }
 
-    const uriChamado = `${URIS.PClientes}/${chamado.InternalNameSubsite}/Lists/${chamado.InternalNameSubsiteList}/DispForm.aspx?ID=${chamado.Id}`;
+    const uriChamado = `${URIS.PClientes}/${chamado.Cliente.InternalNameSubsite}/Lists/${chamado.Cliente.InternalNameSubsiteList}/DispForm.aspx?ID=${chamado.Id}`;
 
     return {
       Id: <div className="btn-group">
@@ -91,7 +92,7 @@ export default function Chamados(props: Props) {
           'text-warning': modificadoAlerta.atencao,
           'text-success': modificadoAlerta.sucesso
         })}>{chamado.diasUteisSemAtualizar}</span>
-        {` dia${chamado.diasUteisSemAtualizar > 1 ? 's' : ''} sem modificar ${moment(chamado.Modified).format('DD/MM - HH:mm')}`}
+        {` ${chamado.diasUteisSemAtualizar > 1 ? 'dias úteis' : 'dia útil'} sem modificar ${moment(chamado.Modified).format('DD/MM - HH:mm')}`}
       </span>,
 
       Status: <div ><span className={classNames({ 'text-warning': statusAlerta.atencao })}>{`${chamado.StatusDaQuestao}`}</span></div>
@@ -128,22 +129,22 @@ export default function Chamados(props: Props) {
         </thead>
         <tbody>
           {
-            chamadosFiltrados.map((chamado: any) => {
+            chamadosFiltrados.map((chamado: IChamado) => {
 
               const actions = tableActions(chamado);
 
               const styleCenter: object = {textAlign: 'center', verticalAlign: 'middle'}
 
-              return <tr key={`${chamado.Id}_${chamado.Cliente}`} >
+              return <tr key={`${chamado.Id}_${chamado.Cliente.Id}`} >
                 <th style={styleCenter} scope="row">{actions.Id}</th>
-                <td style={styleCenter}>{chamado.Cliente}</td>
+                <td style={styleCenter}>{chamado.Cliente.Title}</td>
                 <td style={styleCenter}>{chamado.Title}</td>
                 <td style={styleCenter}>{actions.Status}</td>
                 <td style={styleCenter} className={classNames({ 'text-danger': !chamado?.Atribuida?.Title })}>{chamado?.Atribuida?.Title ?? "Sem atribuição"}</td>
                 <td style={styleCenter} dangerouslySetInnerHTML={{
                   __html: `
                 <div style="max-height:230px;max-width:400px;overflow-y:auto;color:white !important;word-break: break-word;">
-                  <span id="DescricaoDemanda">${chamado.DescricaoDemanda.replace(/color:#000000;/g, '').replace(/color&#58;#000000;/g, '')}</span>
+                  <span id="DescricaoDemanda">${chamado?.DescricaoDemanda?.replace(/color:#000000;/g, '').replace(/color&#58;#000000;/g, '')}</span>
                 </div>` }}></td>
                 <td style={{textAlign: 'center', verticalAlign: 'middle'}}>{actions.Modified}</td>
               </tr>

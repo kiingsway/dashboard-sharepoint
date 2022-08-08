@@ -24,7 +24,7 @@ function App() {
     })
   });*/
 
-
+/*
   const [chamados, setChamados] = useState<any>([]);
   const [clientes, setClientes] = useState<any>([]);
   const [chamadoSelecionado, setChamadoSelecionado] = useState({ Id: 0, Cliente: "" });
@@ -180,6 +180,7 @@ function App() {
               console.error('Não foi possível fazer o cálculo de dias úteis...')
             }*/
 
+            /*
             // Contagem de dias úteis apenas
             const diasUteisSemAtualizar = ((moment().diff(moment(itemChamado.Modified), 'days') * 10) - (contDiasSubtrair * 10)) / 10
 
@@ -303,7 +304,7 @@ function App() {
         </div>
       </div>
     </div>
-  );
+  );*/
 }
 
 export default App;
