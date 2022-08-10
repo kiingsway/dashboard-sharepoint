@@ -22,11 +22,9 @@ function App() {
   const [clientes, setClientes] = useState<ICliente[]>([]);
   const [chamadoSelecionado, setChamadoSelecionado] = useState<IChamadoSelecionado>({ Id: 0 })
   const [feriados, setFeriados] = useState<IFeriado>({});
-  const [appTab, setAppTab] = useState<TAppTabs>('tabFormChamado');
+  const [appTab, setAppTab] = useState<TAppTabs>('tabChamados');
   const [erros, setErros] = useState([]);
   const [atualizacaoSecao, setAtualizacaoSecao] = useState<IAtualizacaoSecao>({ clientes: false, chamados: false, campos: false });
-
-
 
   /**
    * Obtém informações dos clientes e para cada cliente é obtido seus chamados em suas listas respectivas.
@@ -39,33 +37,38 @@ function App() {
    */
   function handleGetClientesChamados() {
     setAtualizacaoSecao(prevAtt => ({ ...prevAtt, clientes: true, chamados: true }));
-    
+
     obterClientes()
-    .catch(e => handleErrors(e))
-    .then((listClientes: any) => {
-      const itensClientes: ICliente[] = listClientes.data.value;
-      setClientes(itensClientes);
-      setChamados([]);
-      setAtualizacaoSecao(prevAtt => ({ ...prevAtt, clientes: false}));
-        for (let cliente of itensClientes.splice(0, 10)) {
-          obterChamados(cliente)
-            .catch(e => handleErrors(e))
-            .then((listChamados: any) => {
+      .catch(e => handleErrors(e))
+      .finally(() => setAtualizacaoSecao(prevAtt => ({ ...prevAtt, clientes: false })))
+      .then((listClientes: any) => {
 
-              // Adicionando propriedades adicionais ao chamado
-              const itensChamados: IChamado[] = listChamados.data.value.map((item: IChamado) => ({
-                ...item,
-                Cliente: cliente,
-                diasCorridosSemAtualizar: DateTime.now().diff(DateTime.fromISO(item.Modified), 'days').days.toFixed(1),
-                diasUteisSemAtualizar: diffBusinessDays(DateTime.fromISO(item.Modified), DateTime.now(), feriados?.Datas).toFixed(1)
-              }))
+        const itensClientes: ICliente[] = listClientes.data.value.slice(0, 5);
+        const batchClientes = itensClientes.map((cliente: ICliente) => obterChamados(cliente));
+        setClientes(itensClientes);
 
-              setChamados((prevChamados: any) => [...prevChamados, ...itensChamados]);
-            })
-        }
-        setAtualizacaoSecao(prevAtt => ({ ...prevAtt, chamados: false }));
-      });
 
+        // Promise.all para obter todos os chamados de uma vez
+        Promise.all(batchClientes)
+          .catch(e => handleErrors(e))
+          .finally(() => setAtualizacaoSecao(prevAtt => ({ ...prevAtt, chamados: false })))
+          .then((batchChamados: any) => {
+            setChamados([]);
+
+            const itemsChamados: IChamado[] = [].concat.apply(
+              [], batchChamados.map((listChamados: IChamado[]) =>
+                listChamados.map((chamado: IChamado) =>
+                ({
+                  ...chamado,
+                  diasCorridosSemAtualizar: DateTime.now().diff(DateTime.fromISO(chamado.Modified), 'days').days.toFixed(1),
+                  diasUteisSemAtualizar: diffBusinessDays(DateTime.fromISO(chamado.Modified), DateTime.now(), feriados?.Datas).toFixed(1)
+
+                }))
+              )
+            );
+            setChamados(itemsChamados)
+          })
+      })
   }
 
   /**
@@ -109,14 +112,22 @@ function App() {
    * Essa array é usada para mostrar os erros que as requisições deram para o usuário.
    * 
    * @param e Objeto de erros obtidas do catch da função da requisição.
+   * @returns void
    */
   function handleErrors(e: any) {
-    e.id = uuidv4();
-    setErros(prevErros => prevErros.length === 0 ? e : [e, ...prevErros]);
+    setErros(prevErros => prevErros.length === 0 ? e : [{...e, id: uuidv4()}, ...prevErros]);
+  }
+
+  function handleSelecionarChamado(chamado: IChamado) {
+    setChamadoSelecionado(chamado);
+    setAppTab('tabFormChamado');
   }
 
   // Executado na primeira abertura da aplicação.
-  useEffect(() => { handleGetClientesChamados(); handleGetFeriados(); }, [])
+  useEffect(() => {
+    handleGetClientesChamados();
+    handleGetFeriados();
+  }, [])
 
   return (
     <>
@@ -155,9 +166,10 @@ function App() {
         </MDBTabsPane>
         <MDBTabsPane className='container mt-4' show={appTab === 'tabDashboard'}>
           <Dashboard
-          setChamadoSelecionado={setChamadoSelecionado}
             clientes={clientes}
-            chamados={chamados} />
+            chamados={chamados}
+            handleSelecionarChamado={handleSelecionarChamado}
+            />
         </MDBTabsPane>
 
         <MDBTabsPane className='container mt-4' show={appTab === 'tabClientes'}>

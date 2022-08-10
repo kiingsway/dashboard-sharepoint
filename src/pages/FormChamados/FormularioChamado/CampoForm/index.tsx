@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faQuestion, faFont, faUser, faSquareCheck, faAlignJustify, IconDefinition, fa1 } from '@fortawesome/free-solid-svg-icons'
+import {v4 as uuidv4} from 'uuid'
 
 interface Props {
   campo: any
@@ -69,7 +70,7 @@ export default function CampoForm(props: Props) {
 
       <div className="col-sm-10">
         {html}
-        <div id={`${htmlId}Help`} className="form-text">
+        <div id={uuidv4()} className="form-text">
           {props.campo?.Description}
         </div>
       </div>

@@ -1,4 +1,4 @@
-import { ICliente } from "interfaces";
+import { IChamado, ICliente } from "interfaces";
 import { GetListItem, GetListItems } from 'services/SPRequest1'
 import URIs from 'services/uris.json'
 import { DateTime } from 'luxon'
@@ -35,7 +35,7 @@ export function obterClientes() {
   return GetListItems(rest)
 }
 
-export function obterChamados(cliente: ICliente) {
+export async function obterChamados(cliente: ICliente) {
 
   const rest = {
     site: URIs.PClientes + '/' + cliente.InternalNameSubsite,
@@ -52,7 +52,9 @@ export function obterChamados(cliente: ICliente) {
     top: 5000
   }
 
-  return GetListItems(rest)
+  return (await GetListItems(rest)).data.value.map((chamado:IChamado) => (
+    { ...chamado, Cliente: cliente }
+  ))
 }
 
 export function obterCampos(cliente: ICliente) {

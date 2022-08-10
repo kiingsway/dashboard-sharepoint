@@ -21,7 +21,7 @@ interface Props {
 }
 
 const tempoAtualizacao: number = 15 * 60 // Tempo (segundos) para atualização dos clientes e chamados.
-const tempoHabilitarAtualizar: number = 3 // Tempo (segundos) para remover o disabled do botão para evitar muitas requisições feitas pelo usuário.
+const tempoHabilitarAtualizar: number = 15 // Tempo (segundos) para remover o disabled do botão para evitar muitas requisições feitas pelo usuário.
 
 export default function HeaderApp(props: Props) {
 
@@ -73,31 +73,28 @@ export default function HeaderApp(props: Props) {
           <MDBNavbarNav className='mr-auto mb-2 mb-lg-0'>
 
             <MDBNavbarItem>
-              <MDBNavbarLink active aria-current='page' href='#'>
-                <MDBTabsItem>
-                  <MDBTabsLink onClick={() => handleSetAppTab('tabFormChamado')} active={props.appTab === 'tabFormChamado'}>
-                    <MDBBtn outline={props.appTab !== 'tabFormChamado'} className='mx-0 border-0' color='light'>
+              <MDBBtn
+                outline={props.appTab !== 'tabFormChamado'}
+                className='mx-0 border-0'
+                color='light'
+                onClick={() => handleSetAppTab('tabFormChamado')}>
 
-                      <FontAwesomeIcon icon={props.chamadoSelecionado.Id !== 0 ? faEdit : faPlus} className='me-2' />
-                      {props.chamadoSelecionado.Id !== 0 ? 'Editar chamado***' : 'Novo chamado***'}
-                      <br />
-                      {
-                        props.chamadoSelecionado.Id !== 0 ?
-                          <>
-                            <MDBBadge
-                              color='dark'
-                              className='ms-2'
-                              style={{ textTransform: "initial" }}>
-                              {`#${props.chamadoSelecionado.Id} | ${props.chamadoSelecionado.Cliente?.Title}`}
-                            </MDBBadge>
-                          </>
-                          : <></>
-                      }
-
-                    </MDBBtn>
-                  </MDBTabsLink>
-                </MDBTabsItem>
-              </MDBNavbarLink>
+                <FontAwesomeIcon icon={props.chamadoSelecionado.Id !== 0 ? faEdit : faPlus} className='me-2' />
+                {
+                  props.chamadoSelecionado.Id !== 0 ?
+                  <>
+                  Editar chamado***
+                  <br />
+                      <MDBBadge
+                        color='dark'
+                        className='ms-2'
+                        style={{ textTransform: "initial" }}>
+                        {`#${props.chamadoSelecionado.Id} | ${props.chamadoSelecionado.Cliente?.Title}`}
+                      </MDBBadge>
+                    </>
+                    : <>Novo chamado***</>
+                }
+              </MDBBtn>
             </MDBNavbarItem>
 
             <MDBNavbarItem>

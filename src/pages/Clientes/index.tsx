@@ -18,7 +18,7 @@ interface Props {
 export default function Clientes(props: Props) {
 
   return (
-    <MDBContainer breakpoint="sm">
+    <MDBContainer breakpoint="md">
     <MDBRow className='row-cols-1 row-cols-md-3 row-cols-lg-3 row-cols-xl-4 g-4'>
       {props.clientes.map((cliente: any) => (
 

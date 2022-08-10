@@ -1,4 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import { faCircle, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { IChamado, TAppTabs } from 'interfaces';
+import './ModalChamados.module.scss'
 import {
   MDBBtn,
   MDBModal,
@@ -11,17 +14,14 @@ import {
   MDBTableBody,
   MDBTableHead,
 } from 'mdb-react-ui-kit';
-import { faCircle, faListUl, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { IChamado } from 'interfaces';
 
 interface Props {
   toggleModalChamados: any
   modalChamados: any
   setModalChamados: any
   chamadosFiltrados: Array<any>
-  handleSelecionarChamado: any
   tileSelecionada: any
+  handleSelecionarChamadoViaModal: (chamado: IChamado) => void
 }
 
 export default function ModalChamados(props: Props) {
@@ -60,8 +60,12 @@ export default function ModalChamados(props: Props) {
           <MDBTableBody>
             {props.tileSelecionada?.Values?.map((chamado: IChamado) => (
               <tr key={`${chamado.Id}#${chamado.Cliente?.Title}`}>
-                <td width={'70px'}>
-                  <MDBBtn title={`Editar chamado #${chamado.Id} da ${chamado.Cliente.Title}`} onClick={()=> props.handleSelecionarChamado(chamado)} color='secondary'>
+                <td>
+                  <MDBBtn
+                  size='sm'
+                  title={`Editar chamado #${chamado.Id} da ${chamado.Cliente.Title}`}
+                  onClick={()=> props.handleSelecionarChamadoViaModal(chamado)}
+                  color='secondary'>
                     <FontAwesomeIcon icon={faPenToSquare} />
                   </MDBBtn>
                 </td>
