@@ -4,7 +4,6 @@ import {
   MDBCard,
   MDBCardImage,
   MDBCardBody,
-  MDBCardText,
   MDBRow,
   MDBCol,
   MDBContainer
@@ -23,7 +22,7 @@ export default function Clientes(props: Props) {
       {props.clientes.map((cliente: any) => (
 
       <MDBCol key={cliente.Id}>
-        <MDBCard className='h-100'>
+        <MDBCard className='h-100 hover-shadow'>
           <MDBCardImage
             src={cliente?.logo?.Url}
             position='top'
@@ -34,9 +33,7 @@ export default function Clientes(props: Props) {
             <span className='fs-3' >{cliente.Title}</span>
           </div>
           <MDBCardBody className='text-center'>
-            <MDBCardText>
               <LinkCliente cliente={cliente} />
-            </MDBCardText>
           </MDBCardBody>
         </MDBCard>
       </MDBCol>

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import moment from 'moment'
-import { MDBRow, MDBCol, MDBCard, MDBCardBody, MDBCardTitle, MDBCardText, MDBCardSubTitle, MDBProgress, MDBProgressBar, MDBContainer, MDBBtn, MDBInput, MDBCardGroup } from 'mdb-react-ui-kit';
+import { MDBRow, MDBCol, MDBCard, MDBCardBody, MDBCardTitle, MDBCardText, MDBCardSubTitle, MDBProgress, MDBProgressBar, MDBContainer, MDBBtn, MDBCardGroup } from 'mdb-react-ui-kit';
 import classNames from 'classnames';
 import Grafico from './Grafico';
 import { faAsterisk, faCalendarDay, faCalendarDays, faCalendarWeek, faCircle, faHeartCrack, faListCheck, faListUl, faUserSlash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ModalChamados from './ModalChamados';
-import { IChamado, IChamadoSelecionado, ICliente, IFiltrosChamados, ITileObject, TAppTabs } from 'interfaces'
+import { IChamado, ICliente, IFiltrosChamados, ITileObject } from 'interfaces'
 import { sortNumberDesc } from 'services/FunctionHelpers'
 import { faBuilding } from '@fortawesome/free-regular-svg-icons';
 
@@ -141,7 +141,13 @@ export default function Dashboard(props: Props) {
                   {tile.Count}
                 </MDBCardText>
                 <MDBProgress height='18' className={tile.Count > 0 && tile.Progress ? '' : 'invisible'}>
-                  <MDBProgressBar className='dashprogress ps-2 pe-2' width={(tile.Count / tile.Total) * 100} valuemin={0} valuemax={tile.Total} >
+                  <MDBProgressBar
+                    className='dashprogress ps-2 pe-2'
+                    width={(tile.Count / tile.Total) * 100 || 0}
+                    valuemin={0}
+                    valuemax={tile.Total}
+                    title={`${tile.Count} ${tile.Title.toLowerCase()} de um total de ${tile.Total} (${Math.floor((tile.Count / tile.Total) * 100) || 0}%)`}
+                  >
                     {Math.floor((tile.Count / tile.Total) * 100)}% ({tile.Count}/{tile.Total})
                   </MDBProgressBar>
                 </MDBProgress>

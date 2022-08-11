@@ -1,6 +1,6 @@
 import { faBug, faClose } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { MDBNavbar, MDBBtn, MDBModal, MDBModalBody, MDBModalContent, MDBModalDialog, MDBModalFooter, MDBModalHeader, MDBModalTitle, MDBInputGroup, MDBBadge, MDBTextArea, MDBInput } from 'mdb-react-ui-kit'
+import { MDBNavbar, MDBBtn, MDBModal, MDBModalBody, MDBModalContent, MDBModalDialog, MDBModalFooter, MDBModalHeader, MDBModalTitle, MDBTextArea, MDBInput } from 'mdb-react-ui-kit'
 import React, { useState } from 'react'
 
 interface Props {
@@ -78,7 +78,7 @@ export default function HeaderErrors(props: Props) {
         <MDBModalContent>
           <MDBModalHeader>
             <MDBModalTitle>{erroSelecionado?.message}</MDBModalTitle>
-            <MDBBtn className='btn-close' color='none' onClick={toggleModalErro}></MDBBtn>
+            <MDBBtn className='btn-close' color='none' onClick={toggleModalErro} title='Fechar janela'></MDBBtn>
           </MDBModalHeader>
           <MDBModalBody>
                       

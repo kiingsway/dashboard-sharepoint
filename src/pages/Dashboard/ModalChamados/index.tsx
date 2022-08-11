@@ -1,6 +1,6 @@
 import { faCircle, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { IChamado, TAppTabs } from 'interfaces';
+import { IChamado, ITileObject } from 'interfaces';
 import './ModalChamados.module.scss'
 import {
   MDBBtn,
@@ -16,12 +16,12 @@ import {
 } from 'mdb-react-ui-kit';
 
 interface Props {
-  toggleModalChamados: any
-  modalChamados: any
-  setModalChamados: any
-  chamadosFiltrados: Array<any>
-  tileSelecionada: any
-  handleSelecionarChamadoViaModal: (chamado: IChamado) => void
+  modalChamados: boolean;
+  chamadosFiltrados: Array<any>;
+  tileSelecionada: ITileObject | undefined;
+  toggleModalChamados: (tile: ITileObject) => void;
+  setModalChamados: React.Dispatch<React.SetStateAction<boolean>>;
+  handleSelecionarChamadoViaModal: any
 }
 
 export default function ModalChamados(props: Props) {
@@ -58,12 +58,12 @@ export default function ModalChamados(props: Props) {
             </tr>
           </MDBTableHead>
           <MDBTableBody>
-            {props.tileSelecionada?.Values?.map((chamado: IChamado) => (
+            {props.tileSelecionada?.Values?.map((chamado: IChamado | Partial<IChamado>) => (
               <tr key={`${chamado.Id}#${chamado.Cliente?.Title}`}>
                 <td>
                   <MDBBtn
                   size='sm'
-                  title={`Editar chamado #${chamado.Id} da ${chamado.Cliente.Title}`}
+                  title={`Editar chamado #${chamado.Id} da ${chamado?.Cliente?.Title}`}
                   onClick={()=> props.handleSelecionarChamadoViaModal(chamado)}
                   color='secondary'>
                     <FontAwesomeIcon icon={faPenToSquare} />
@@ -92,7 +92,7 @@ export default function ModalChamados(props: Props) {
               <FontAwesomeIcon icon={props.tileSelecionada?.Icon || faCircle} className='me-2' />
               {props.tileSelecionada?.Title}
             </MDBModalTitle>
-            <MDBBtn className='btn-close' color='none' onClick={() => props.setModalChamados(!props.modalChamados)}></MDBBtn>
+            <MDBBtn title='Fechar janela' className='btn-close' color='none' onClick={() => props.setModalChamados(!props.modalChamados)}></MDBBtn>
           </MDBModalHeader>
           <MDBModalBody>
             {tabelaModal()}

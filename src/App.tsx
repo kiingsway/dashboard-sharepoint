@@ -7,7 +7,7 @@ import FormChamados from './pages/FormChamados';
 import HeaderErrors from 'components/HeaderErrors';
 import HeaderApp from 'components/HeaderApp';
 import { obterClientes, obterChamados, obterFeriados } from 'services/GetDashboardHelper'
-import { IChamado, ICliente, IChamadoSelecionado, TAppTabs, IFeriado, IAtualizacaoSecao } from 'interfaces'
+import { IChamado, ICliente, IChamadoSelecionado, TAppTabs, ILocalStorageFeriado, IAtualizacaoSecao } from 'interfaces'
 import { diffBusinessDays } from 'services/FunctionHelpers';
 
 import 'mdb-react-ui-kit/dist/css/mdb.min.css'
@@ -21,7 +21,7 @@ function App() {
   const [chamados, setChamados] = useState<IChamado[]>([]);
   const [clientes, setClientes] = useState<ICliente[]>([]);
   const [chamadoSelecionado, setChamadoSelecionado] = useState<IChamadoSelecionado>({ Id: 0 })
-  const [feriados, setFeriados] = useState<IFeriado>({});
+  const [feriados, setFeriados] = useState<ILocalStorageFeriado>({});
   const [appTab, setAppTab] = useState<TAppTabs>('tabChamados');
   const [erros, setErros] = useState([]);
   const [atualizacaoSecao, setAtualizacaoSecao] = useState<IAtualizacaoSecao>({ clientes: false, chamados: false, campos: false });
@@ -85,7 +85,7 @@ function App() {
   function handleGetFeriados() {
 
     // Feriados: Obtendo a informação do Local Storage.
-    const lsFeriados: IFeriado = JSON.parse(localStorage.getItem('dashboard.feriados') || '{}')
+    const lsFeriados: ILocalStorageFeriado = JSON.parse(localStorage.getItem('dashboard.feriados') || '{}')
     const hoje = DateTime.now().toISODate();
 
     // Caso Local Storage esteja atualizado (DataRequisicao === hoje) ou
@@ -99,7 +99,7 @@ function App() {
       // Transformando o objeto retornado em apenas uma array de strings com as datas dos feriados.
       const datasFeriados: string[] = listferiados.data.value.map((item: any) => DateTime.fromISO(item.Data).toISODate());
 
-      const feriadosData: IFeriado = { DataRequisicao: hoje, Datas: datasFeriados };
+      const feriadosData: ILocalStorageFeriado = { DataRequisicao: hoje, Datas: datasFeriados };
 
       localStorage.setItem('dashboard.feriados', JSON.stringify(feriadosData));
       setFeriados(feriadosData);
@@ -160,7 +160,7 @@ function App() {
           <Chamados
             clientes={clientes}
             chamados={chamados}
-            feriados={feriados}
+            feriados={feriados.Datas}
             setChamadoSelecionado={setChamadoSelecionado}
           />
         </MDBTabsPane>

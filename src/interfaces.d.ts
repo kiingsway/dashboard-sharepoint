@@ -44,10 +44,12 @@ export interface ICliente {
   InternalNameSubsiteList: string;
 }
 
-export interface IFeriado {
+export interface ILocalStorageFeriado {
   DataRequisicao?: string;
   Datas?: string[];
 }
+
+type IFeriados = string[];
 
 export interface IAtualizacaoSecao {
   clientes: boolean;
