@@ -4,25 +4,31 @@ Projeto criado via React.
 
 Obtém itens de uma lista do Sharepoint em vários sites. Esses sites são definidos em outra lista única.
 
+<hr>
+
 ## Tarefas
 
-|Tarefa           |
-|-----------------|
-|Navegação        |
-|Aba: Form Chamado|
-|Aba: Chamados    |
-|Aba: Dashboard   |
-|Aba: Clientes    |
+<style> li {list-style: none;} ul {padding:0} </style>
 
-### Implementações futuras (análise pós conclusão do projeto):
+|Tarefa           |Status                         |Tarefas                            |
+|-----------------|-------------------------------|-----------------------------------|
+|Navegação        |⏳ Aguardando conclusão de **cada aba**...  |<ul><li>[ ] Remover "astersico" de Form Chamado</li><li>[ ] Remover "astersico" de Chamados</li><li>[x] Remover "astersico" de Dashboard</li><li>[x] Remover "astersico" de Clientes</li><li>[x] Remover "astersico" de Atualizar</li></ul>
+|Aba: Form Chamado|⏳ Aguardando conclusão de **Chamados**...|<ul><li>[ ] Desenvolver...</li><ul>
+|Aba: Chamados    |👨‍💻 *Desenvolvendo*...|<ul><li>[ ] Tabela de chamados</li><li>[ ] Filtros</li><li>[ ] Classificação</li><li>[ ] setChamadoSelecionado(chamado)</li></ul>|
+|Aba: Dashboard   |✅ Concluído
+|Aba: Clientes    |✅ Concluído
 
-|Tarefa           |Status|
-|-----------------|-|
-|Navegação        |<ul><li>[x] item1</li><li>[ ] item2</li></ul>|
-|Aba: Form Chamado|<ul><li>[ ] XX</li></ul>|
-|Aba: Chamados    |<ul><li>[ ] XX</li></ul>|
-|Aba: Dashboard   |<ul><li>[ ] XX</li></ul>|
-|Aba: Clientes    |<ul><li>[ ] XX</li></ul>|
+<hr>
+
+## Implementações futuras (análise pós conclusão do projeto):
+
+|Tarefa           |Status                         |Tarefas                            |
+|-----------------|-------------------------------|-----------------------------------|
+|Navegação        |⏳ Aguardando *conclusão do projeto*...|[ ] Apenas ícones quando tela menor|
+|Aba: Form Chamado|⏳ Aguardando *conclusão do projeto*...|                                   |
+|Aba: Chamados    |⏳ Aguardando *conclusão do projeto*...|[ ] Destacar usuário logado        |
+|Aba: Dashboard   |⏳ Aguardando *conclusão do projeto*...|[ ] Destacar usuário logado        |
+|Aba: Clientes    |⏳ Aguardando *conclusão do projeto*...|                                   |
 
 # Getting Started with Create React App
 
