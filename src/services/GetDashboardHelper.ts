@@ -40,7 +40,7 @@ export async function obterChamados(cliente: ICliente) {
   const rest = {
     site: URIs.PClientes + '/' + cliente.InternalNameSubsite,
     list: cliente.InternalNameSubsiteList,
-    select: `Id,Title,Atribuida/Id,Atribuida/Title,Atribuida/EMail,DescricaoDemanda,StatusDaQuestao,Modified,Comentarios,Created`,
+    select: `Id,Title,Atribuida/Id,Atribuida/Title,Atribuida/EMail,DescricaoDemanda,StatusDaQuestao,Modified,Comentarios,Created,Attachments,BugEmProducao,EmailCliente,TipoSolicitacao,Urg_x00ea_ncia`,
     expand: 'Atribuida',
     filter: `StatusDaQuestao ne 'Resolvida' and
     StatusDaQuestao ne 'Fechada' and

@@ -11,7 +11,7 @@ export function GetListItems(rest: IListItems) {
             `?$select=${rest.select || ''}` +
             `&$expand=${rest.expand || ''}` +
             `&$filter=${rest.filter || ''}` +
-            `&$top=${rest.top ? rest.top : 100}` +
+            `&$top=${rest.top || 100}` +
             `&$orderBy=${rest.orderBy || ''}`,
         Headers: rest.headers ? rest.headers : { Accept: "application/json;odata=nometadata" }
     }

@@ -1,6 +1,10 @@
+import classNames from 'classnames'
 import { IChamado, ICliente, IChamadoSelecionado, IFeriados } from 'interfaces'
+import { DateTime } from 'luxon'
 import { MDBTable } from 'mdb-react-ui-kit'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import './Chamados.module.scss'
+import Filtros from './Filtros'
 
 interface Props {
   clientes: ICliente[]
@@ -9,39 +13,74 @@ interface Props {
   setChamadoSelecionado: React.Dispatch<React.SetStateAction<IChamadoSelecionado>>
 }
 
+const filtrosDefault = {
+  Cliente: [],
+  Status: [],
+  Atribuicao: [],
+  Modificado: {
+    De: null,
+    Até: DateTime.now().endOf('day')
+  }
+}
+
+const colunasTabelaDefault = {
+  Id: true,
+  Cliente: true,
+  Title: true,
+  StatusDaQuestao: true,
+  Atribuida: true,
+  DescricaoDemanda: true,
+  Modified: true
+}
+
 export default function Chamados(props: Props) {
+
+  const [chamadosFiltrados, setChamadosFiltrados] = useState<IChamado[]>(props.chamados);
+  const [filtros, setFiltros] = useState(filtrosDefault);
+  const [colunasTabela, setColunasTabela] = useState(colunasTabelaDefault);
+
+  useEffect(() => setChamadosFiltrados(props.chamados), [props.chamados])
 
   function tabela() {
     return (
       <>
         <colgroup>
-          <col style={{ width: '6%' }} />
-          <col style={{ width: '20%' }} />
-          <col style={{ width: '30%' }} />
-          <col style={{ width: '20%' }} />
-          <col style={{ width: '10%' }} />
-          <col style={{ width: '4%' }} />
+          <col className='colId' />
+          <col className='colCliente' />
+          <col className='colTitle' />
+          <col className='colStatusDaQuestao' />
+          <col className='colAtribuida' />
+          <col className='colDescricaoDemanda hideFullColumn' />
+          <col className='colModified' />
         </colgroup>
         <thead>
           <tr>
-            <th>Nunc commodo facilisis rutrum</th>
-            <th>Nunc commodo facilisis rutrum</th>
-            <th>Nunc commodo facilisis rutrum</th>
-            <th>Nunc commodo facilisis rutrum</th>
-            <th>Nunc commodo facilisis rutrum</th>
-            <th>Nunc commodo facilisis rutrum</th>
+            <th className={classNames({'d-none': !colunasTabela.Id})}>Id</th>
+            <th>Cliente</th>
+            <th>Title</th>
+            <th>StatusDaQuestao</th>
+            <th>Atribuida</th>
+            <th>DescricaoDemanda</th>
+            <th>Modified</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-
-            <td>Nunc commodo facilisis rutrum</td>
-            <td>Nunc commodo facilisis rutrum</td>
-            <td>Nunc commodo facilisis rutrum</td>
-            <td>Nunc commodo facilisis rutrum</td>
-            <td>Nunc commodo facilisis rutrum</td>
-            <td>Nunc commodo facilisis rutrum</td>
-          </tr>
+          {console.log(chamadosFiltrados)}
+          {chamadosFiltrados.map((chamado: IChamado) => (
+            <tr>
+              <td className={classNames({'d-none': !colunasTabela.Id})}>{chamado.Id}</td>
+              <td>{chamado.Cliente.Title}</td>
+              <td>{chamado.Title}</td>
+              <td>{chamado.StatusDaQuestao}</td>
+              <td>{chamado.Atribuida?.Title}</td>
+              <td dangerouslySetInnerHTML={{
+                  __html: `
+                <div style="max-height:230px;max-width:400px;overflow-y:auto;color:white !important;word-break: break-word;">
+                  <span id="DescricaoDemanda">${chamado?.DescricaoDemanda?.replace(/color:#000000;/g, '').replace(/color&#58;#000000;/g, '')}</span>
+                </div>` }}></td>
+              <td>{chamado.Modified}</td>
+            </tr>
+          ))}
 
         </tbody>
       </>
@@ -50,20 +89,16 @@ export default function Chamados(props: Props) {
 
 
   return (
-    <>
-      <div>
+    <div className='d-flex justify-content-between'>
+      <div className='w-25'>
+        <Filtros/>
       </div>
-      <div>
+      <div className='w-75'>
         <div className='bg-light'>
-          <MDBTable hover responsive>{tabela()}</MDBTable>
-          <MDBTable hover responsive="sm">{tabela()}</MDBTable>
-          <MDBTable hover responsive="md">{tabela()}</MDBTable>
-          <MDBTable hover responsive="lg">{tabela()}</MDBTable>
-          <MDBTable hover responsive="xl">{tabela()}</MDBTable>
-          <MDBTable hover responsive="xxl">{tabela()}</MDBTable>
+          <MDBTable color='dark' hover responsive>{tabela()}</MDBTable>
         </div>
 
       </div>
-    </>
+    </div>
   )
 }

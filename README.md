@@ -1,3 +1,29 @@
+# Dashboard 2022 Sharepoint
+
+Projeto criado via React.
+
+Obtém itens de uma lista do Sharepoint em vários sites. Esses sites são definidos em outra lista única.
+
+## Tarefas
+
+|Tarefa           |
+|-----------------|
+|Navegação        |
+|Aba: Form Chamado|
+|Aba: Chamados    |
+|Aba: Dashboard   |
+|Aba: Clientes    |
+
+### Implementações futuras (análise pós conclusão do projeto):
+
+|Tarefa           |Status|
+|-----------------|-|
+|Navegação        |<ul><li>[x] item1</li><li>[ ] item2</li></ul>|
+|Aba: Form Chamado|<ul><li>[ ] XX</li></ul>|
+|Aba: Chamados    |<ul><li>[ ] XX</li></ul>|
+|Aba: Dashboard   |<ul><li>[ ] XX</li></ul>|
+|Aba: Clientes    |<ul><li>[ ] XX</li></ul>|
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
