@@ -34,10 +34,10 @@ export function diffBusinessDays(dataAntes: DateTime, dataDepois: DateTime, feri
 
     // Caso a Data Atual for sábado, domingo ou a data conter nos feriados...
     if (dataAtual.weekday === 7 || dataAtual.weekday === 6 || feriados?.includes(dataAtual.toISODate())) {
-
+      
       // Caso a Data Atual seja Hoje,
       // diminui apenas a diferença entre hoje e meia noite de hoje. Se não, diminua 1
-      contSubtrairDias += dataAtual === hoje ? hoje.diff(hoje.startOf('day'), 'day').days : 1
+      contSubtrairDias += dataAtual.hasSame(hoje, 'day') ? hoje.diff(hoje.startOf('day'), 'day').days : 1
     }
     dataAtual = dataAtual.minus({ 'days': 1 })
     cont++;
