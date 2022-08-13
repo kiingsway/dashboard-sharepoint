@@ -1,6 +1,5 @@
 
 import { MDBAccordion, MDBAccordionItem, MDBCheckbox } from 'mdb-react-ui-kit';
-import React from 'react'
 
 interface Props {
   setColunasTabela: any
@@ -8,10 +7,30 @@ interface Props {
 
 }
 
+/** Define quais colunas (nome interno) estarão desabilitadas para remover da tabela de chamados.
+ * Insira-as em minúsculo para comparação em toLowerCase().*/
+const colunasPerpetuas: string[] = ['id'];
+
 export default function Filtros(props: Props) {
 
   function handleToggleColumn(column: any) {
     props.setColunasTabela((prevColumns: any) => ({...prevColumns, [column]: {...prevColumns[column], Show: !prevColumns[column]['Show']}}))
+  }
+
+  function handleToggleAllColumns(e:any) {
+
+    for (let col in props.colunasTabela) {
+
+      if (colunasPerpetuas.includes(col.toLowerCase())) continue;
+      
+      props.setColunasTabela((prevCols: any) => ({
+          ...prevCols,
+          [col]: {
+            ...prevCols[col],
+            Show: e.target.checked
+          }
+      }))
+    }
   }
 
   let columns = [];
@@ -19,8 +38,15 @@ export default function Filtros(props: Props) {
 
   return (
     <>
-      <MDBAccordion className='me-2'>
+      <MDBAccordion>
         <MDBAccordionItem collapseId={1} headerTitle='Mostrar/Esconder colunas'>
+          <MDBCheckbox
+            name='toggleAllColumns'
+            id='chbToggleAllColumns'
+            onChange={handleToggleAllColumns}
+            label='Mostrar/Esconder todas'
+          />
+          <hr />
           {columns.map(column => (
             <MDBCheckbox
               key={column}
@@ -29,7 +55,7 @@ export default function Filtros(props: Props) {
               onChange={() => handleToggleColumn(column)}
               label={props.colunasTabela[column]['Title']}
               checked={props.colunasTabela[column]['Show']}
-              disabled={column.toLowerCase() === 'id'}
+              disabled={colunasPerpetuas.includes(column.toLowerCase())}
               />
           ))}
         </MDBAccordionItem>
