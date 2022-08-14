@@ -36,7 +36,7 @@ export default function HeaderApp(props: Props) {
 
   return (
     <>
-    <MDBNavbar expand='lg' sticky dark bgColor='dark' className='navBarDash'>
+    <MDBNavbar expand='lg' sticky dark bgColor='dark' className='navBarDash shadow-lg'>
       <MDBContainer fluid>
         <MDBNavbarBrand className='navTitle'>Dashboard 22</MDBNavbarBrand>
 

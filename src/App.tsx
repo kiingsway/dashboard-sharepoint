@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import Chamados from './pages/Chamados';
+import Chamados from './pages/Chamados/index';
 import Clientes from './pages/Clientes';
 import Dashboard from './pages/Dashboard';
 import FormChamados from './pages/FormChamados';
@@ -156,7 +156,7 @@ function App() {
             setChamadoSelecionado={setChamadoSelecionado}
           /> */}
         </MDBTabsPane>
-        <MDBTabsPane className='container mt-4' show={appTab === 'tabChamados'}>
+        <MDBTabsPane className='container-fluid m-0 p-0' show={appTab === 'tabChamados'}>
           <Chamados
             clientes={clientes}
             chamados={chamados}
