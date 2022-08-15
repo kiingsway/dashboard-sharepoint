@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import Chamados from './pages/Chamados/index';
+import Chamados from './pages/Chamados';
 import Clientes from './pages/Clientes';
 import Dashboard from './pages/Dashboard';
 import FormChamados from './pages/FormChamados';
@@ -12,7 +12,7 @@ import { diffBusinessDays } from 'services/FunctionHelpers';
 
 import 'mdb-react-ui-kit/dist/css/mdb.min.css'
 import './App.css';
-import { MDBTabsContent, MDBTabsPane } from 'mdb-react-ui-kit';
+import { MDBBtn, MDBTabsContent, MDBTabsPane } from 'mdb-react-ui-kit';
 import { v4 as uuidv4 } from 'uuid';
 import { DateTime } from 'luxon';
 
@@ -43,7 +43,7 @@ function App() {
       .finally(() => setAtualizacaoSecao(prevAtt => ({ ...prevAtt, clientes: false })))
       .then((listClientes: any) => {
 
-        const itensClientes: ICliente[] = listClientes.data.value.slice(0, 5);
+        const itensClientes: ICliente[] = listClientes.data.value.slice(0, 5000);
         const batchClientes = itensClientes.map((cliente: ICliente) => obterChamados(cliente));
         setClientes(itensClientes);
 
@@ -115,7 +115,7 @@ function App() {
    * @returns void
    */
   function handleErrors(e: any) {
-    setErros(prevErros => prevErros.length === 0 ? e : [{...e, id: uuidv4()}, ...prevErros]);
+    setErros(prevErros => prevErros.length === 0 ? e : [{ ...e, id: uuidv4() }, ...prevErros]);
   }
 
   function handleSelecionarChamado(chamado: IChamado) {
@@ -149,6 +149,13 @@ function App() {
 
       <MDBTabsContent>
         <MDBTabsPane className='container mt-4' show={appTab === 'tabFormChamado'}>
+          <MDBBtn
+            color='danger'
+            className={chamadoSelecionado.Id === 0 ? 'd-none' : ''}
+            onClick={() => setChamadoSelecionado({ Id: 0 })}
+          >
+            Cancelar edição
+          </MDBBtn>
           {/* <FormChamados
             clientes={clientes}
             chamados={chamados}
@@ -161,6 +168,7 @@ function App() {
             clientes={clientes}
             chamados={chamados}
             feriados={feriados.Datas}
+            chamadoSelecionado={chamadoSelecionado}
             setChamadoSelecionado={setChamadoSelecionado}
           />
         </MDBTabsPane>
@@ -169,7 +177,7 @@ function App() {
             clientes={clientes}
             chamados={chamados}
             handleSelecionarChamado={handleSelecionarChamado}
-            />
+          />
         </MDBTabsPane>
 
         <MDBTabsPane className='container mt-4' show={appTab === 'tabClientes'}>
