@@ -90,8 +90,10 @@ function buttonID(chamado: any, handleChamadoSelecionado: any, chamadoSelecionad
   const uriChamado = `${URIs.PClientes}/${chamado.Cliente.InternalNameSubsite}/Lists/${chamado.Cliente.InternalNameSubsiteList}/DispForm.aspx?ID=${chamado.Id}`;
 
   return (
-    <MDBDropdown className='btn-group shadow-sm'>
+    <MDBDropdown className='btn-group shadow-sm w-100'>
       <MDBBtn
+        block
+        className='text-start'
         outline={!(chamado.Id === chamadoSelecionado.Id && chamado.Cliente.Id === chamadoSelecionado.Cliente?.Id)}
         color={geralApenasUmTrue.perigo ? 'danger' : (geralApenasUmTrue.atencao ? 'warning' : 'success')}
         style={{ borderWidth: '.125rem 0 .125rem .125rem', fontSize: '.75rem' }}
@@ -153,13 +155,13 @@ export default function Chamados(props: Props) {
       size='sm'
       outline
       className='border-0'
-      color='dark'
+      color='light'
       style={{ border: 0, textTransform: 'initial' }}
       btnChildren={(<div className='border-0'>{params.value?.Title}</div>)}
     >
-      <MDBPopoverHeader>{params.value?.Title}</MDBPopoverHeader>
+      <MDBPopoverHeader>{params.value?.Title} <span className='text-muted ms-2' style={{ fontSize: '10px', fontWeight: 500 }}> #{params.value.Id} </span></MDBPopoverHeader>
       <MDBPopoverBody className='d-flex flex-column justify-content-start p-2'>
-        <span className='text-muted' style={{ fontSize: '10px', fontWeight: 500 }}> #{params.value.Id} </span>
+        
         <span style={{ fontWeight: 600 }}> {params.value.EMail} </span>
         <div className='d-flex flex-row pt-2'>
 
@@ -198,7 +200,7 @@ export default function Chamados(props: Props) {
         </MDBBadge>
       </div>
       :
-      <span>{params?.value}</span>
+      <div className='w-100 text-center'><span>{params?.value}</span></div>
   }
 
   function domModified(params:any) {
@@ -211,15 +213,14 @@ export default function Chamados(props: Props) {
     const diasInt = Math.floor(params.value)
     const hrsInt = Math.floor((params.value - diasInt) * 24)
 
-    return <>{diasInt}d {hrsInt}hrs</>
-  }
+    return <div className={classNames({'text-danger': params.value >= 2.1}, {'text-warning': params.value < 2.1 && params.value >=1.5}, {'text-success': params.value < 1.5})}> {diasInt}d {hrsInt}hrs</div>  }
 
 
   const columns: GridColDef[] = [
     { field: 'Attachments', headerName: 'Anexos', width: 70, renderCell: (params: any) => <div className='text-center w-100'><FontAwesomeIcon icon={faPaperclip} className={classNames({ 'd-none': !params.value })} /></div> },
     { field: 'Id', headerName: 'ID', width: 120, renderCell: (params: any) => buttonID(params.row, props.setChamadoSelecionado, props.chamadoSelecionado) },
     { field: 'Cliente', headerName: 'Cliente', width: 120, renderCell: (params: any) => <span>{params.value.Title}</span> },
-    { field: 'Title', headerName: 'Título', width: 300 },
+    { field: 'Title', headerName: 'Título', width: 500 },
     { field: 'BugEmProducao', headerName: 'Bug em Produção?', width: 150, renderCell: (p: any) => domBug(p) },
     { field: 'StatusDaQuestao', headerName: 'Status', width: 200, renderCell: (params: any) => <span className={classNames({ 'text-warning': params.value === 'Aberto' })}>{params.value}</span> },
     { field: 'Atribuida', headerName: 'Atribuído', width: 200, renderCell: (p: any) => domAtribuicao(p) },
@@ -248,7 +249,18 @@ export default function Chamados(props: Props) {
         rows={chamadosTable}
         columns={columns}
         pageSize={100}
+        rowHeight={60}
         rowsPerPageOptions={[100]}
+        style={{
+          backgroundColor: '#333',
+          color: '#FFF',
+          border: '0',
+          fontFamily: '"Roboto", sans-serif !important'
+        }}
+        sx={{'& .MuiDataGrid-cell': {
+          border:0,
+          fontFamily: '"Roboto", sans-serif !important'
+        }}}
       />
     </div>
   );

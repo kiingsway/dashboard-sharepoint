@@ -149,19 +149,19 @@ function App() {
 
       <MDBTabsContent>
         <MDBTabsPane className='container mt-4' show={appTab === 'tabFormChamado'}>
-          <MDBBtn
+          {/* <MDBBtn
             color='danger'
             className={chamadoSelecionado.Id === 0 ? 'd-none' : ''}
             onClick={() => setChamadoSelecionado({ Id: 0 })}
           >
             Cancelar edição
-          </MDBBtn>
-          {/* <FormChamados
+          </MDBBtn> */}
+          <FormChamados
             clientes={clientes}
             chamados={chamados}
             chamadoSelecionado={chamadoSelecionado}
             setChamadoSelecionado={setChamadoSelecionado}
-          /> */}
+          />
         </MDBTabsPane>
         <MDBTabsPane className='container-fluid m-0 p-0' show={appTab === 'tabChamados'}>
           <Chamados

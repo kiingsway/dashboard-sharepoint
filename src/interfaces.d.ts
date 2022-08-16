@@ -42,7 +42,7 @@ export interface IChamadoSelecionado extends Partial<IChamado> { }
 
 export interface ICliente {
   Id: number;
-  ID: number;
+  ID?: number;
   Title: string;
   logo?: {
     Description: string;

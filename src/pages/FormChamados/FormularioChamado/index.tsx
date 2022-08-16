@@ -73,9 +73,8 @@ export default function FormularioChamado(props: Props) {
 
   }, [props.chamadoSelecionado])
 
-  if (props.chamadoSelecionado?.Id === 0) {
-    return <></>
-  } else return (
+  if (props.chamadoSelecionado?.Id === 0) return <></>
+  else return (
     <div className='container mt-4' style={{ maxWidth: "900px" }}>
       <div className="card">
         <div className="card-body w-100">
@@ -90,22 +89,22 @@ export default function FormularioChamado(props: Props) {
             </div>
 
             {camposChamado.map((campo: any) => {
-                return <><CampoForm
-                  key={campo.Id}
-                  campo={campo}
-                  chamadoSelecionado={props.chamadoSelecionado}
-                />
-                {campo.EntityPropertyName === 'Comentarios' ? 
+              return <><CampoForm
+                key={campo.Id}
+                campo={campo}
+                chamadoSelecionado={props.chamadoSelecionado}
+              />
+                {campo.EntityPropertyName === 'Comentarios' ?
 
-                    <div className="form-check text-right">
-                      <input className="form-check-input" type="checkbox" id="cbEnviarNomeHorario" name='additional.enviarNomeHorario' checked />
-                        <label className="form-check-label" htmlFor="cbEnviarNomeHorario">
-                          Enviar com nome e horário
-                        </label>
-                    </div>
-                    :
-                    ""}
-                </>
+                  <div className="form-check text-right">
+                    <input className="form-check-input" type="checkbox" id="cbEnviarNomeHorario" name='additional.enviarNomeHorario' checked />
+                    <label className="form-check-label" htmlFor="cbEnviarNomeHorario">
+                      Enviar com nome e horário
+                    </label>
+                  </div>
+                  :
+                  ""}
+              </>
             })}
 
             <div className="row mb-4 w-100">

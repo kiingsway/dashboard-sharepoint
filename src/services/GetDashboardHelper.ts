@@ -1,5 +1,5 @@
 import { IChamado, ICliente } from "interfaces";
-import { GetListItem, GetListItems } from 'services/SPRequest1'
+import { GetListFields, GetListItem, GetListItems } from 'services/SPRequest1'
 import URIs from 'services/uris.json'
 import { DateTime } from 'luxon'
 declare module 'luxon';
@@ -40,8 +40,8 @@ export async function obterChamados(cliente: ICliente) {
   const rest = {
     site: URIs.PClientes + '/' + cliente.InternalNameSubsite,
     list: cliente.InternalNameSubsiteList,
-    select: `Id,Title,Atribuida/Id,Atribuida/Title,Atribuida/EMail,DescricaoDemanda,StatusDaQuestao,Modified,Comentarios,Created,Attachments,BugEmProducao,EmailCliente,TipoSolicitacao,Urg_x00ea_ncia`,
-    expand: 'Atribuida',
+    select: `Id,Title,Atribuida/Id,Atribuida/Title,Atribuida/EMail,DescricaoDemanda,StatusDaQuestao,Modified,Comentarios,Created,Attachments,BugEmProducao,EmailCliente,TipoSolicitacao,Urg_x00ea_ncia,DataPendenteValidacao,AttachmentFiles/FileName,AttachmentFiles/ServerRelativePath`,
+    expand: 'Atribuida,AttachmentFiles',
     filter: `StatusDaQuestao ne 'Resolvida' and
     StatusDaQuestao ne 'Fechada' and
     StatusDaQuestao ne 'Fechado' and
@@ -57,9 +57,16 @@ export async function obterChamados(cliente: ICliente) {
   ))
 }
 
-export function obterCampos(cliente: ICliente) {
+export async function obterColunas(cliente: ICliente) {
 
-  return []
+  const rest = {
+    site: URIs.PClientes + '/' + cliente.InternalNameSubsite,
+    list: cliente.InternalNameSubsiteList,
+    filter: `Hidden eq false and ReadOnlyField eq false`,
+    top: 5000
+  }
+
+  return (await GetListFields(rest)).data.value;
 }
 
 export function criarChamado(cliente: ICliente) {
