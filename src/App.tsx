@@ -43,7 +43,7 @@ function App() {
       .finally(() => setAtualizacaoSecao(prevAtt => ({ ...prevAtt, clientes: false })))
       .then((listClientes: any) => {
 
-        const itensClientes: ICliente[] = listClientes.data.value.slice(0, 5000);
+        const itensClientes: ICliente[] = listClientes.data.value.slice(0, 5);
         const batchClientes = itensClientes.map((cliente: ICliente) => obterChamados(cliente));
         setClientes(itensClientes);
 
@@ -142,10 +142,10 @@ function App() {
         setAtualizacaoSecao={setAtualizacaoSecao}
       />
 
-      <HeaderErrors
+      {/* <HeaderErrors
         erros={erros}
         setErros={setErros}
-      />
+      /> */}
 
       <MDBTabsContent>
         <MDBTabsPane className='container mt-4' show={appTab === 'tabFormChamado'}>
@@ -164,13 +164,13 @@ function App() {
           />
         </MDBTabsPane>
         <MDBTabsPane className='container-fluid m-0 p-0' show={appTab === 'tabChamados'}>
-          <Chamados
+          {/* <Chamados
             clientes={clientes}
             chamados={chamados}
             feriados={feriados.Datas}
             chamadoSelecionado={chamadoSelecionado}
             setChamadoSelecionado={setChamadoSelecionado}
-          />
+          /> */}
         </MDBTabsPane>
         <MDBTabsPane className='container mt-4' show={appTab === 'tabDashboard'}>
           <Dashboard

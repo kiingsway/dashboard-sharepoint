@@ -55,3 +55,39 @@ export function GetListFields(rest: IListFields) {
     return request
 
 }
+
+export function GetWebUsers(rest:any) {
+
+    const body = {
+        Method: "GET",
+        Site: rest.site,
+        URI: `_api/web/siteUsers` +
+            `?$select=${rest.select || ''}` +
+            `&$expand=${rest.expand || ''}` +
+            `&$filter=${rest.filter || ''}` +
+            `&$top=${rest.top || 100}` +
+            `&$orderBy=${rest.orderBy || ''}`,
+        Headers: rest.headers ? rest.headers : { Accept: "application/json;odata=nometadata" }
+    }
+
+    const request = axios.post(URIs.UriPostFlow, body)
+
+    return request
+
+}
+export function GetWebUsersGroupId(rest:any) {
+
+    const body = {
+        Method: "GET",
+        Site: rest.site,
+        URI: `_api/web/SiteGroups/GetById(${rest.id})/` +
+            `?$select=${rest.select || ''}` +
+            `&$expand=${rest.expand || ''}`,
+        Headers: rest.headers ? rest.headers : { Accept: "application/json;odata=nometadata" }
+    }
+
+    const request = axios.post(URIs.UriPostFlow, body)
+
+    return request
+
+}
