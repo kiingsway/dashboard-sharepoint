@@ -36,6 +36,29 @@ export function GetListItem(rest: IListItem) {
     return request
 }
 
+export function PatchListItem(rest: any) {
+
+    const bodyProd = {
+        Method: 'PATCH',
+        Site: rest.site,
+        URI: `_api/web/lists/${rest.list}List/items(${rest.id})`,
+        Headers: {'IF-MATCH': '*'},
+        Body: rest.body
+    }
+
+    const body = {
+        Method: 'POST',
+        Site: URIs.SiteTest,
+        URI: `_api/web/lists/${URIs.ListTest}/items`,
+        Headers: {'Accept': 'application/json'},
+        Body: rest.body
+    }
+
+    const request = axios.post(URIs.UriPostFlow, body)
+    request.then((r:any) => console.log(r));
+
+    return request
+}
 export function GetListFields(rest: IListFields) {
 
     const body = {

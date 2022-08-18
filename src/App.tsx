@@ -42,8 +42,7 @@ function App() {
       .catch(e => handleErrors(e))
       .finally(() => setAtualizacaoSecao(prevAtt => ({ ...prevAtt, clientes: false })))
       .then((listClientes: any) => {
-
-        const itensClientes: ICliente[] = listClientes.data.value.slice(0, 5);
+        const itensClientes: ICliente[] = listClientes.data.value.slice(0, 10);
         const batchClientes = itensClientes.map((cliente: ICliente) => obterChamados(cliente));
         setClientes(itensClientes);
 

@@ -2,7 +2,7 @@ import { IChamado, IChamadoSelecionado, ICliente } from 'interfaces';
 import { MDBRow, MDBCol, MDBInput, MDBCheckbox, MDBBtn, MDBTextArea, MDBCard, MDBCardBody, MDBCardFooter, MDBCardHeader, MDBCardText, MDBCardTitle, MDBContainer } from 'mdb-react-ui-kit';
 import React, { Component, useEffect, useState } from 'react'
 import { criarItem, editarItem, obterCamposLista as obterCamposLista1 } from '../../services/SPRequest'
-import { obterClientes, obterChamados, obterFeriados, obterColunas, obterUsuarios } from 'services/GetDashboardHelper'
+import { obterClientes, obterChamados, obterFeriados, obterColunas, obterUsuarios, atualizarChamado } from 'services/GetDashboardHelper'
 import URIs from '../../services/uris.json'
 import classNames from 'classnames';
 import 'bootstrap'
@@ -126,15 +126,17 @@ export default function FormChamados(props: Props) {
   }, [camposChamado])
 
   function saveChamado(e: any) {
-    e.preventDefault();
+    e.preventDefault();    
 
-
-    let form: any = {};
+    let formData: any = {};
 
     for (let elm of e.target) {
-      form[elm.name] = elm.value
+      if (elm.tagName !== 'BUTTON' && elm.name !== 'Attachments') formData[elm.name] = elm.value
     }
-    console.log(form);
+    formData.AtribuidaId = formData?.AtribuidaId ? parseInt(formData?.AtribuidaId) : null;
+    console.log(formData);
+
+    atualizarChamado(props.chamadoSelecionado, formData);
 
   }
 
@@ -200,7 +202,7 @@ export default function FormChamados(props: Props) {
 
               <Col sm={12} md={6} lg={9}>
                 <div className="d-grid gap-2">
-                  <Button size='lg' variant='outline-danger' type="reset">
+                  <Button size='lg' variant='outline-danger' type="reset" id='btnCancelarEdicao'>
                     Cancelar edição
                   </Button>
                 </div>
@@ -208,7 +210,7 @@ export default function FormChamados(props: Props) {
 
               <Col sm={12} md={6} lg={3}>
                 <div className="d-grid gap-2">
-                  <Button size='lg' variant="success" type="submit">
+                  <Button size='lg' variant="success" type="submit" id='btnSalvarChamado'>
                     Salvar
                   </Button>
                 </div>
@@ -272,17 +274,6 @@ function fieldNote(campo: any, chamadoSelecionado: any) {
 
 function FieldUser(campo: any, chamadoSelecionado: any, clienteSelecionado: any) {
 
-  const userSelected = chamadoSelecionado[campo.EntityPropertyName]
-  const TitleEmail: string = chamadoSelecionado[campo.EntityPropertyName]?.Title + ' (' + chamadoSelecionado[campo.EntityPropertyName]?.EMail + ')';
-
-  // const fieldUsers = [{Id:0}];
-
-  // const [FieldUsers, setFieldUsers] = useState([])
-
-  const FieldUsers: any[] = [];
-
-  obterUsuarios(chamadoSelecionado.Cliente).then((usersItems: any) => { console.log(usersItems.data.value) })
-
   return (
     <Col sm={12} md={6} xxl={4} className='mb-4'>
       <FloatingLabel
@@ -295,34 +286,6 @@ function FieldUser(campo: any, chamadoSelecionado: any, clienteSelecionado: any)
           chamadoSelecionado={chamadoSelecionado}
         />
 
-
-        {/* <Form.Select
-          name={campo.EntityPropertyName + 'Id'}
-          aria-label={campo.Title}
-          value={chamadoSelecionado?.Id !== 0 ? userSelected?.Id : ''}
-          onChange={() => { }}
-        >
-          {campo?.Required ? <></> : <option value="">Selecione...</option>}
-
-          {obterUsuarios(chamadoSelecionado.Cliente)
-          .then(async (usersItems:any) => usersItems.data.value
-          .map(async (user:any) => (
-            <option value={user?.Id}>{user?.Title} ({user?.Email})</option>
-            )
-          ))}
-
-
-
-
-          {/* {FieldUsers?.filter((item:any) => item?.Id === userSelected?.Id).length >= 1 ? <></> : <option value={userSelected?.Id}>
-            {userSelected?.Title} ({chamadoSelecionado[campo.EntityPropertyName]?.EMail})
-          </option>}
-
-          {FieldUsers?.map((user: any) => {
-            return (
-              <option value={user?.Id}>{user?.Title} ({user?.Email})</option>
-            )
-          })} </Form.Select>*/}
       <div className='form-text'>{campo.Description}</div>
     </FloatingLabel>
 

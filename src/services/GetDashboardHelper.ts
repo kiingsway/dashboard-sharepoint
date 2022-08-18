@@ -1,5 +1,5 @@
 import { IChamado, ICliente } from "interfaces";
-import { GetListFields, GetListItem, GetListItems, GetWebUsers, GetWebUsersGroupId } from 'services/SPRequest1'
+import { GetListFields, GetListItem, GetListItems, GetWebUsers, GetWebUsersGroupId, PatchListItem } from 'services/SPRequest1'
 import URIs from 'services/uris.json'
 import { DateTime } from 'luxon'
 declare module 'luxon';
@@ -86,8 +86,17 @@ export function obterChamado(cliente: ICliente, chamadoId: number) {
   return GetListItem(rest)
 }
 
-export function atualizarChamado(cliente: ICliente, chamadoId: number) {
+export function atualizarChamado(chamadoSelecionado: Partial<IChamado>, body: Partial<IChamado>) {
 
+  
+  const rest = {
+    site: URIs.PClientes + '/' + chamadoSelecionado?.Cliente?.InternalNameSubsite,
+    list: chamadoSelecionado?.Cliente?.InternalNameSubsiteList,
+    id: chamadoSelecionado?.Id,
+    body: body
+  }
+  
+  return PatchListItem(rest)
 }
 
 export async function obterUsuarios(cliente: ICliente, groupId?: number | null) {
