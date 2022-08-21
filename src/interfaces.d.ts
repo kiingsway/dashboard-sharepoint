@@ -3,7 +3,8 @@ import { IconDefinition } from "@fortawesome/free-solid-svg-icons";
 export type TAppTabs = 'tabFormChamado' | 'tabChamados' | 'tabDashboard' | 'tabClientes';
 
 export interface IChamado {
-  Attachments: boolean;
+  Attachments: boolean | undefined;
+  AttachmentFiles?: IAttachmentsSharepoint[];
   BugEmProducao: string;
   TipoSolicitacao: string;
   EmailCliente: string;
@@ -21,21 +22,28 @@ export interface IChamado {
   Modified: string;
   Created: string;
   Cliente: {
-    ID: number;
+    ID?: number;
     Id: number;
     Title: string;
     ClienteInternalName: string;
     InternalNameSubsite: string;
     InternalNameSubsiteList: string;
-    logo?: HyperlinkSharepoint;
+    logo?: IHyperlinkSharepoint;
   }
   diasCorridosSemAtualizar: number;
   diasUteisSemAtualizar: number;
 }
 
-interface HyperlinkSharepoint {
+interface IHyperlinkSharepoint {
   Description: string;
   Url: string;
+}
+
+interface IAttachmentsSharepoint {
+  FileName: string;
+  ServerRelativePath: {
+    DecodeUrl: string
+  }
 }
 
 export interface IChamadoSelecionado extends Partial<IChamado> { }
@@ -63,7 +71,9 @@ type IFeriados = string[];
 export interface IAtualizacaoSecao {
   clientes: boolean;
   chamados: boolean;
-  campos: boolean;
+  slcChamados: boolean;
+  formChamados: boolean;
+
 }
 
 export interface IFiltrosChamados {
@@ -88,16 +98,24 @@ export interface ITileObject {
 
 interface IColTabelaChamados {
   Attachments: { Title: string; Show: boolean }
-  Id: { Title: string, Show: boolean}
-  Cliente: { Title: string, Show: boolean}
-  Title: { Title: string, Show: boolean}
-  BugEmProducao: { Title: string, Show: boolean}
-  StatusDaQuestao: { Title: string, Show: boolean}
-  Atribuida: { Title: string, Show: boolean}
-  TipoSolicitacao: { Title: string, Show: boolean}
-  DescricaoDemanda: { Title: string, Show: boolean}
-  EmailCliente: { Title: string, Show: boolean}
-  Modified: { Title: string, Show: boolean}
-  diasCorridosSemAtualizar: { Title: string, Show: boolean}
-  diasUteisSemAtualizar: { Title: string, Show: boolean}
+  Id: { Title: string, Show: boolean }
+  Cliente: { Title: string, Show: boolean }
+  Title: { Title: string, Show: boolean }
+  BugEmProducao: { Title: string, Show: boolean }
+  StatusDaQuestao: { Title: string, Show: boolean }
+  Atribuida: { Title: string, Show: boolean }
+  TipoSolicitacao: { Title: string, Show: boolean }
+  DescricaoDemanda: { Title: string, Show: boolean }
+  EmailCliente: { Title: string, Show: boolean }
+  Modified: { Title: string, Show: boolean }
+  diasCorridosSemAtualizar: { Title: string, Show: boolean }
+  diasUteisSemAtualizar: { Title: string, Show: boolean }
+}
+
+export interface ISiteUser {
+  Id: number;
+  LoginName: string;
+  Title: string;
+  Email?: string;
+  UserPrincipalName: string;
 }

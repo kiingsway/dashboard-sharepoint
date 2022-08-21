@@ -44,7 +44,7 @@ export default function HeaderAtualizacao(props: Props) {
       outline
       onClick={handleSetSegundosAtualizacao}
       disabled={
-        props.atualizacaoSecao.clientes || props.atualizacaoSecao.chamados ? true :
+        props.atualizacaoSecao.clientes || props.atualizacaoSecao.chamados || props.atualizacaoSecao.slcChamados ? true :
           segundosAtualizacao > tempoAtualizacao - tempoHabilitarAtualizar
       }
     >

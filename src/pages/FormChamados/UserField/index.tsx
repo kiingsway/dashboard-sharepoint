@@ -12,16 +12,15 @@ export default function UserField(props: Props) {
 
   const [users, setUsers] = useState([]);
 
-  
+
   useEffect(() => {
     obterUsuarios(props.clienteSelecionado).then((usersItems: any) => { setUsers(usersItems.data.value) });
-    
+
   }, [props.chamadoSelecionado])
-  
+
 
   const userSelected = props.chamadoSelecionado[props.campo.EntityPropertyName]
 
-console.log(props.chamadoSelecionado)
 
   return (
     <Form.Select
@@ -32,7 +31,7 @@ console.log(props.chamadoSelecionado)
       onChange={() => { }}
     >
       {props.campo?.Required ? <></> : <option value="">Selecione...</option>}
-      {users.map((user:any) => (
+      {users.map((user: any) => (
         <option value={user.Id} key={user.Id}>{user.Title} ({user?.Email})</option>
       ))}
     </Form.Select>

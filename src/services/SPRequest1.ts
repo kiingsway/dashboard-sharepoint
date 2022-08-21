@@ -1,8 +1,7 @@
 import URIs from 'services/uris.json'
 import axios from "axios";
-import { IListItems, IListItem, IListFields } from 'services/interfaces'
 
-export function GetListItems(rest: IListItems) {
+export function GetListItems(rest: any) {
 
     const body = {
         Method: "GET",
@@ -20,7 +19,7 @@ export function GetListItems(rest: IListItems) {
 
     return request
 }
-export function GetListItem(rest: IListItem) {
+export function GetListItem(rest: any) {
 
     const body = {
         Method: "GET",
@@ -36,13 +35,45 @@ export function GetListItem(rest: IListItem) {
     return request
 }
 
+export function UploadItemAttachments(rest?: any, id?: any, attachments?: any) {
+
+    const bodyProd = {
+        Method: 'PATCH',
+        Site: rest.site,
+        URI: `_api/web/lists/${rest.list}List/items(${rest.id})`,
+        Headers: { 'IF-MATCH': '*' },
+        Body: rest.body
+    }
+
+    const att = {
+        '$content': attachments.content.split(',')[1],
+        '$content-type': 'application/octet-stream'
+    }
+
+    const body = {
+        Method: 'POST',
+        Site: URIs.SiteTest,
+        URI: `_api/web/lists/${URIs.ListTest}/items(${id})/AttachmentFiles/add(FileName='${attachments.name}')`,
+        Headers: {
+            Accept: 'application/json;odata=verbose',
+            'Content-Type': 'application/json;odata=verbose'
+        },
+        Body: att
+    }
+
+    const request = axios.post(URIs.UriPostFlow, body)
+
+    return request
+
+}
+
 export function PatchListItem(rest: any) {
 
     const bodyProd = {
         Method: 'PATCH',
         Site: rest.site,
         URI: `_api/web/lists/${rest.list}List/items(${rest.id})`,
-        Headers: {'IF-MATCH': '*'},
+        Headers: { 'IF-MATCH': '*' },
         Body: rest.body
     }
 
@@ -50,16 +81,15 @@ export function PatchListItem(rest: any) {
         Method: 'POST',
         Site: URIs.SiteTest,
         URI: `_api/web/lists/${URIs.ListTest}/items`,
-        Headers: {'Accept': 'application/json'},
+        Headers: { 'Accept': 'application/json' },
         Body: rest.body
     }
 
     const request = axios.post(URIs.UriPostFlow, body)
-    request.then((r:any) => console.log(r));
 
     return request
 }
-export function GetListFields(rest: IListFields) {
+export function GetListFields(rest: any) {
 
     const body = {
         Method: "GET",
@@ -79,7 +109,7 @@ export function GetListFields(rest: IListFields) {
 
 }
 
-export function GetWebUsers(rest:any) {
+export function GetWebUsers(rest: any) {
 
     const body = {
         Method: "GET",
@@ -98,7 +128,15 @@ export function GetWebUsers(rest:any) {
     return request
 
 }
-export function GetWebUsersGroupId(rest:any) {
+
+interface WebUsersGroupId {
+    site: string;
+    id?: string | number | null;
+    select?: string;
+    expand?: string;
+    headers?: object;
+}
+export function GetWebUsersGroupId(rest: WebUsersGroupId) {
 
     const body = {
         Method: "GET",
@@ -113,4 +151,18 @@ export function GetWebUsersGroupId(rest:any) {
 
     return request
 
+}
+
+interface ICurrentUserRest { site: string, select?: string; }
+export function GetCurrentUser(rest: ICurrentUserRest) {
+
+    const body = {
+        Method: "GET",
+        Site: rest.site,
+        URI: `_api/web/CurrentUser` +
+            `?$select=${rest.select || ''}`,
+        Headers: { Accept: "application/json;odata=nometadata" }
+    }
+
+    return axios.post(URIs.UriPostFlow, body)
 }

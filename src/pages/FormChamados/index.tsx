@@ -1,24 +1,24 @@
-import { IChamado, IChamadoSelecionado, ICliente } from 'interfaces';
+import { IAtualizacaoSecao, IChamado, IChamadoSelecionado, ICliente } from 'interfaces';
 import { MDBRow, MDBCol, MDBInput, MDBCheckbox, MDBBtn, MDBTextArea, MDBCard, MDBCardBody, MDBCardFooter, MDBCardHeader, MDBCardText, MDBCardTitle, MDBContainer } from 'mdb-react-ui-kit';
 import React, { Component, useEffect, useState } from 'react'
-import { criarItem, editarItem, obterCamposLista as obterCamposLista1 } from '../../services/SPRequest'
-import { obterClientes, obterChamados, obterFeriados, obterColunas, obterUsuarios, atualizarChamado } from 'services/GetDashboardHelper'
+import { obterClientes, obterChamados, obterFeriados, obterColunas, obterUsuarios, atualizarChamado, criarChamado, obterTodosChamados } from 'services/GetDashboardHelper'
 import URIs from '../../services/uris.json'
 import classNames from 'classnames';
 import 'bootstrap'
 import { Button, Card, Col, Container, FloatingLabel, Form, ListGroup, Row } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowUpRightFromSquare, faPaperclip } from '@fortawesome/free-solid-svg-icons';
-import { useTab } from '@mui/base';
 import SelecionarChamado from './SelecionarChamado';
-import { convertToObject } from 'typescript';
 import UserField from './UserField';
+import ComentariosField from './ComentariosField';
 
 interface Props {
   chamadoSelecionado: IChamadoSelecionado;
   clientes: ICliente[];
   chamados: IChamado[];
-  setChamadoSelecionado: React.Dispatch<React.SetStateAction<IChamadoSelecionado>>;
+  handleSelecionarChamado: (chamado: IChamadoSelecionado) => void;
+  atualizacaoSecao: IAtualizacaoSecao;
+  setAtualizacaoSecao: React.Dispatch<React.SetStateAction<IAtualizacaoSecao>>;
 }
 
 export default function FormChamados(props: Props) {
@@ -26,6 +26,8 @@ export default function FormChamados(props: Props) {
   const [camposChamado, setCamposChamado] = useState([]);
   const [camposChamadoHtml, setCamposChamadoHtml] = useState(<></>);
   const [clienteSelecionado, setClienteSelecionado] = useState<any>({ Id: 0 });
+  const [buscarResolvidos, setBuscarResolvidos] = useState<boolean>(false)
+  const [listaChamados, setListaChamados] = useState<IChamado[]>(props.chamados)
 
   useEffect(() => {
 
@@ -56,7 +58,7 @@ export default function FormChamados(props: Props) {
       });
     }
 
-    if (props.chamadoSelecionado.Id !== 0) {
+    if (props.chamadoSelecionado.Id !== 0 || true) {
 
       //Buscar campos
       obterColunas(clienteSelecionado).then(resp => {
@@ -70,13 +72,38 @@ export default function FormChamados(props: Props) {
 
     }
 
-  }, [clienteSelecionado])
+    if (clienteSelecionado.Id) {
+      props.setAtualizacaoSecao(prevAtt => ({ ...prevAtt, slcChamados: true }))
+
+      if (buscarResolvidos) {
+
+        obterTodosChamados(clienteSelecionado, 200).then((novosChamados: IChamado[]) => {
+
+          setListaChamados([...props.chamados.filter(chamado => chamado.Cliente.Id !== clienteSelecionado.Id), ...novosChamados])
+          props.setAtualizacaoSecao(prevAtt => ({ ...prevAtt, slcChamados: false }))
+
+        })
+
+      } else {
+
+        obterChamados(clienteSelecionado).then((novosChamados: IChamado[]) => {
+
+          setListaChamados([...props.chamados.filter(chamado => chamado.Cliente.Id !== clienteSelecionado.Id), ...novosChamados])
+          props.setAtualizacaoSecao(prevAtt => ({ ...prevAtt, slcChamados: false }))
+
+        })
+
+      }
+    }
+
+  }, [clienteSelecionado, buscarResolvidos, props.chamadoSelecionado])
 
   useEffect(() => {
-    if (props.chamadoSelecionado.Id !== 0) setClienteSelecionado(props.chamadoSelecionado.Cliente)
-    else setClienteSelecionado({ Id: 0 })
+    if (props.chamadoSelecionado?.Cliente?.Id) {
+      setClienteSelecionado(props.chamadoSelecionado.Cliente)
+    }
 
-  }, [props.chamadoSelecionado.Id])
+  }, [props.chamadoSelecionado])
 
   useEffect(() => {
 
@@ -126,7 +153,7 @@ export default function FormChamados(props: Props) {
   }, [camposChamado])
 
   function saveChamado(e: any) {
-    e.preventDefault();    
+    e.preventDefault();
 
     let formData: any = {};
 
@@ -134,52 +161,61 @@ export default function FormChamados(props: Props) {
       if (elm.tagName !== 'BUTTON' && elm.name !== 'Attachments') formData[elm.name] = elm.value
     }
     formData.AtribuidaId = formData?.AtribuidaId ? parseInt(formData?.AtribuidaId) : null;
-    console.log(formData);
 
-    atualizarChamado(props.chamadoSelecionado, formData);
-
+    if (props.chamadoSelecionado.Id === 0) criarChamado(clienteSelecionado, formData)
+    else atualizarChamado(props.chamadoSelecionado, formData)
   }
 
   function resetFormChamado(e: any) {
     e.preventDefault();
-    props.setChamadoSelecionado({ Id: 0 })
+    props.handleSelecionarChamado({ Id: 0 })
   }
 
-  const uriChamado = `${URIs.PClientes}/${props?.chamadoSelecionado?.Cliente?.InternalNameSubsite}/Lists/${props?.chamadoSelecionado?.Cliente?.InternalNameSubsiteList}/DispForm.aspx?ID=${props?.chamadoSelecionado?.Id}`;
+  const uriEditChamado = `${URIs.PClientes}/${props?.chamadoSelecionado?.Cliente?.InternalNameSubsite}/Lists/${props?.chamadoSelecionado?.Cliente?.InternalNameSubsiteList}/DispForm.aspx?ID=${props?.chamadoSelecionado?.Id}`;
+
+  const uriNewChamado = `${URIs.PClientes}/${clienteSelecionado?.InternalNameSubsite}/Lists/${clienteSelecionado?.InternalNameSubsiteList}/NewForm.aspx`;
 
   return (
 
     <>
       <SelecionarChamado
+        buscarResolvidos={buscarResolvidos}
+        setBuscarResolvidos={setBuscarResolvidos}
+        clientes={props.clientes}
+        listaChamados={listaChamados}
+        chamadoSelecionado={props.chamadoSelecionado}
         clienteSelecionado={clienteSelecionado}
         setClienteSelecionado={setClienteSelecionado}
-        setChamadoSelecionado={props.setChamadoSelecionado}
+        handleSelecionarChamado={props.handleSelecionarChamado}
+        atualizacaoSecao={props.atualizacaoSecao}
+        setAtualizacaoSecao={props.setAtualizacaoSecao}
       />
-      <MDBCard className={classNames({ 'd-none': clienteSelecionado.Id === 0 })}>
+
+      <MDBCard className={classNames({ 'd-none': !clienteSelecionado?.Id })}>
         <MDBCardHeader className='d-flex justify-content-between align-items-center'>
           <h4>
             {clienteSelecionado.Title}
-            {props.chamadoSelecionado.Id !== 0 ? <> | #{props.chamadoSelecionado.Id} | {props.chamadoSelecionado.Title}</> : <>Novo chamado</>}
+            {props.chamadoSelecionado.Id !== 0 ? <> | #{props.chamadoSelecionado.Id} | {props.chamadoSelecionado.Title}</> : <> | Criar chamado</>}
 
           </h4>
 
           <div className='text-right d-flex'>
 
             <MDBBtn
-              href={uriChamado}
+              href={props.chamadoSelecionado.Id ? uriEditChamado : uriNewChamado}
               target='__blank'
               color='secondary'
               outline
-              className={props.chamadoSelecionado.Id === 0 ? 'd-none' : 'me-2 my-1'}
+              className='me-2 my-1'
             >
-              Abrir formulário no PClientes
+              {props.chamadoSelecionado.Id ? 'Editar chamado no PClientes' : 'Criar chamado no PClientes'}
               <FontAwesomeIcon icon={faArrowUpRightFromSquare} className='ms-2' />
             </MDBBtn>
 
             <MDBBtn
               color='danger'
               className={props.chamadoSelecionado.Id === 0 ? 'd-none' : ' my-1'}
-              onClick={() => props.setChamadoSelecionado({ Id: 0 })}
+              onClick={() => props.handleSelecionarChamado({ Id: 0 })}
             >
               Cancelar edição
             </MDBBtn>
@@ -255,19 +291,27 @@ function fieldNote(campo: any, chamadoSelecionado: any) {
 
   return (
     <Col sm={12} xxl={6} className='mb-4'>
-      <FloatingLabel
-        controlId={`txa${campo.EntityPropertyName}`}
-        label={campo.Title}
-      >
-        <Form.Control
-          as="textarea"
-          name={campo.EntityPropertyName}
-          value={chamadoSelecionado[campo.EntityPropertyName]}
-          style={{ height: chamadoSelecionado[campo.EntityPropertyName]?.length > 200 ? '200px' : '60px' }}
-          onChange={() => { }}
-        />
-        <div className='form-text'>{campo.Description}</div>
-      </FloatingLabel>
+
+
+      {campo.EntityPropertyName === 'Comentarios' ?
+        <ComentariosField
+          campo={campo}
+          chamadoSelecionado={chamadoSelecionado}
+        /> :
+        <FloatingLabel
+          controlId={`txa${campo.EntityPropertyName}`}
+          label={campo.Title}
+        >
+          <Form.Control
+            as="textarea"
+            name={campo.EntityPropertyName}
+            value={chamadoSelecionado[campo.EntityPropertyName]}
+            style={{ height: chamadoSelecionado[campo.EntityPropertyName]?.length > 200 ? '200px' : '60px' }}
+            onChange={() => { }}
+          />
+        </FloatingLabel>
+      }
+      <div className='form-text'>{campo.Description}</div>
     </Col>
   )
 }
@@ -286,8 +330,8 @@ function FieldUser(campo: any, chamadoSelecionado: any, clienteSelecionado: any)
           chamadoSelecionado={chamadoSelecionado}
         />
 
-      <div className='form-text'>{campo.Description}</div>
-    </FloatingLabel>
+        <div className='form-text'>{campo.Description}</div>
+      </FloatingLabel>
 
     </Col >
   )
@@ -311,7 +355,7 @@ function fieldChoice(campo: any, chamadoSelecionado: any) {
           {campo.Required ? <></> : <option value="">Selecione...</option>}
           {campo.Choices.map((valor: any) => {
             return (
-              <option value={valor}>{valor}</option>
+              <option value={valor} key={valor}>{valor}</option>
             )
           })}
         </Form.Select>
@@ -407,25 +451,25 @@ function fieldAttachments(campo: any, chamadoSelecionado: any) {
       <Row>
         <Col sm={12}>
 
-          <Form.Group controlId={`txt${campo.EntityPropertyName}`}>
+          {/* <Form.Group controlId={`txt${campo.EntityPropertyName}`}>
             <Form.Label>{campo.Title}</Form.Label>
             <Form.Control type="file" placeholder='Selecione...'
               name={campo.EntityPropertyName} onChange={() => { }} />
             <div className='form-text'>{campo.Description}</div>
-          </Form.Group>
+          </Form.Group> */}
 
 
         </Col>
         <Col sm={12}>
           <Row>
-            {chamadoSelecionado.AttachmentFiles.map((anexo: any) => {
+            {chamadoSelecionado.AttachmentFiles?.map((anexo: any) => {
 
               const formatFile = anexo.FileName.split('.').slice(-1)[0]
 
               const imageFile = formatFile === 'png' || formatFile === 'jpg' || formatFile === 'jpeg'
 
               return imageFile ? (
-                <Col sm={6} lg={4} xxl={2} key={anexo.FileName}>
+                <Col sm={6} lg={4} xl={3} xxl={2} key={anexo.FileName}>
                   <Card className='shadow my-2'>
                     <Card.Img
                       variant="top"

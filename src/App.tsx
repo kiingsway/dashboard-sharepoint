@@ -22,9 +22,9 @@ function App() {
   const [clientes, setClientes] = useState<ICliente[]>([]);
   const [chamadoSelecionado, setChamadoSelecionado] = useState<IChamadoSelecionado>({ Id: 0 })
   const [feriados, setFeriados] = useState<ILocalStorageFeriado>({});
-  const [appTab, setAppTab] = useState<TAppTabs>('tabChamados');
+  const [appTab, setAppTab] = useState<TAppTabs>('tabFormChamado');
   const [erros, setErros] = useState([]);
-  const [atualizacaoSecao, setAtualizacaoSecao] = useState<IAtualizacaoSecao>({ clientes: false, chamados: false, campos: false });
+  const [atualizacaoSecao, setAtualizacaoSecao] = useState<IAtualizacaoSecao>({ clientes: false, chamados: false, slcChamados: false, formChamados: false });
 
   /**
    * Obtém informações dos clientes e para cada cliente é obtido seus chamados em suas listas respectivas.
@@ -42,7 +42,7 @@ function App() {
       .catch(e => handleErrors(e))
       .finally(() => setAtualizacaoSecao(prevAtt => ({ ...prevAtt, clientes: false })))
       .then((listClientes: any) => {
-        const itensClientes: ICliente[] = listClientes.data.value.slice(0, 10);
+        const itensClientes: ICliente[] = listClientes.data.value.slice(0, 15);
         const batchClientes = itensClientes.map((cliente: ICliente) => obterChamados(cliente));
         setClientes(itensClientes);
 
@@ -117,7 +117,7 @@ function App() {
     setErros(prevErros => prevErros.length === 0 ? e : [{ ...e, id: uuidv4() }, ...prevErros]);
   }
 
-  function handleSelecionarChamado(chamado: IChamado) {
+  function handleSelecionarChamado(chamado: IChamadoSelecionado) {
     setChamadoSelecionado(chamado);
     setAppTab('tabFormChamado');
   }
@@ -159,7 +159,9 @@ function App() {
             clientes={clientes}
             chamados={chamados}
             chamadoSelecionado={chamadoSelecionado}
-            setChamadoSelecionado={setChamadoSelecionado}
+            handleSelecionarChamado={handleSelecionarChamado}
+            atualizacaoSecao={atualizacaoSecao}
+            setAtualizacaoSecao={setAtualizacaoSecao}
           />
         </MDBTabsPane>
         <MDBTabsPane className='container-fluid m-0 p-0' show={appTab === 'tabChamados'}>

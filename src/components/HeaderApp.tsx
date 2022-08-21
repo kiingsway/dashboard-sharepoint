@@ -61,9 +61,9 @@ export default function HeaderApp(props: Props) {
                 outline={props.appTab !== 'tabFormChamado'}
                 onClick={() => handleSetAppTab('tabFormChamado')}>
 
-                <FontAwesomeIcon icon={props.chamadoSelecionado.Id !== 0 ? faEdit : faPlus} className='me-2' />
+                <FontAwesomeIcon icon={props.chamadoSelecionado?.Id ? faEdit : faPlus} className='me-2' />
                 {
-                  props.chamadoSelecionado.Id !== 0 ?
+                  props.chamadoSelecionado?.Id ?
                     <>
                       Editar chamado***
                       <br />
