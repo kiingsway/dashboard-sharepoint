@@ -27,22 +27,23 @@ export default function ComentariosField(props: Props) {
   const [alturaComentarios, setAlturaComentarios] = useState<number>(70)
 
   function handleComentariosAltura(e: any) {
-    setAlturaComentarios(prevAltura => e.target.scrollHeight >= 70 ? e.target.scrollHeight : prevAltura)
+    // setAlturaComentarios(prevAltura => e.target.scrollHeight >= 70 ? e.target.scrollHeight : prevAltura)
+    setAlturaComentarios(e.target.scrollHeight)
 
   }
 
   useEffect(() => {
-    if(props.chamadoSelecionado?.Comentarios?.length >= 100) {
+    // if (props.chamadoSelecionado?.Comentarios?.length >= 100) {
 
-      setAlturaComentarios(200)
+    //   setAlturaComentarios(200)
 
-    }
-    
+    // }
+
   }, [props.chamadoSelecionado])
 
   useEffect(() => {
-    obterUsuarioAtual(props.chamadoSelecionado.Cliente)
-      .then((data: ISiteUser) => setCurrentUser(data))
+    obterUsuarioAtual()
+      .then((siteUser: ISiteUser) => setCurrentUser(siteUser))
   }, [])
 
   const handleVerticalClick = (value: TComentarioTabs) => {
@@ -75,7 +76,7 @@ export default function ComentariosField(props: Props) {
             <Form.Control
               as="textarea"
               name={props.campo.EntityPropertyName}
-              style={{height: alturaComentarios, minHeight:70, maxHeight: 700}}
+              style={{ height: alturaComentarios, minHeight: 70, maxHeight: 700 }}
               onMouseUp={handleComentariosAltura}
 
               onChange={() => { }}
@@ -94,9 +95,9 @@ export default function ComentariosField(props: Props) {
               as="textarea"
               name={props.campo.EntityPropertyName}
               value={props.chamadoSelecionado[props.campo.EntityPropertyName]}
-              style={{height: alturaComentarios, minHeight:70, maxHeight: 700}}
+              style={{ height: alturaComentarios, minHeight: 70, maxHeight: 700 }}
               onMouseUp={handleComentariosAltura}
-              
+
               onChange={() => { }}
             />
           </FloatingLabel>

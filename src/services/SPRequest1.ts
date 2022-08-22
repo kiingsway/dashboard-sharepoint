@@ -30,9 +30,7 @@ export function GetListItem(rest: any) {
         Headers: rest.headers ? rest.headers : { Accept: "application/json;odata=nometadata" }
     }
 
-    const request = axios.post(URIs.UriPostFlow, body)
-
-    return request
+    return axios.post(URIs.UriPostFlow, body)
 }
 
 export function UploadItemAttachments(rest?: any, id?: any, attachments?: any) {
@@ -67,28 +65,52 @@ export function UploadItemAttachments(rest?: any, id?: any, attachments?: any) {
 
 }
 
-export function PatchListItem(rest: any) {
+interface IPatchListItem {
+    site: string;
+    list: string
+    id: string | number | null;
+    body: object;
+    select: string;
+    expand: string;
+}
+export function PatchListItem(rest: Partial<IPatchListItem>) {
 
-    const bodyProd = {
+    const body = {
         Method: 'PATCH',
         Site: rest.site,
-        URI: `_api/web/lists/${rest.list}List/items(${rest.id})`,
-        Headers: { 'IF-MATCH': '*' },
+        URI: `_api/web/lists/${rest.list}List/items(${rest.id})` +
+        `?$select=${rest.select || ''}` +
+        `&$expand=${rest.expand || ''}`,
+        Headers: { 'IF-MATCH': '*', 'Content-Type': 'application/json;odata=nometadata' },
         Body: rest.body
     }
+
+    return axios.post(URIs.UriPostFlow, body)
+}
+
+interface IPostListItem {
+    site: string;
+    list: string
+    id: string | number | null;
+    body: object;
+    select?: string
+    expand?: string
+}
+export function PostListItem(rest: Partial<IPostListItem>) {
 
     const body = {
         Method: 'POST',
-        Site: URIs.SiteTest,
-        URI: `_api/web/lists/${URIs.ListTest}/items`,
-        Headers: { 'Accept': 'application/json' },
+        Site: rest.site,
+        URI: `_api/web/lists/${rest.list}List/items` +
+        `?$select=${rest.select || ''}` +
+        `&$expand=${rest.expand || ''}`,
+        Headers: { 'Accept': 'application/json;odata=nometadata' },
         Body: rest.body
     }
 
-    const request = axios.post(URIs.UriPostFlow, body)
-
-    return request
+    return axios.post(URIs.UriPostFlow, body)
 }
+
 export function GetListFields(rest: any) {
 
     const body = {
@@ -129,14 +151,14 @@ export function GetWebUsers(rest: any) {
 
 }
 
-interface WebUsersGroupId {
+interface IWebUsersGroupId {
     site: string;
     id?: string | number | null;
     select?: string;
     expand?: string;
     headers?: object;
 }
-export function GetWebUsersGroupId(rest: WebUsersGroupId) {
+export function GetWebUsersGroupId(rest: IWebUsersGroupId) {
 
     const body = {
         Method: "GET",

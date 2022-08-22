@@ -1,85 +1,191 @@
-import { faArrowRotateLeft, faArrowRotateRight, faArrowUpRightFromSquare } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
-import { IAtualizacaoSecao, IChamado, IChamadoSelecionado, ICliente } from 'interfaces'
-import { MDBCard, MDBCardBody, MDBRipple, MDBSpinner, MDBSwitch } from 'mdb-react-ui-kit'
-import React, { useEffect, useRef, useState } from 'react'
-import { Card, Col, FloatingLabel, Form, Row } from 'react-bootstrap'
-import './SelecionarChamado.css'
-// import styles from './SelecionarChamado.module.scss'
+import { IAtualizacaoSecao, IChamado, IChamadoSelecionado, ICliente, TAppTabs } from 'interfaces'
+import { MDBCard, MDBCardHeader, MDBCardBody, MDBBtn, MDBCardTitle, MDBCardText, MDBCardFooter, MDBContainer, MDBCol, MDBRow, MDBSwitch, MDBSpinner } from 'mdb-react-ui-kit'
+import React, { FormEvent, useEffect, useState } from 'react'
+import { FloatingLabel, Form } from 'react-bootstrap'
+import { obterChamados, obterColunas, obterTodosChamados } from 'services/GetDashboardHelper';
 
 interface Props {
   clientes: ICliente[];
-  listaChamados: IChamado[];
-  clienteSelecionado: ICliente;
+  chamados: IChamado[];
+  clienteSelecionado: Partial<ICliente>;
+  setClienteSelecionado: React.Dispatch<React.SetStateAction<Partial<ICliente>>>;
   chamadoSelecionado: IChamadoSelecionado;
-  setClienteSelecionado: any
-  handleSelecionarChamado: (chamado: IChamadoSelecionado) => void
-  buscarResolvidos: any
-  setBuscarResolvidos: any
-  atualizacaoSecao: IAtualizacaoSecao
-  setAtualizacaoSecao: React.Dispatch<React.SetStateAction<IAtualizacaoSecao>>;
+  atualizacaoSecao: IAtualizacaoSecao;
+  handleSelecionarChamado: (chamado: IChamadoSelecionado, tab?: TAppTabs) => void
 }
+
+interface IElmLoading { chamados: boolean; }
 
 export default function SelecionarChamado(props: Props) {
 
-  const [chamadosCliente, setChamadosCliente] = useState<IChamadoSelecionado[]>([]);
+  const [listaChamados, setListaChamados] = useState<IChamado[]>(props.chamados);
+  const [buscarResolvidos, setBuscarResolvidos] = useState<boolean>(false);
+  const [elmLoading, setElmLoading] = useState<IElmLoading>({ chamados: false });
 
+  useEffect(() => {
 
+    setElmLoading({ chamados: true })
+
+    if (buscarResolvidos) {
+      obterTodosChamados(props.clienteSelecionado, 200).then((novosChamados: any) => {
+
+        const chamadosSemCliente = props.chamados.filter((chamado: any) => props.clienteSelecionado.Id !== chamado.Cliente.Id);
+        setListaChamados([...chamadosSemCliente, ...novosChamados]);
+        setElmLoading({ chamados: false })
+
+      });
+
+    } else {
+      setListaChamados(props.chamados);
+      setElmLoading({ chamados: false });
+    }
+
+    if (!props.clienteSelecionado.Id) {
+      console.log("Cliente Selecionado ID: " + props.clienteSelecionado.Id)
+      setBuscarResolvidos(false);
+    }
+
+  }, [buscarResolvidos, props.clienteSelecionado])
 
   function handleSelectChamado(e: any) {
+
     const [selectClienteId, selectChamadoId] = e.target.value.split('#').map((id: any) => parseInt(id));
 
+    function filterSameCliente(chamado: any) {
+
+      return chamado.Id === selectChamadoId && chamado.Cliente.Id === selectClienteId
+    }
+
     const chamadoSelecionado: IChamadoSelecionado = selectChamadoId ?
-      props.listaChamados
-        .filter((chamado: IChamado) => chamado.Id === selectChamadoId && chamado.Cliente.Id === selectClienteId)[0]
-      :
-      { Id: 0 }
+      listaChamados.filter(filterSameCliente)[0] : { Id: 0 }
 
     props.handleSelecionarChamado(chamadoSelecionado)
   }
 
-  /**
-   * Toda vez que o cliente for alterado, é obtido os chamados desse cliente e
-   * atualizado no state de Chamados. Também é inserido chamados Resolvidos caso a opção esteja ativa.
-   * @param e Evento recebido.
-   * @returns void
-   */
   function handleSelectCliente(e: any) {
 
-    props.setAtualizacaoSecao(prevAtt => ({ ...prevAtt, slcChamados: true }))
+    setElmLoading(prevState => ({ ...prevState, chamados: true }))
 
     // Verificar elemento ativo para condicionar se cliente foi alterado pelo usuário no selectCliente.
-    if (e.target.ownerDocument.activeElement.id === 'FormSelectCliente') props.handleSelecionarChamado({ Id: 0 })
+    if (e.target?.ownerDocument?.activeElement?.id === 'FormSelectCliente') props.handleSelecionarChamado({ Id: 0 })
 
     if (e.target.value) {
 
       const novoClienteSelecionado: IChamadoSelecionado = props.clientes.filter((cliente: ICliente) => cliente.Id === parseInt(e.target.value))[0];
-
       props.setClienteSelecionado(novoClienteSelecionado)
 
-
     } else {
-      props.setBuscarResolvidos(false);
-
+      setBuscarResolvidos(false);
       props.setClienteSelecionado({ Id: 0 });
-
     }
 
-    props.setAtualizacaoSecao(prevAtt => ({ ...prevAtt, slcChamados: false }))
+
+    setElmLoading(prevState => ({ ...prevState, chamados: false }))
   }
 
-  useEffect(() => {
+  useEffect(() =>
+    console.log('-'),
+    // props.clienteSelecionado
+    [props.clienteSelecionado])
 
-    const chamadosDoCliente = props.listaChamados.filter((chamado: IChamado) => chamado.Cliente.Id === props.clienteSelecionado.Id)
+  let chamadosDoCliente = listaChamados.filter(chamado => chamado.Cliente.Id === props.clienteSelecionado?.Id);
 
-    setChamadosCliente(chamadosDoCliente)
+  return (
+    <MDBCard className='rounded-0 rounded-bottom bg-dark'>
+      <MDBCardBody>
+        <MDBContainer className='p-0'>
+          <MDBRow>
+            <MDBCol size={12} className={classNames('my-1')} md={props.clienteSelecionado.Id ? 4 : 12}>
 
-  }, [props.clienteSelecionado, props.listaChamados])
+              <SkeletonInput show={props.atualizacaoSecao.clientes} message={'Obtendo clientes...'} />
 
-  // const txt = `Cliente selecionado: #${props.clienteSelecionado.Id} ${props.clienteSelecionado.Title}
-  // Chamado selecionado: #${props.listaChamadoselecionado.Id} do cliente ${props.listaChamadoselecionado?.Cliente?.Title}`;
-  // console.log(txt)
+              <FloatingLabel
+                controlId='FormSelectCliente'
+                label='Cliente'
+                className={classNames('bg-dark text-light', { 'd-none': props.atualizacaoSecao.clientes })}
+              >
+
+                <Form.Select
+                  className={classNames('bg-dark text-light', { 'd-none': props.atualizacaoSecao.clientes })}
+                  id='FormSelectCliente'
+                  name='FormSelectCliente'
+                  aria-label='Selecionar cliente'
+                  onChange={handleSelectCliente}
+                  disabled={props.atualizacaoSecao.clientes || props.atualizacaoSecao.slcChamados || elmLoading.chamados}>
+
+                  {props.clienteSelecionado.Id ?
+                    <option value="">-- Fechar formulário --</option> :
+                    <option value="">Selecione o cliente para criar e editar chamados...</option>}
+                  {props.clientes.map((cliente: any) => <option key={cliente.Id} value={cliente.Id}>{cliente.Title}</option>)}
+
+                </Form.Select>
+              </FloatingLabel>
+
+            </MDBCol>
+            <MDBCol size={12} md={8} className={classNames('my-1', { 'd-none': !props.clienteSelecionado?.Id })}>
+
+
+              <SkeletonInput show={props.atualizacaoSecao.clientes} message={'Obtendo clientes...'} />
+
+              <SkeletonInput show={!props.atualizacaoSecao.clientes && props.atualizacaoSecao.chamados} message={'Obtendo chamados...'} />
+
+              <SkeletonInput
+                show={!props.atualizacaoSecao.clientes && !props.atualizacaoSecao.chamados && elmLoading.chamados}
+                message={`Obtendo chamados da ${props.clienteSelecionado.Title}...`}
+              />
+
+              <FloatingLabel
+                controlId='FormSelectChamado'
+                label='Chamado'
+                className={classNames('bg-dark text-light', { 'd-none': props.atualizacaoSecao.clientes || props.atualizacaoSecao.chamados || elmLoading.chamados })}
+              >
+
+                <Form.Select
+                  id='FormSelectCliente'
+                  className={classNames('bg-dark text-light', { 'd-none': props.atualizacaoSecao.clientes || props.atualizacaoSecao.chamados || elmLoading.chamados })}
+                  name='FormSelectCliente'
+                  aria-label='Selecionar chamado'
+                  onChange={handleSelectChamado}
+                  disabled={props.atualizacaoSecao.clientes}>
+
+                  <option value="">Novo chamado ({chamadosDoCliente.length ? chamadosDoCliente.length : 'Nenhum'} encontrado{chamadosDoCliente.length > 1 ? 's' : ''})...</option>
+                  {chamadosDoCliente.map(chamado => (
+                    <option
+                      key={`${chamado.Id}#${chamado.Cliente.Id}`}
+                      value={`${chamado.Id}#${chamado.Cliente.Id}`}
+                    >
+                      {chamado.Cliente.Title} | #{chamado.Id} | {chamado.Title}
+                    </option>
+                  ))}
+
+                </Form.Select>
+              </FloatingLabel>
+
+            </MDBCol>
+          </MDBRow>
+          <MDBRow>
+            <MDBCol>
+
+              <div className='mt-2'>
+                <MDBSwitch
+                  checked={buscarResolvidos}
+                  onClick={() => setBuscarResolvidos((prevBuscar: any) => !prevBuscar)}
+                  id='flexSwitchCheckDefault'
+                  className='text-light'
+                  label={<span className='text-light'>Obter chamados resolvidos (máx. 200)</span>} />
+              </div>
+            </MDBCol>
+          </MDBRow>
+        </MDBContainer>
+      </MDBCardBody>
+    </MDBCard>
+  )
+
+}
+
+
+function SkeletonInput(props: { show: boolean, message: string }) {
 
   const styleLoadingCard: React.CSSProperties = {
     height: '58px',
@@ -87,113 +193,16 @@ export default function SelecionarChamado(props: Props) {
     animation: 'background-color: hsl(200, 20%, 80%) 1s linear infinite alternate'
   }
 
-
   return (
-
-    <Card className='shadow mb-3'>
-      <Card.Body className='pb-1'>
-        <Row>
-          <Col sm={12} md={!props.clienteSelecionado?.Id ? 12 : 4}>
-
-            <MDBCard className={!props.atualizacaoSecao.clientes ? 'd-none' : 'shadow-0 border-0 skeleton'} style={styleLoadingCard}>
-              <MDBCardBody className='p-0 d-flex flex-row align-items-center'>
-                <div>
-                  <MDBSpinner role='status' className='mx-3' color='secondary'><span className='visually-hidden'>Loading...</span></MDBSpinner>
-
-                </div>
-                <div className='text-muted fw-600 d-flex flex-column'>
-                  <span className='text-muted'>Obtendo clientes...</span>
-                </div>
-
-              </MDBCardBody>
-            </MDBCard>
-
-            <FloatingLabel
-              controlId='FormSelectCliente'
-              label='Cliente'
-              className={props.atualizacaoSecao.clientes ? 'd-none' : ''}
-            >
-
-              <Form.Select
-                id='FormSelectCliente'
-                name='FormSelectCliente'
-                aria-label='Selecionar cliente'
-                defaultValue={props.clienteSelecionado.Id}
-                value={props.clienteSelecionado.Id}
-                onChange={handleSelectCliente}
-                disabled={props.atualizacaoSecao.slcChamados}
-                >
-
-                {props.clienteSelecionado.Id ?
-                  <option value="">-- Fechar formulário --</option> :
-                  <option value="">Selecione o cliente para criar e editar chamados...</option>}
-
-                {props.clientes?.map((cliente: ICliente) => <option key={cliente.Id} value={cliente.Id}>{cliente.Title}</option>)}
-
-              </Form.Select>
-            </FloatingLabel>
-
-          </Col>
-          <Col sm={12} md={8} className={!props.clienteSelecionado?.Id ? 'd-none' : 'align-items-baseline'}>
-
-            <MDBCard className={!props.atualizacaoSecao.slcChamados ? 'd-none' : 'shadow-0 border-0 skeleton'} style={styleLoadingCard}>
-              <MDBCardBody className='p-0 d-flex flex-row align-items-center'>
-                <div>
-                  <MDBSpinner role='status' className='mx-3' color='secondary'><span className='visually-hidden'>Loading...</span></MDBSpinner>
-
-                </div>
-                <div className='text-muted fw-600 d-flex flex-column'>
-                  <span className='text-muted'>Obtendo chamados...</span>
-                  <span className='text-muted'>Cliente: {props.clienteSelecionado?.Title}</span>
-                </div>
-
-              </MDBCardBody>
-            </MDBCard>
-
-            <FloatingLabel
-              controlId='FormSelectChamado'
-              label='Chamado'
-              className={props.atualizacaoSecao.slcChamados ? 'd-none' : ''}
-            >
-
-              <Form.Select
-                name='FormSelectChamado'
-                aria-label='Selecionar chamado'
-                value={`${props.chamadoSelecionado?.Cliente?.Id}#${props.chamadoSelecionado.Id}`}
-                onChange={handleSelectChamado}
-                disabled={!props.clienteSelecionado?.Id || props.atualizacaoSecao.slcChamados}
-              >
-                {!props.clienteSelecionado?.Id ? <option>Selecione o cliente...</option> : null}
-                <option value="">Criar chamado... ({chamadosCliente.length ? chamadosCliente.length : 'Nenhum'} encontrado{chamadosCliente.length > 1 ? 's' : ''})</option>
-
-                {props.listaChamados.filter((chamado: IChamado) => chamado.Cliente.Id === props.clienteSelecionado.Id).map((chamado: IChamado) => (
-                  <option
-                    key={chamado.Id}
-                    value={`${chamado?.Cliente?.Id}#${chamado.Id}`}
-                  >
-                    #{chamado.Id} | {chamado.Title}
-                  </option>
-                ))}
-              </Form.Select>
-            </FloatingLabel>
-
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-
-            <div className="my-2">
-
-              <MDBSwitch
-                id='flexSwitchCheckDefault'
-                label='Buscar chamados resolvidos (max. 200)'
-                checked={props.buscarResolvidos}
-                onClick={() => props.setBuscarResolvidos((prevBuscar: any) => !prevBuscar)}
-              />
-            </div>
-          </Col>
-        </Row>
-      </Card.Body>
-    </Card>
+    <MDBCard className={!props.show ? 'd-none' : 'shadow-0 border-0 skeleton'} style={styleLoadingCard}>
+      <MDBCardBody className='p-0 d-flex flex-row align-items-center'>
+        <div>
+          <MDBSpinner role='status' className='mx-3' color='secondary'><span className='visually-hidden'>Carregando...</span></MDBSpinner>
+        </div>
+        <div className='text-muted fw-600 d-flex flex-column'>
+          <span className='text-muted'>{props.message}</span>
+        </div>
+      </MDBCardBody>
+    </MDBCard>
   )
 }

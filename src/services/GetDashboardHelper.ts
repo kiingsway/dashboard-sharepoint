@@ -1,5 +1,5 @@
 import { IChamado, IChamadoSelecionado, ICliente } from "interfaces";
-import { GetCurrentUser, GetListFields, GetListItem, GetListItems, GetWebUsers, GetWebUsersGroupId, PatchListItem, UploadItemAttachments } from 'services/SPRequest1'
+import { GetCurrentUser, GetListFields, GetListItem, GetListItems, GetWebUsers, GetWebUsersGroupId, PatchListItem, PostListItem, UploadItemAttachments } from 'services/SPRequest1'
 import URIs from 'services/uris.json'
 import { DateTime } from 'luxon'
 
@@ -46,7 +46,7 @@ export function obterClientes() {
   return GetListItems(rest)
 }
 
-export async function obterTodosChamados(cliente: ICliente, top?: number) {
+export async function obterTodosChamados(cliente: any, top?: number) {
 
   const rest: IRest = {
     site: URIs.PClientes + '/' + cliente.InternalNameSubsite,
@@ -63,7 +63,7 @@ export async function obterTodosChamados(cliente: ICliente, top?: number) {
 
 }
 
-export async function obterChamados(cliente: ICliente) {
+export async function obterChamados(cliente: any) {
 
   const rest: IRest = {
     site: URIs.PClientes + '/' + cliente.InternalNameSubsite,
@@ -85,46 +85,60 @@ export async function obterChamados(cliente: ICliente) {
   ))
 }
 
-export async function obterColunas(cliente: ICliente) {
+export async function obterColunas(cliente: any) {
 
   const rest: IRest = {
     site: URIs.PClientes + '/' + cliente.InternalNameSubsite,
     list: cliente.InternalNameSubsiteList,
     filter: `Hidden eq false and ReadOnlyField eq false`,
+    orderBy: 'Title',
     top: 5000
   }
 
   return (await GetListFields(rest)).data.value;
 }
 
-export function criarChamado(cliente: ICliente, body: IChamadoSelecionado) {
+export async function criarChamado(cliente: ICliente, body: IChamadoSelecionado) {
+
+  const rest: IRest = {
+    site: URIs.PClientes + '/' + cliente.InternalNameSubsite,
+    list: cliente.InternalNameSubsiteList,
+    select: `Id,Title,Atribuida/Id,Atribuida/Title,Atribuida/EMail,DescricaoDemanda,StatusDaQuestao,Modified,Comentarios,Created,Attachments,BugEmProducao,EmailCliente,TipoSolicitacao,Urg_x00ea_ncia,DataPendenteValidacao,AttachmentFiles/FileName,AttachmentFiles/ServerRelativePath`,
+    expand: 'AttachmentFiles',
+    body: body
+  }
+
+  return (await PostListItem(rest)).data
 
 }
 
-export function obterChamado(cliente: ICliente, chamadoId: number) {
+export async function obterChamado(cliente: ICliente, chamadoId: number) {
 
   const rest: IRest = {
     site: URIs.PClientes + '/' + cliente.InternalNameSubsite,
     list: cliente.InternalNameSubsiteList,
     id: chamadoId,
-    select: '*',
+    select: `Id,Title,Atribuida/Id,Atribuida/Title,Atribuida/EMail,DescricaoDemanda,StatusDaQuestao,Modified,Comentarios,Created,Attachments,BugEmProducao,EmailCliente,TipoSolicitacao,Urg_x00ea_ncia,DataPendenteValidacao,AttachmentFiles/FileName,AttachmentFiles/ServerRelativePath`,
+    expand: 'AttachmentFiles,Atribuida',
     top: 5000,
   }
 
-  return GetListItem(rest)
+  return (await GetListItem(rest)).data
 }
 
 
 
-export function atualizarChamado(chamadoSelecionado: IChamadoSelecionado, body: IChamadoSelecionado) {
+export function atualizarChamado(chamadoSelecionado: IChamado, body: IChamadoSelecionado) {
 
   const rest: IRest = {
-    site: URIs.PClientes + '/' + chamadoSelecionado?.Cliente?.InternalNameSubsite,
-    list: chamadoSelecionado?.Cliente?.InternalNameSubsiteList,
-    id: chamadoSelecionado?.Id,
-    body: { ...body, IDChamado: chamadoSelecionado?.Id }
+    site: URIs.PClientes + '/' + chamadoSelecionado.Cliente.InternalNameSubsite,
+    list: chamadoSelecionado.Cliente.InternalNameSubsiteList,
+    id: chamadoSelecionado.Id,
+    select: `Id,Title,Atribuida/Id,Atribuida/Title,Atribuida/EMail,DescricaoDemanda,StatusDaQuestao,Modified,Comentarios,Created,Attachments,BugEmProducao,EmailCliente,TipoSolicitacao,Urg_x00ea_ncia,DataPendenteValidacao,AttachmentFiles/FileName,AttachmentFiles/ServerRelativePath`,
+    expand: 'AttachmentFiles,Atribuida',
+    body: body
   }
-  
+
   return PatchListItem(rest)
 }
 
@@ -141,10 +155,10 @@ export async function obterUsuarios(cliente: ICliente, groupId?: number | null) 
   return groupId ? await GetWebUsersGroupId(rest) : await GetWebUsers(rest)
 }
 
-export async function obterUsuarioAtual(cliente: ICliente) {
+export async function obterUsuarioAtual() {
 
   const rest: IRest = {
-    site: URIs.PClientes + '/' + cliente.InternalNameSubsite,
+    site: URIs.PClientes,
     select: 'Id,Title,Email,UserPrincipalName'
   }
 

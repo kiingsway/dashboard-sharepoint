@@ -26,6 +26,20 @@ function App() {
   const [erros, setErros] = useState([]);
   const [atualizacaoSecao, setAtualizacaoSecao] = useState<IAtualizacaoSecao>({ clientes: false, chamados: false, slcChamados: false, formChamados: false });
 
+  function handleAtualizarChamadoLista(cliente: any, chamado: any) {
+
+    function removerChamado(ch: any) {
+      return ch.Id !== chamado.Id && ch.Cliente.Id !== cliente.Id
+    }
+
+    const chamadoEcliente = { ...chamado, Cliente: cliente };
+
+    setChamados(prevChamados => [...prevChamados.filter(removerChamado), chamadoEcliente])
+
+    setChamadoSelecionado(chamadoEcliente);
+
+  }
+
   /**
    * Obtém informações dos clientes e para cada cliente é obtido seus chamados em suas listas respectivas.
    * Clientes e chamados são salvos no state setClientes e setChamados respectivamente.
@@ -117,9 +131,9 @@ function App() {
     setErros(prevErros => prevErros.length === 0 ? e : [{ ...e, id: uuidv4() }, ...prevErros]);
   }
 
-  function handleSelecionarChamado(chamado: IChamadoSelecionado) {
+  function handleSelecionarChamado(chamado: IChamadoSelecionado, tab: TAppTabs = 'tabFormChamado') {
     setChamadoSelecionado(chamado);
-    setAppTab('tabFormChamado');
+    if (tab) setAppTab('tabFormChamado');
   }
 
   // Executado na primeira abertura da aplicação.
@@ -147,7 +161,7 @@ function App() {
       /> */}
 
       <MDBTabsContent>
-        <MDBTabsPane className='container mt-4' show={appTab === 'tabFormChamado'}>
+        <MDBTabsPane className='container-lg p-0' show={appTab === 'tabFormChamado'}>
           {/* <MDBBtn
             color='danger'
             className={chamadoSelecionado.Id === 0 ? 'd-none' : ''}
@@ -162,6 +176,7 @@ function App() {
             handleSelecionarChamado={handleSelecionarChamado}
             atualizacaoSecao={atualizacaoSecao}
             setAtualizacaoSecao={setAtualizacaoSecao}
+            handleAtualizarChamadoLista={handleAtualizarChamadoLista}
           />
         </MDBTabsPane>
         <MDBTabsPane className='container-fluid m-0 p-0' show={appTab === 'tabChamados'}>
