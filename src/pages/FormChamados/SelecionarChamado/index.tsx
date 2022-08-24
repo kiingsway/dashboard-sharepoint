@@ -23,6 +23,18 @@ export default function SelecionarChamado(props: Props) {
   const [buscarResolvidos, setBuscarResolvidos] = useState<boolean>(false);
   const [elmLoading, setElmLoading] = useState<IElmLoading>({ chamados: false });
 
+  let switchChamadosResolvidosEnabled = !props.atualizacaoSecao.clientes ||
+  !props.atualizacaoSecao.chamados ||
+  !props.atualizacaoSecao.slcChamados ||
+  !props.atualizacaoSecao.formChamados;
+  
+  useEffect(() => {
+    
+    switchChamadosResolvidosEnabled = false;
+    setTimeout(() => switchChamadosResolvidosEnabled = true, 3000)
+
+  }, [buscarResolvidos])
+
   useEffect(() => {
 
     setElmLoading({ chamados: true })
@@ -42,20 +54,16 @@ export default function SelecionarChamado(props: Props) {
     }
 
     if (!props.clienteSelecionado.Id) {
-      console.log("Cliente Selecionado ID: " + props.clienteSelecionado.Id)
       setBuscarResolvidos(false);
     }
 
-  }, [buscarResolvidos, props.clienteSelecionado])
+  }, [buscarResolvidos, props.clienteSelecionado, props.chamados])
 
   function handleSelectChamado(e: any) {
 
     const [selectClienteId, selectChamadoId] = e.target.value.split('#').map((id: any) => parseInt(id));
 
-    function filterSameCliente(chamado: any) {
-
-      return chamado.Id === selectChamadoId && chamado.Cliente.Id === selectClienteId
-    }
+    const filterSameCliente = (chamado:any) => chamado.Id === selectChamadoId && chamado.Cliente.Id === selectClienteId;
 
     const chamadoSelecionado: IChamadoSelecionado = selectChamadoId ?
       listaChamados.filter(filterSameCliente)[0] : { Id: 0 }
@@ -84,10 +92,6 @@ export default function SelecionarChamado(props: Props) {
     setElmLoading(prevState => ({ ...prevState, chamados: false }))
   }
 
-  useEffect(() =>
-    console.log('-'),
-    // props.clienteSelecionado
-    [props.clienteSelecionado])
 
   let chamadosDoCliente = listaChamados.filter(chamado => chamado.Cliente.Id === props.clienteSelecionado?.Id);
 
@@ -152,8 +156,8 @@ export default function SelecionarChamado(props: Props) {
                   <option value="">Novo chamado ({chamadosDoCliente.length ? chamadosDoCliente.length : 'Nenhum'} encontrado{chamadosDoCliente.length > 1 ? 's' : ''})...</option>
                   {chamadosDoCliente.map(chamado => (
                     <option
-                      key={`${chamado.Id}#${chamado.Cliente.Id}`}
-                      value={`${chamado.Id}#${chamado.Cliente.Id}`}
+                      key={`${chamado.Cliente.Id}#${chamado.Id}`}
+                      value={`${chamado.Cliente.Id}#${chamado.Id}`}
                     >
                       {chamado.Cliente.Title} | #{chamado.Id} | {chamado.Title}
                     </option>
@@ -170,10 +174,11 @@ export default function SelecionarChamado(props: Props) {
               <div className='mt-2'>
                 <MDBSwitch
                   checked={buscarResolvidos}
-                  onClick={() => setBuscarResolvidos((prevBuscar: any) => !prevBuscar)}
+                  onChange={() => setBuscarResolvidos((prevBuscar: any) => !prevBuscar)}
                   id='flexSwitchCheckDefault'
                   className='text-light'
-                  label={<span className='text-light'>Obter chamados resolvidos (máx. 200)</span>} />
+                  label={<span className='text-light'>Obter chamados resolvidos (máx. 200)</span>}
+                  disabled={!switchChamadosResolvidosEnabled}/>
               </div>
             </MDBCol>
           </MDBRow>

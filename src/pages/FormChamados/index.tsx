@@ -22,7 +22,8 @@ export default function FormChamados(props: any) {
       />
 
       <div className='mb-2' />
-      <EditForm />
+      <EditForm 
+        clienteSelecionado={clienteSelecionado}/>
     </div>
   )
 }

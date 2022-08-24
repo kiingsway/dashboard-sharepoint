@@ -133,7 +133,7 @@ function App() {
 
   function handleSelecionarChamado(chamado: IChamadoSelecionado, tab: TAppTabs = 'tabFormChamado') {
     setChamadoSelecionado(chamado);
-    if (tab) setAppTab('tabFormChamado');
+    if (tab) setAppTab(tab);
   }
 
   // Executado na primeira abertura da aplicação.

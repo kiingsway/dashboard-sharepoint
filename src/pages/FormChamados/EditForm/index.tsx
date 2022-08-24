@@ -1,6 +1,6 @@
 import { IChamadoSelecionado, ICliente } from 'interfaces'
 import { MDBCard, MDBCardHeader, MDBCardBody, MDBCardTitle, MDBCardText, MDBBtn, MDBCardFooter } from 'mdb-react-ui-kit';
-import React, { FormEvent } from 'react'
+import React, { FormEvent, useEffect } from 'react'
 
 interface Props {
   clienteSelecionado: ICliente
@@ -10,7 +10,12 @@ interface Props {
 export default function EditForm(props: any) {
 
   /** Caso não tenha cliente selecionado, retornar nulo. */
-  // if (!props.clienteSelecionado) return null
+  if (!props.clienteSelecionado?.Id) {return null}
+
+
+  // useEffect(() => {
+  //   console.log()
+  // }, [props.clienteSelecionado])
 
   function saveForm(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
