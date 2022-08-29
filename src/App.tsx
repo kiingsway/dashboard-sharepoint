@@ -180,13 +180,13 @@ function App() {
           />
         </MDBTabsPane>
         <MDBTabsPane className='container-fluid m-0 p-0' show={appTab === 'tabChamados'}>
-          {/* <Chamados
+          <Chamados
             clientes={clientes}
             chamados={chamados}
             feriados={feriados.Datas}
             chamadoSelecionado={chamadoSelecionado}
             setChamadoSelecionado={setChamadoSelecionado}
-          /> */}
+          />
         </MDBTabsPane>
         <MDBTabsPane className='container mt-4' show={appTab === 'tabDashboard'}>
           <Dashboard

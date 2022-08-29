@@ -1,7 +1,6 @@
 import { faCircle, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IChamado, ITileObject } from 'interfaces';
-import { DataGrid, GridColDef, GridRenderCellParams, GridValueGetterParams } from '@mui/x-data-grid';
 import './ModalChamados.module.scss'
 import {
   MDBBtn,
@@ -15,12 +14,11 @@ import {
   MDBTableBody,
   MDBTableHead,
 } from 'mdb-react-ui-kit';
-import { ColunasChamados } from 'services/DataTableConfig'
 
 interface Props {
   modalChamados: boolean;
   chamadosFiltrados: Array<any>;
-  tileSelecionada?: ITileObject;
+  tileSelecionada: ITileObject | undefined;
   toggleModalChamados: (tile: ITileObject) => void;
   setModalChamados: React.Dispatch<React.SetStateAction<boolean>>;
   handleSelecionarChamadoViaModal: any
@@ -28,48 +26,8 @@ interface Props {
 
 export default function ModalChamados(props: Props) {
 
-  const clientesColumns: GridColDef[] = [
-    { field: 'name', width: 200, headerName: 'Cliente' },
-    { field: 'value', width: 180, headerName: 'Qtd. de chamados' },
-  ];
-
-  const chamadosColumns: GridColDef[] = [
-    { field: 'name', width: 200, headerName: 'Cliente' },
-    { field: 'value', width: 180, headerName: 'Qtd. de chamados' },
-  ];
-
-
   function tabelaModal() {
     if (props.tileSelecionada?.Title === 'Clientes com chamados') {
-
-      const dataTable = props.tileSelecionada?.Values.map((item: any) => ({ ...item, id: item.name }))
-
-      return (
-        <div style={{ height: 800, width: '100%', backgroundColor: 'white' }}>
-          <DataGrid
-            rows={dataTable || []}
-            columns={clientesColumns}
-            pageSize={100}
-            rowHeight={60}
-            rowsPerPageOptions={[100]}
-            style={{
-              backgroundColor: '#333',
-              color: '#FFF !important',
-              border: '0',
-              fontFamily: '"Roboto", sans-serif !important'
-            }}
-            hideFooter={true}
-            rowCount={dataTable?.length}
-            sx={{
-              '& .MuiDataGrid-cell, & .MuiDataGrid-columnHeaderTitle, & .MuiSvgIcon-root': {
-                border: 0,
-                color: '#FFF !important',
-                fontFamily: '"Roboto", sans-serif !important'
-              }
-            }}
-          />
-        </div>
-      )
       return (
         <MDBTable hover>
           <MDBTableHead>
@@ -88,42 +46,6 @@ export default function ModalChamados(props: Props) {
           </MDBTableBody>
         </MDBTable>)
     } else {
-
-      const dataTable = props.tileSelecionada?.Values.map((item: any) => ({ ...item, id: `${item.Cliente.Id}#${item.Id}` }))
-
-      console.log('dataTable: ')
-      console.table(dataTable)
-      console.log("clientesColumns: ")
-      console.table(clientesColumns)
-
-      return (
-
-        <div style={{ height: 800, width: '100%', backgroundColor: 'white' }}>
-          <DataGrid
-            rows={dataTable || []}
-            columns={ColunasChamados()}
-            pageSize={100}
-            rowHeight={60}
-            rowsPerPageOptions={[100]}
-            style={{
-              backgroundColor: '#333',
-              color: '#FFF !important',
-              border: '0',
-              fontFamily: '"Roboto", sans-serif !important'
-            }}
-            hideFooter={true}
-            rowCount={dataTable?.length}
-            sx={{
-              '& .MuiDataGrid-cell, & .MuiDataGrid-columnHeaderTitle, & .MuiSvgIcon-root': {
-                border: 0,
-                color: '#FFF !important',
-                fontFamily: '"Roboto", sans-serif !important'
-              }
-            }}
-          />
-        </div>
-
-      )
       return (
         <MDBTable hover>
           <MDBTableHead>
@@ -140,10 +62,10 @@ export default function ModalChamados(props: Props) {
               <tr key={`${chamado.Id}#${chamado.Cliente?.Title}`}>
                 <td>
                   <MDBBtn
-                    size='sm'
-                    title={`Editar chamado #${chamado.Id} da ${chamado?.Cliente?.Title}`}
-                    onClick={() => props.handleSelecionarChamadoViaModal(chamado)}
-                    color='secondary'>
+                  size='sm'
+                  title={`Editar chamado #${chamado.Id} da ${chamado?.Cliente?.Title}`}
+                  onClick={()=> props.handleSelecionarChamadoViaModal(chamado)}
+                  color='secondary'>
                     <FontAwesomeIcon icon={faPenToSquare} />
                   </MDBBtn>
                 </td>

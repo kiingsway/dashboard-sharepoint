@@ -161,7 +161,7 @@ export default function Chamados(props: Props) {
     >
       <MDBPopoverHeader>{params.value?.Title} <span className='text-muted ms-2' style={{ fontSize: '10px', fontWeight: 500 }}> #{params.value.Id} </span></MDBPopoverHeader>
       <MDBPopoverBody className='d-flex flex-column justify-content-start p-2'>
-        
+
         <span style={{ fontWeight: 600 }}> {params.value.EMail} </span>
         <div className='d-flex flex-row pt-2'>
 
@@ -203,17 +203,18 @@ export default function Chamados(props: Props) {
       <div className='w-100 text-center'><span>{params?.value}</span></div>
   }
 
-  function domModified(params:any) {
+  function domModified(params: any) {
 
     return <>{DateTime.fromISO(params.value).toFormat('dd/MMM/y T')}</>
   }
 
-  function domDiasDecimalParaHoras(params:any) {
-    
+  function domDiasDecimalParaHoras(params: any) {
+
     const diasInt = Math.floor(params.value)
     const hrsInt = Math.floor((params.value - diasInt) * 24)
 
-    return <div className={classNames({'text-danger': params.value >= 2.1}, {'text-warning': params.value < 2.1 && params.value >=1.5}, {'text-success': params.value < 1.5})}> {diasInt}d {hrsInt}hrs</div>  }
+    return <div className={classNames({ 'text-danger': params.value >= 2.1 }, { 'text-warning': params.value < 2.1 && params.value >= 1.5 }, { 'text-success': params.value < 1.5 })}> {diasInt}d {hrsInt}hrs</div>
+  }
 
 
   const columns: GridColDef[] = [
@@ -236,11 +237,17 @@ export default function Chamados(props: Props) {
       ),
     },
     { field: 'EmailCliente', headerName: 'E-mail do cliente', width: 300 },
-    { field: 'Modified', headerName: 'Modificado', width: 300, renderCell: (p:any) => domModified(p) },
-    { field: 'diasCorridosSemAtualizar', headerName: 'Dias (corridos) sem atualizar', width: 200, renderCell: (p:any) => domDiasDecimalParaHoras(p) },
-    { field: 'diasUteisSemAtualizar', headerName: 'Dias (úteis) sem modificar', width: 200, renderCell: (p:any) => domDiasDecimalParaHoras(p) },
+    { field: 'Modified', headerName: 'Modificado', width: 300, renderCell: (p: any) => domModified(p) },
+    { field: 'diasCorridosSemAtualizar', headerName: 'Dias (corridos) sem atualizar', width: 200, renderCell: (p: any) => domDiasDecimalParaHoras(p) },
+    { field: 'diasUteisSemAtualizar', headerName: 'Dias (úteis) sem modificar', width: 200, renderCell: (p: any) => domDiasDecimalParaHoras(p) },
   ];
 
+
+  // console.log('Rows: ')
+  // console.log(chamadosTable)
+
+  // console.log('Columns: ')
+  // console.log(columns)
 
 
   return (
@@ -257,10 +264,12 @@ export default function Chamados(props: Props) {
           border: '0',
           fontFamily: '"Roboto", sans-serif !important'
         }}
-        sx={{'& .MuiDataGrid-cell': {
-          border:0,
-          fontFamily: '"Roboto", sans-serif !important'
-        }}}
+        sx={{
+          '& .MuiDataGrid-cell': {
+            border: 0,
+            fontFamily: '"Roboto", sans-serif !important'
+          }
+        }}
       />
     </div>
   );

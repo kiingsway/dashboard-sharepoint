@@ -92,7 +92,7 @@ export interface ITileObject {
   Count: number;
   Total: any;
   Progress: boolean;
-  Values: object[];
+  Values: {}[];
   Icon?: IconDefinition
 }
 
