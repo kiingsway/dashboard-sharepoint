@@ -37,7 +37,7 @@ export function obterClientes() {
   const rest: IRest = {
     site: URIs.PClientes,
     list: URIs.ListaClientes.InternalName,
-    select: 'Id,Title,ClienteInternalName,InternalNameSubsite,InternalNameSubsiteList,logo',
+    select: 'Id,Title,ClienteInternalName,InternalNameSubsite,InternalNameSubsiteList,logo,Created',
     filter: `Ativo eq 1 and PossuiSuporte eq 1`,
     orderBy: 'Title',
     top: 5000,

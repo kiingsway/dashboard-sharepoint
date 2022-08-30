@@ -59,6 +59,7 @@ export interface ICliente {
   ClienteInternalName: string;
   InternalNameSubsite: string;
   InternalNameSubsiteList: string;
+  Created: string;
 }
 
 export interface ILocalStorageFeriado {

@@ -16,6 +16,9 @@ import { MDBBtn, MDBTabsContent, MDBTabsPane } from 'mdb-react-ui-kit';
 import { v4 as uuidv4 } from 'uuid';
 import { DateTime } from 'luxon';
 
+import bClientes from './data/clientes.json'
+import bChamados from './data/chamados.json'
+
 function App() {
 
   const [chamados, setChamados] = useState<IChamado[]>([]);
@@ -50,13 +53,18 @@ function App() {
    * @returns void
    */
   function handleGetClientesChamados() {
+
+    setClientes(bClientes)
+    setChamados(bChamados.map((chamado: any) => ({ ...chamado, diasCorridosSemAtualizar: parseFloat(chamado.diasCorridosSemAtualizar) })))
+    return
+
     setAtualizacaoSecao(prevAtt => ({ ...prevAtt, clientes: true, chamados: true }));
 
     obterClientes()
       .catch(e => handleErrors(e))
       .finally(() => setAtualizacaoSecao(prevAtt => ({ ...prevAtt, clientes: false })))
       .then((listClientes: any) => {
-        const itensClientes: ICliente[] = listClientes.data.value.slice(0, 15);
+        const itensClientes: ICliente[] = listClientes.data.value.slice(0, 5000);
         const batchClientes = itensClientes.map((cliente: ICliente) => obterChamados(cliente));
         setClientes(itensClientes);
 
@@ -83,6 +91,12 @@ function App() {
           })
       })
   }
+
+  // useEffect(() => {
+  //   console.log(chamados)
+  //   console.log(clientes)
+
+  // }, [chamados,clientes])
 
   /**
    * Obtém todos os feriados desde hoje até a um ano atrás.
@@ -142,6 +156,7 @@ function App() {
     handleGetFeriados();
   }, [])
 
+
   return (
     <>
       <HeaderApp
@@ -162,14 +177,7 @@ function App() {
 
       <MDBTabsContent>
         <MDBTabsPane className='container-lg p-0' show={appTab === 'tabFormChamado'}>
-          {/* <MDBBtn
-            color='danger'
-            className={chamadoSelecionado.Id === 0 ? 'd-none' : ''}
-            onClick={() => setChamadoSelecionado({ Id: 0 })}
-          >
-            Cancelar edição
-          </MDBBtn> */}
-          <FormChamados
+          {/* <FormChamados
             clientes={clientes}
             chamados={chamados}
             chamadoSelecionado={chamadoSelecionado}
@@ -177,27 +185,27 @@ function App() {
             atualizacaoSecao={atualizacaoSecao}
             setAtualizacaoSecao={setAtualizacaoSecao}
             handleAtualizarChamadoLista={handleAtualizarChamadoLista}
-          />
+          /> */}
         </MDBTabsPane>
         <MDBTabsPane className='container-fluid m-0 p-0' show={appTab === 'tabChamados'}>
-          <Chamados
+          {/* <Chamados
             clientes={clientes}
             chamados={chamados}
             feriados={feriados.Datas}
             chamadoSelecionado={chamadoSelecionado}
             setChamadoSelecionado={setChamadoSelecionado}
-          />
+          /> */}
         </MDBTabsPane>
         <MDBTabsPane className='container mt-4' show={appTab === 'tabDashboard'}>
-          <Dashboard
+          {/* <Dashboard
             clientes={clientes}
             chamados={chamados}
             handleSelecionarChamado={handleSelecionarChamado}
-          />
+          /> */}
         </MDBTabsPane>
 
         <MDBTabsPane className='container mt-4' show={appTab === 'tabClientes'}>
-          <Clientes clientes={clientes} />
+          <Clientes clientes={clientes} chamados={chamados} />
         </MDBTabsPane>
 
       </MDBTabsContent>
