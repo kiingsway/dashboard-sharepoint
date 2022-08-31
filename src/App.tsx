@@ -188,6 +188,9 @@ function App() {
           /> */}
         </MDBTabsPane>
         <MDBTabsPane className='container-fluid m-0 p-0' show={appTab === 'tabChamados'}>
+          <Chamados
+            chamados={chamados}
+          />
           {/* <Chamados
             clientes={clientes}
             chamados={chamados}
@@ -197,11 +200,10 @@ function App() {
           /> */}
         </MDBTabsPane>
         <MDBTabsPane className='container mt-4' show={appTab === 'tabDashboard'}>
-          {/* <Dashboard
+          <Dashboard
             clientes={clientes}
             chamados={chamados}
-            handleSelecionarChamado={handleSelecionarChamado}
-          /> */}
+          />
         </MDBTabsPane>
 
         <MDBTabsPane className='container mt-4' show={appTab === 'tabClientes'}>

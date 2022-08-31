@@ -91,11 +91,6 @@ export default function ModalChamados(props: Props) {
 
       const dataTable = props.tileSelecionada?.Values.map((item: any) => ({ ...item, id: `${item.Cliente.Id}#${item.Id}` }))
 
-      console.log('dataTable: ')
-      console.table(dataTable)
-      console.log("clientesColumns: ")
-      console.table(clientesColumns)
-
       return (
 
         <div style={{ height: 800, width: '100%', backgroundColor: 'white' }}>

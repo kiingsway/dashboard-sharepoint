@@ -13,7 +13,7 @@ import { faBuilding } from '@fortawesome/free-regular-svg-icons';
 interface Props {
   chamados: IChamado[]
   clientes: ICliente[]
-  handleSelecionarChamado: (chamado: IChamado) => void
+  // handleSelecionarChamado: (chamado: IChamado) => void
 }
 
 export default function Dashboard(props: Props) {
@@ -94,7 +94,7 @@ export default function Dashboard(props: Props) {
 
   function handleSelecionarChamadoViaModal(chamado: IChamado) {
     setModalChamados(!modalChamados)
-    props.handleSelecionarChamado(chamado)
+    // props.handleSelecionarChamado(chamado)
   }
 
   return (

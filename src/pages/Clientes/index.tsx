@@ -8,14 +8,21 @@ import {
   MDBCardText,
   MDBCardTitle,
   MDBBtn,
-  MDBTooltip
+  MDBTooltip,
+  MDBTabs,
+  MDBTabsContent,
+  MDBTabsItem,
+  MDBTabsLink,
+  MDBTabsPane,
+  MDBIcon
 } from 'mdb-react-ui-kit';
 import { IChamado, ICliente } from 'interfaces';
-import { faCalendar, faGlobe, faList, faListSquares } from '@fortawesome/free-solid-svg-icons';
+import { faCalendar, faGlobe, faInfoCircle, faList, faListSquares } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { DateTime } from 'luxon'
 import classNames from 'classnames';
 import URIs from '../../services/uris.json'
+import { useState } from 'react';
 
 interface Props {
   clientes: ICliente[]
@@ -23,6 +30,15 @@ interface Props {
 }
 
 export default function Clientes(props: Props) {
+  const [basicActive, setBasicActive] = useState('tab1');
+
+  const handleBasicClick = (value: string) => {
+    if (value === basicActive) {
+      return;
+    }
+
+    setBasicActive(value);
+  };
 
   return (
     <MDBRow>
@@ -39,18 +55,20 @@ export default function Clientes(props: Props) {
 
           <MDBCol key={cliente.ID} size={12} sm={6} md={4} xl={3} xxl={2} className='mb-4'>
             <MDBCard className='h-100 bg-dark text-light'>
-              <div style={{ height: '150px' }}>
+              <div className='bg-light rounded-top' style={{ height: '150px' }}>
 
                 <MDBCardImage
                   src={cliente?.logo?.Url}
                   alt={cliente.Title}
-                  className='p-5 bg-light'
+                  className='p-4'
                   position='top'
+                  style={{ overflow: 'hidden', maxHeight: '150px' }}
                 />
 
               </div>
               <MDBCardBody className='text-center shadow bg-dark'>
                 <MDBCardTitle className=''>{cliente.Title}</MDBCardTitle>
+
                 <MDBCardText className=' fw-light my-3'>
                   <MDBCol className={classNames({ 'invisible': !qtdChamadosPorCliente })} style={{ cursor: 'default' }}>
 
@@ -79,14 +97,25 @@ export default function Clientes(props: Props) {
               <MDBCardFooter className='shadow-inner'>
                 <div className='d-flex justify-content-evenly my-2'>
 
-                  <MDBBtn outline className='me-2 shadow-inner' color='light' target='__blank' href={urlCliente} title={'Abrir portal de chamados da ' + cliente.Title + ' em outra aba...'}>
-                    <FontAwesomeIcon icon={faGlobe} className='me-2' />
+                  <MDBBtn outline
+                    className='me-2 shadow-inner'
+                    color='light'
+                    target='__blank'
+                    href={urlCliente}
+                    title={'Abrir portal de chamados da ' + cliente.Title + ' em outra aba...'}>
+
+                    <FontAwesomeIcon
+                      icon={faGlobe}
+                      className='me-2' />
+
                     Portal
                   </MDBBtn>
-                  <MDBBtn outline className='me-2 shadow-inner' color='light' target='__blank' href={urlClienteForm}title={'Abrir a lista de chamados da ' + cliente.Title + ' em outra aba...'}>
+
+                  <MDBBtn outline className='me-2 shadow-inner' color='light' target='__blank' href={urlClienteForm} title={'Abrir a lista de chamados da ' + cliente.Title + ' em outra aba...'}>
                     <FontAwesomeIcon icon={faList} className='me-2' />
                     Lista
                   </MDBBtn>
+
                 </div>
 
               </MDBCardFooter>
