@@ -57,7 +57,7 @@ export default function HeaderApp(props: Props) {
               <MDBBtn
                 type='button'
                 color='light'
-                className='mx-1 my-1 border-0'
+                className='mx-1 my-1 border-0 d-none'
                 outline={props.appTab !== 'tabFormChamado'}
                 onClick={() => handleSetAppTab('tabFormChamado')}>
 

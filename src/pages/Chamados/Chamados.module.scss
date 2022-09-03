@@ -1,5 +1,48 @@
-#colId {
-    width: 10px;
+.wb {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-bottom: 0px !important;
+}
+
+.btng {
+    border-width: 3px !important;
+    font-weight: 500 !important;
+}
+
+.th_filter {
+    border: 1px solid transparent;
+    &:hover {
+        border: 1px solid #AAA;
+    }
+}
+
+.col {
+    text-align: center;
+    overflow: hidden;
+    // border-left: 1px solid white;
+    // border-right: 1px solid white;
+    &_Attachments {
+        min-width: 100px;
+        width: 120px;
+    }
+    &_Id {
+        min-width: 110px;
+        width: 130px;
+    }
+    &_Cliente {
+        width: 100px;
+    }
+    &_Bug {
+        min-width: 110px;
+        width: 110px;
+    }
+    &_Modified {
+        min-width: 100px;
+    }
+    &_EmailCliente {
+        min-width: 100px;
+    }
 }
 
 #colCliente {
@@ -48,4 +91,30 @@
 
 .w-95 {
     width: 95% !important
+}
+
+.filterBadge {
+    line-height: 1em;
+    border: 1px solid #CCC;
+    &>div {
+        padding: 2px 1px 1px 10px;
+    }
+    &_Value {
+        padding-top: 10px;
+        color: #EEE;
+        line-height: 1.1em;
+        margin-right: 10px;
+    }
+    &_Field {
+        padding-left: 5px;
+        color: #CCC;
+        font-size: 13px;
+    }
+    &_Close {
+        font-size: 16px !important;
+    }
+}
+
+.text_normal {
+    text-transform: initial !important;
 }

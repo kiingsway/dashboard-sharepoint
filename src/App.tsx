@@ -25,7 +25,7 @@ function App() {
   const [clientes, setClientes] = useState<ICliente[]>([]);
   const [chamadoSelecionado, setChamadoSelecionado] = useState<IChamadoSelecionado>({ Id: 0 })
   const [feriados, setFeriados] = useState<ILocalStorageFeriado>({});
-  const [appTab, setAppTab] = useState<TAppTabs>('tabFormChamado');
+  const [appTab, setAppTab] = useState<TAppTabs>('tabChamados');
   const [erros, setErros] = useState([]);
   const [atualizacaoSecao, setAtualizacaoSecao] = useState<IAtualizacaoSecao>({ clientes: false, chamados: false, slcChamados: false, formChamados: false });
 
@@ -55,7 +55,15 @@ function App() {
   function handleGetClientesChamados() {
 
     setClientes(bClientes)
-    setChamados(bChamados.map((chamado: any) => ({ ...chamado, diasCorridosSemAtualizar: parseFloat(chamado.diasCorridosSemAtualizar) })))
+    setChamados(bChamados.map((chamado: any) => (
+      {
+        ...chamado,
+        diasUteisSemAtualizar: parseFloat(chamado.diasUteisSemAtualizar),
+        diasCorridosSemAtualizar: parseFloat(chamado.diasCorridosSemAtualizar),
+        ClienteTitle: chamado.Cliente.Title,
+        AtribuidaTitle: chamado.Atribuida?.Title || null,
+      }
+    )))
     return
 
     setAtualizacaoSecao(prevAtt => ({ ...prevAtt, clientes: true, chamados: true }));
@@ -187,7 +195,7 @@ function App() {
             handleAtualizarChamadoLista={handleAtualizarChamadoLista}
           /> */}
         </MDBTabsPane>
-        <MDBTabsPane className='container-fluid m-0 p-0' show={appTab === 'tabChamados'}>
+        <MDBTabsPane className='m-0 p-0' show={appTab === 'tabChamados'}>
           <Chamados
             chamados={chamados}
           />
@@ -206,7 +214,7 @@ function App() {
           />
         </MDBTabsPane>
 
-        <MDBTabsPane className='container mt-4' show={appTab === 'tabClientes'}>
+        <MDBTabsPane show={appTab === 'tabClientes'}>
           <Clientes clientes={clientes} chamados={chamados} />
         </MDBTabsPane>
 
