@@ -1,13 +1,11 @@
-import { faBars, faBatteryCar, faBug, faChartColumn, faClipboard, faClose, faEdit, faEnvelopeOpen, faFileCode, faFileCsv, faFileExcel, faFileLines, faFilePdf, faFilePowerpoint, faFileWord, faFileZipper, faIdCard, faImage, faLaptopFile, faList, faObjectGroup, faPaperclip, faProjectDiagram, faSearch, faSitemap, faTableList, faVideo, IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { faBug, faChartColumn, faClose, faEdit, faEnvelopeOpen, faFileCode, faFileCsv, faFileExcel, faFileLines, faFilePdf, faFilePowerpoint, faFileWord, faFileZipper, faIdCard, faImage, faLaptopFile, faList, faObjectGroup, faPaperclip, faProjectDiagram, faSearch, faSitemap, faVideo, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { IChamado, IChamadoSelecionado } from 'interfaces'
-import { MDBTable, MDBTableHead, MDBTableBody, MDBBadge, MDBBtn, MDBContainer, MDBCol, MDBRow, MDBDropdown, MDBDropdownItem, MDBDropdownMenu, MDBDropdownToggle, MDBDropdownLink, MDBTooltip, MDBInputGroup, MDBNavbar, MDBCard, MDBCardBody, MDBCardText, MDBCardTitle, MDBBtnGroup } from 'mdb-react-ui-kit'
+import { IChamado } from 'interfaces'
+import { MDBTable, MDBTableHead, MDBTableBody, MDBBadge, MDBBtn, MDBCol, MDBRow, MDBTooltip, MDBInputGroup, MDBNavbar, MDBCard, MDBCardBody, MDBBtnGroup, MDBContainer } from 'mdb-react-ui-kit'
 import React, { useEffect, useState } from 'react'
-import { FloatingLabel, Form } from 'react-bootstrap';
 import styles from './Chamados.module.scss'
 import URIs from '../../services/uris.json'
 import classNames from 'classnames';
-import { style } from '@mui/system';
 import { DateTime } from 'luxon'
 
 interface Props {
@@ -140,7 +138,7 @@ export default function Chamados(props: Props) {
 
   return (
     <>
-      <MDBNavbar dark style={{ backgroundColor: '#292E33' }} className='mb-4 flex-nowrap align-items-end'>
+      <MDBNavbar dark style={{ backgroundColor: '#292E33' }} className=' flex-nowrap align-items-end'>
         <div className='d-flex flex-wrap' style={{ width: '60%' }}>
           {filter.map(f => {
             const campo = camposChamado.filter(c => c.InternalName === f.field)[0];
@@ -209,97 +207,182 @@ export default function Chamados(props: Props) {
         </div>
       </MDBNavbar>
 
-      <MDBTable color='dark' borderless responsive hover className='text-break mx-0' style={{ tableLayout: 'fixed' }}>
-        <MDBTableHead>
-          <tr>
-            <th scope='col' className={styles.wb}>Anexos</th>
-            <th scope='col' className={styles.wb}>ID</th>
-            <th scope='col' className={styles.wb}>Cliente</th>
-            <th scope='col' className={styles.wb}>Título</th>
-            <th scope='col' className={styles.wb}>Bug em Produção?</th>
-            <th scope='col' className={styles.wb}>Status</th>
-            <th scope='col' className={styles.wb}>Atribuído</th>
-            <th scope='col' className={styles.wb}>Descrição</th>
-            <th scope='col' className={styles.wb}>Tipo de Solicitação</th>
-            <th scope='col' className={styles.wb}>Modificado</th>
-            <th scope='col' className={styles.wb}>Email do cliente</th>
-          </tr>
-          <tr>
-            <th scope='col'><FilterSelect name='Attachments' /></th>
-            <th scope='col'></th>
-            <th scope='col'><FilterSelect name='ClienteTitle' /></th>
-            <th scope='col'></th>
-            <th scope='col'><FilterSelect name='BugEmProducao' /></th>
-            <th scope='col'><FilterSelect name='StatusDaQuestao' /></th>
-            <th scope='col'><FilterSelect name='AtribuidaTitle' /></th>
-            <th scope='col'></th>
-            <th scope='col'><FilterSelect name='TipoSolicitacao' /></th>
-            <th scope='col'></th>
-            <th scope='col'><FilterSelect name='EmailCliente' /></th>
-          </tr>
-        </MDBTableHead>
-        <MDBTableBody className='w-100' style={{ borderTop: '1px solid #DDD' }}>
-          {chamadosFiltrados.map(chamado => {
+      <div className={styles.tableFixHead}>
 
-            if (view === 'card') return (
-              <tr>
-                <td colSpan={11}>
-                  <MDBCard border='light' className='w-100 bg-dark' >
-                    <MDBCardBody className='w-100'>
 
-                      <MDBRow>
-                        <MDBCol size={2} className='me-0'>
+        <MDBTable color='dark' borderless responsive hover className='text-break mx-0' style={{ tableLayout: 'fixed' }}>
+          <MDBTableHead className={styles.table_chamados}>
+            <tr>
+              <th scope='col' className={styles.wb}>Anexos</th>
+              <th scope='col' className={styles.wb}>ID</th>
+              <th scope='col' className={styles.wb}>Cliente</th>
+              <th scope='col' className={styles.wb}>Título</th>
+              <th scope='col' className={styles.wb}>Bug em Produção?</th>
+              <th scope='col' className={styles.wb}>Status</th>
+              <th scope='col' className={styles.wb}>Atribuído</th>
+              <th scope='col' className={styles.wb}>Descrição</th>
+              <th scope='col' className={styles.wb}>Tipo de Solicitação</th>
+              <th scope='col' className={styles.wb}>Modificado</th>
+              <th scope='col' className={styles.wb}>Email do cliente</th>
+            </tr>
+            <tr>
+              <th scope='col'><FilterSelect name='Attachments' /></th>
+              <th scope='col'></th>
+              <th scope='col'><FilterSelect name='ClienteTitle' /></th>
+              <th scope='col'></th>
+              <th scope='col'><FilterSelect name='BugEmProducao' /></th>
+              <th scope='col'><FilterSelect name='StatusDaQuestao' /></th>
+              <th scope='col'><FilterSelect name='AtribuidaTitle' /></th>
+              <th scope='col'></th>
+              <th scope='col'><FilterSelect name='TipoSolicitacao' /></th>
+              <th scope='col'></th>
+              <th scope='col'><FilterSelect name='EmailCliente' /></th>
+            </tr>
+          </MDBTableHead>
+          <MDBTableBody className={`w-100 ${styles.chamados_body}`}>
+            {chamadosFiltrados.map((chamado: IChamado) => {
+
+              const comBug = chamado.BugEmProducao?.toString()?.toLowerCase()?.includes('sim');
+
+              if (view === 'card') return (
+                <tr key={`${chamado.Cliente.Id}#${chamado.Id}`}>
+                  <td colSpan={11} className='d-non'>
+                    <MDBRow className=' m-0 justify-content-start'>
+
+                      <MDBCol size={12} sm={6} className='d-flex align-items-center'>
+
+                        <MDBCol size={12} sm={1} >
+                          <AttachmentsElm chamado={chamado} />
+                        </MDBCol>
+
+                        <MDBCol size={12} sm={2} style={{ maxWidth: '150px' }}>
+                          <IdElm chamado={chamado} />
+                        </MDBCol>
+
+                        <MDBCol size={12} sm={2} style={{ width: '150px' }} className={`${styles.col_Bug} ${comBug ? '' : 'd-none'}`}>
+                          <BugElm chamado={chamado} />
+                        </MDBCol>
+
+                        <MDBCol size={'auto'} className='ms-2 '>
+                          <MDBRow>
+                            <TitleElm chamado={chamado} className='fs-6' />
+                          </MDBRow>
+
+                          <MDBRow className='justify-content-start'>
+                            <ClienteElm chamado={chamado} className='py-0 text-muted' />
+                          </MDBRow>
+                        </MDBCol>
+                      </MDBCol>
+
+                      <MDBCol size={12} sm={6} className='d-flex align-items-center'>
+
+                        <MDBRow>
+                          <StatusElm chamado={chamado} />
+                        </MDBRow>
+
+                      </MDBCol>
+
+                    </MDBRow>
+                  </td>
+
+                  <td colSpan={11} className='d-none'>
+
+                    <MDBContainer
+                      className='p-0 m-0 d-flex justify-content-between border rounded border-light'>
+
+                      <MDBRow className='align-items-center'>
+                        <MDBCol size='auto' className='ps-2 pe-0' style={{ width: '100px' }}>
+                          <AttachmentsElm chamado={chamado} />
+                        </MDBCol>
+
+                        <MDBCol size='auto' className='mx-0 ps-3 pe-0'>
                           <TdId chamado={chamado} />
                         </MDBCol>
-                        <MDBCol size={10}>
+
+                        <div className='d-flex flex-nowrap align-items-center' style={{ width: '30%' }}>
+                          <MDBCol size='auto' className={`mx-1 ${comBug ? '' : 'd-none'}`}>
+                            <BugElm chamado={chamado} />
+                          </MDBCol>
+
+                          <MDBCol size='auto'>
+                            <MDBRow>
+                              <MDBCol className='fs-6' style={{ maxWidth: '400px', lineHeight: '1.3em' }}>
+                                <TdTitle chamado={chamado} />
+                              </MDBCol>
+                            </MDBRow>
+                            <MDBRow>
+                              <MDBCol>
+                                <small className='text-muted'>{chamado.Cliente.Title}</small>
+
+                              </MDBCol>
+                            </MDBRow>
+                          </MDBCol>
+
+                        </div>
+                        <MDBCol size='auto' className='text-center' style={{ width: '200px' }} >
                           <MDBRow>
-                            <MDBCol>
-                              {chamado.Cliente.Title}
-                            </MDBCol>
+                            <StatusElm chamado={chamado} />
                           </MDBRow>
                           <MDBRow>
-                            <MDBCol>
-                              <TdTitle chamado={chamado} />
-                            </MDBCol>
-
-
+                            <span
+                              className={!chamado.Atribuida?.Title ? 'text-danger' : ''}
+                              title={chamado.Atribuida?.Title ? chamado.Atribuida?.Title : '(sem atribuição)'}>
+                              {chamado.Atribuida?.Title ? chamado.Atribuida?.Title : '(sem atribuição)'}
+                            </span>
+                          </MDBRow>
+                        </MDBCol>
+                        <MDBCol size='auto' className='text-center' style={{ width: '200px' }} >
+                          <MDBRow>
+                            <span>
+                              {chamado.TipoSolicitacao}
+                            </span>
+                          </MDBRow>
+                          <MDBRow>
+                            <small>
+                              {chamado.EmailCliente}
+                            </small>
+                          </MDBRow>
+                        </MDBCol>
+                        <MDBCol size='auto' className='text-center' style={{ width: '200px' }} >
+                          <MDBRow>
+                            <ModifiedElm chamado={chamado} />
                           </MDBRow>
                         </MDBCol>
                       </MDBRow>
+                    </MDBContainer>
 
-                    </MDBCardBody>
-                  </MDBCard>
-                </td>
+                  </td>
 
-              </tr>
-            );
-            else return (
-              <tr key={`${chamado.Cliente.Id}#${chamado.Id}`}>
-                <TdAttachments chamado={chamado} />
-                <TdId chamado={chamado} />
-                <TdCliente chamado={chamado} />
-                <TdTitle chamado={chamado} />
-                <TdBug chamado={chamado} />
-                <TdStatusDaQuestao chamado={chamado} />
-                <TdAtribuida chamado={chamado} />
-                <TdDescricaoDemanda chamado={chamado} />
-                <TdTipoSolicitacao chamado={chamado} />
-                <TdModified chamado={chamado} />
-                <TdEmailCliente chamado={chamado} />
-              </tr>
-            )
-          })}
-        </MDBTableBody>
-      </MDBTable>
+                </tr>
+              );
+              else return (
+                <tr key={`${chamado.Cliente.Id}#${chamado.Id}`}>
+                  <TdAttachments chamado={chamado} />
+                  <TdId chamado={chamado} />
+                  <TdCliente chamado={chamado} />
+                  <TdTitle chamado={chamado} className='text-center' />
+                  <TdBug chamado={chamado} className='text-center' />
+                  <TdStatusDaQuestao chamado={chamado} className='text-center' />
+                  <TdAtribuida chamado={chamado} className='text-center' />
+                  <TdDescricaoDemanda chamado={chamado} />
+                  <TdTipoSolicitacao chamado={chamado} className='text-center' />
+                  <TdModified chamado={chamado} className='text-center' />
+                  <TdEmailCliente chamado={chamado} className='text-center' />
+                </tr>
+              )
+            })}
+          </MDBTableBody>
+        </MDBTable>
+      </div>
     </>
   )
 }
 
-interface ITdProps { chamado: IChamado }
+interface IElmProps { chamado: IChamado, className?: string | undefined }
 
-type TFileType = 'image' | 'design' | 'video' | 'csv' | 'site' | 'compacted' | 'pdf' | 'bi' | 'word' | 'powerpoint' | 'excel' | 'email' | 'txt' | 'exe' | 'code' | 'project' | undefined;
+type TFileType = 'image' | 'design' | 'video' | 'csv' | 'site' | 'compacted' | 'pdf' | 'pbi' | 'word' | 'powerpoint' | 'excel' | 'email' | 'txt' | 'exe' | 'code' | 'project' | undefined;
 
-const TdAttachments = (pr: ITdProps) => {
+const TdAttachments = (pr: IElmProps) => {
 
   const dataAttachments = pr.chamado.AttachmentFiles?.map((anexo: any) => {
 
@@ -358,14 +441,14 @@ const TdAttachments = (pr: ITdProps) => {
       case 'ai':
         icon = faObjectGroup; type = 'design'; break;
       case 'pbix':
-        icon = faChartColumn; type = 'bi'; break;
+        icon = faChartColumn; type = 'pbi'; break;
       case 'sppkg':
         icon = faSitemap; type = 'site'; break;
       default:
-        icon = icon; type = undefined; break;
+        type = undefined; break;
     }
 
-    const PClientesHost = /^(?:\w+\:\/\/)?([^\/]+)([^\?]*)\??(.*)$/.exec(URIs.PClientes);
+    const PClientesHost = /^(?:\w+)?([^]+)([^]*)?(.*)$/.exec(URIs.PClientes);
     const url = `https://${PClientesHost?.[1]}${anexo?.ServerRelativePath?.DecodedUrl}`
 
     return {
@@ -378,7 +461,7 @@ const TdAttachments = (pr: ITdProps) => {
   })
 
   return (
-    <td className={`${styles.col} ${styles.col_Attachments}`}>
+    <td className={`${styles.col} ${styles.col_Attachments} ${pr.className}`}>
       <div className='text-center' style={{ maxWidth: '120px' }}>
 
         {dataAttachments?.map((anexo: any) => {
@@ -419,19 +502,8 @@ const TdAttachments = (pr: ITdProps) => {
       </div>
     </td>
   )
-  return (
-    <td className={`${styles.col} ${styles.col_Attachments}`}>
-      <div className='text-center'>
-        {pr.chamado.AttachmentFiles?.map(anexo => (
-          <MDBBtn outline className='border-0' color='light'>
-            <FontAwesomeIcon icon={faPaperclip} />
-          </MDBBtn>
-        ))}
-      </div>
-    </td>
-  )
 }
-const TdId = (pr: ITdProps) => {
+const TdId = (pr: IElmProps) => {
 
   const modificadoAlerta = {
     perigo: pr.chamado.diasUteisSemAtualizar >= 2.1,
@@ -440,6 +512,7 @@ const TdId = (pr: ITdProps) => {
   }
 
   const statusAlerta = {
+    muted: pr.chamado.StatusDaQuestao?.toLowerCase().includes('resolvid') || pr.chamado.StatusDaQuestao?.toLowerCase().includes('fechad'),
     atencao: pr.chamado.StatusDaQuestao === 'Aberto'
   }
 
@@ -448,6 +521,7 @@ const TdId = (pr: ITdProps) => {
   }
 
   const geralAlerta = {
+    muted: statusAlerta.muted,
     perigo: modificadoAlerta.perigo || atribuidoAlerta.perigo,
     atencao: modificadoAlerta.atencao || statusAlerta.atencao,
     sucesso: modificadoAlerta.sucesso
@@ -455,21 +529,23 @@ const TdId = (pr: ITdProps) => {
 
   // Para evitar que múltiplas classes aparecam, aqui é verificado se algum mais 'forte' está true antes de colocar true.
   const geralApenasUmTrue = {
-    perigo: geralAlerta.perigo,
-    atencao: geralAlerta.atencao && !geralAlerta.perigo,
-    sucesso: geralAlerta.sucesso && !geralAlerta.atencao && !geralAlerta.perigo
+    muted: geralAlerta.muted,
+    perigo: geralAlerta.perigo || !geralAlerta.muted,
+    atencao: geralAlerta.atencao && (!geralAlerta.perigo || !geralAlerta.muted),
+    sucesso: geralAlerta.sucesso && (!geralAlerta.atencao && (!geralAlerta.perigo || !geralAlerta.muted))
   }
 
   const uriChamado = `${URIs.PClientes}/${pr.chamado.Cliente.InternalNameSubsite}/Lists/${pr.chamado.Cliente.InternalNameSubsiteList}/EditForm.aspx?ID=${pr.chamado.Id}`;
 
   return (
-    <td className={`${styles.col} ${styles.col_Id}`}>
+    <td className={`${styles.col} ${styles.col_Id} ${pr.className}`}>
       <MDBBtn
         href={uriChamado}
         target='__blank'
+        title={`Abrir chamado #${pr.chamado.Id} da ${pr.chamado.Cliente.Title}...`}
         outline
         className={`px-3 py-2 m-0 w-100 ${styles.btng}`}
-        color={geralApenasUmTrue.perigo ? 'danger' : (geralApenasUmTrue.atencao ? 'warning' : 'success')}>
+        color={geralApenasUmTrue.muted ? 'secondary' : (geralApenasUmTrue.perigo ? 'danger' : (geralApenasUmTrue.atencao ? 'warning' : 'success'))}>
 
         <FontAwesomeIcon icon={faEdit} className='me-2' />
         #{pr.chamado.Id}
@@ -478,9 +554,9 @@ const TdId = (pr: ITdProps) => {
     </td>
   )
 }
-const TdCliente = (pr: ITdProps) => {
+const TdCliente = (pr: IElmProps) => {
   return (
-    <td className={`${styles.col} ${styles.col_Cliente}`}>
+    <td className={`${styles.col} ${styles.col_Cliente} ${pr.className}`}>
       <MDBBtn
         outline
         target='__blank'
@@ -493,17 +569,17 @@ const TdCliente = (pr: ITdProps) => {
     </td>
   )
 }
-const TdTitle = (pr: ITdProps) => {
+const TdTitle = (pr: IElmProps) => {
   return (
-    <td className={`${styles.col} ${styles.col_Title}`}>
+    <td className={`${styles.col} ${styles.col_Title} ${pr.className}`}>
       {pr.chamado.Title}
     </td>
   )
 }
-const TdBug = (pr: ITdProps) => {
+const TdBug = (pr: IElmProps) => {
   const bugEmProd = pr.chamado.BugEmProducao?.toLowerCase() === 'sim'
   return (
-    <td className={`${styles.col} ${styles.col_Bug}`}>
+    <td className={`${styles.col} ${styles.col_Bug} ${pr.className}`}>
       <MDBBadge
         color='danger'
         className={classNames(
@@ -516,26 +592,26 @@ const TdBug = (pr: ITdProps) => {
     </td>
   )
 }
-const TdStatusDaQuestao = (pr: ITdProps) => {
+const TdStatusDaQuestao = (pr: IElmProps) => {
   const status = pr.chamado.StatusDaQuestao?.toLowerCase();
   return (
-    <td className={`${styles.col} ${styles.col_StatusDaQuestao}`}>
-      <span className={classNames({ 'text-warning': status?.includes('abert') })}>
+    <td className={`${styles.col} ${styles.col_StatusDaQuestao} ${pr.className}`}>
+      <span className={classNames({ 'text-warning': status?.includes('abert') }, { 'text-muted': status?.includes('resolvid') || status?.includes('fechad') })}>
         {pr.chamado.StatusDaQuestao}
       </span>
     </td>
   )
 }
-const TdAtribuida = (pr: ITdProps) => {
+const TdAtribuida = (pr: IElmProps) => {
   return (
-    <td className={`${styles.col} ${styles.col_Atribuida} ${pr.chamado.Atribuida?.Title ? '' : 'text-danger'}`}>
+    <td className={`${styles.col} ${pr.className} ${styles.col_Atribuida} ${pr.chamado.Atribuida?.Title ? '' : 'text-danger'}`}>
       {pr.chamado.Atribuida?.Title ? pr.chamado.Atribuida.Title : '(sem atribuição)'}
     </td>
   )
 }
-const TdDescricaoDemanda = (pr: ITdProps) => {
+const TdDescricaoDemanda = (pr: IElmProps) => {
   return (
-    <td className={`${styles.col} ${styles.col_DescricaoDemanda}`}>
+    <td className={`${styles.col} ${styles.col_DescricaoDemanda} ${pr.className}`}>
       <div
         style={{ maxHeight: '200px', maxWidth: '300px', overflow: 'auto' }}
         dangerouslySetInnerHTML={{ '__html': `${pr.chamado.DescricaoDemanda}` }}
@@ -543,14 +619,14 @@ const TdDescricaoDemanda = (pr: ITdProps) => {
     </td>
   )
 }
-const TdTipoSolicitacao = (pr: ITdProps) => {
+const TdTipoSolicitacao = (pr: IElmProps) => {
   return (
-    <td className={`${styles.col} ${styles.col_TipoSolicitacao}`}>
+    <td className={`${styles.col} ${styles.col_TipoSolicitacao} ${pr.className}`}>
       {pr.chamado.TipoSolicitacao}
     </td>
   )
 }
-const TdModified = (pr: ITdProps) => {
+const TdModified = (pr: IElmProps) => {
 
   const modificadoAlerta = {
     perigo: pr.chamado.diasUteisSemAtualizar >= 2.1,
@@ -558,27 +634,274 @@ const TdModified = (pr: ITdProps) => {
     sucesso: pr.chamado.diasUteisSemAtualizar < 1.7
   }
 
-  return (
-    <td className={`${styles.col} ${styles.col_Modified}`}>
-      <p title={`${pr.chamado.diasCorridosSemAtualizar} dias corridos sem modificar`}>
-        <span
+  const dtModified = DateTime.fromISO(pr.chamado.Modified);
+  const formatModified = dtModified.toFormat('yy') === DateTime.now().toFormat('yy') ? 'dd/LL - HH:mm' : 'dd/LL/yy - HH:mm';
 
-          className={classNames(
-            { 'text-danger': modificadoAlerta.perigo },
-            { 'text-warning': modificadoAlerta.atencao },
-            { 'text-success': modificadoAlerta.sucesso }
-          )}>{pr.chamado.diasUteisSemAtualizar}</span> dias úteis sem modificar
-      </p>
-      <p title={pr.chamado.Modified}>
-        {DateTime.fromISO(pr.chamado.Modified).toFormat('dd/LL - HH:mm')}
-      </p>
+  return (
+    <td className={`${styles.col} ${styles.col_Modified} ${pr.className}`}>
+      <span title={`${pr.chamado.diasCorridosSemAtualizar} dias corridos sem modificar`}>
+        <span className={classNames(
+          'd-block',
+          { 'text-danger': modificadoAlerta.perigo },
+          { 'text-warning': modificadoAlerta.atencao },
+          { 'text-success': modificadoAlerta.sucesso }
+        )}>{pr.chamado.diasUteisSemAtualizar}</span> dias úteis sem modificar
+      </span>
+      <span title={pr.chamado.Modified} className='m-0 d-block'>
+        {dtModified.toFormat(formatModified)}
+      </span>
     </td>
   )
 }
-const TdEmailCliente = (pr: ITdProps) => {
+const TdEmailCliente = (pr: IElmProps) => {
   return (
-    <td className={`${styles.col} ${styles.col_EmailCliente}`}>
+    <td className={`${styles.col} ${styles.col_EmailCliente} ${pr.className}`}>
       {pr.chamado.EmailCliente}
     </td>
+  )
+}
+
+const fieldStatus = (chamado: IChamado) => {
+  type TColors = 'secondary' | 'danger' | 'warning' | 'success';
+  interface IColors { Id: TColors; Bug: TColors; Status: TColors; Atribuida: TColors; diasUteis: TColors; }
+
+  /** * Variável apenas para encurtar expressões */
+  const ch_exp = {
+    bug: chamado.BugEmProducao === 'Sim',
+    emAberto: chamado.StatusDaQuestao?.toLowerCase().includes('abert') || false,
+    fechado: chamado.StatusDaQuestao?.toLowerCase().includes('resolvid') || chamado.StatusDaQuestao?.toLowerCase().includes('fechad') || false,
+    vencido: chamado.diasUteisSemAtualizar >= 2.2,
+    quaseVencendo: chamado.diasUteisSemAtualizar >= 1.7 && chamado.diasUteisSemAtualizar < 2.2,
+    atualizado: chamado.diasUteisSemAtualizar < 1.7,
+    atribuido: Boolean(chamado.Atribuida?.Title)
+  }
+
+  const colors: IColors = {
+    Id: ch_exp.fechado ? 'secondary' :
+      (ch_exp.vencido || !ch_exp.atribuido ? 'danger'
+        : (ch_exp.emAberto || ch_exp.quaseVencendo ? 'warning'
+          : 'success'
+        )
+      ),
+    Bug: ch_exp.bug ? 'danger' : 'success',
+    Status: ch_exp.emAberto ? 'warning' : (ch_exp.fechado ? 'secondary' : 'success'),
+    Atribuida: ch_exp.atribuido ? 'success' : 'danger',
+    diasUteis: ch_exp.fechado ? 'secondary' : (ch_exp.vencido ? 'danger' : (ch_exp.quaseVencendo ? 'warning' : 'success'))
+  }
+
+  return colors
+}
+
+const AttachmentsElm = (pr: IElmProps) => {
+
+  if (!pr.chamado.AttachmentFiles.length) return <></>
+
+  const dataAttachments = pr.chamado.AttachmentFiles.map(anexo => {
+
+    const formatFile = anexo.FileName.split('.').pop().toLowerCase();
+    let icon: IconDefinition = faPaperclip;
+    let type: TFileType;
+
+    switch (formatFile) {
+      case 'json':
+      case 'xml':
+      case 'har':
+      case 'js':
+      case 'html':
+      case 'css':
+        icon = faFileCode; type = 'code'; break;
+      case 'avi':
+      case 'mp4':
+      case 'mkv':
+      case 'gif':
+      case 'wmv':
+        icon = faVideo; type = 'video'; break;
+      case 'png':
+      case 'jpeg':
+      case 'jpg':
+      case 'svg':
+      case 'ico':
+        icon = faImage; type = 'image'; break;
+      case 'zip':
+      case 'rar':
+      case '7z':
+      case 'gz':
+        icon = faFileZipper; type = 'compacted'; break;
+      case 'xls':
+      case 'xlsm':
+      case 'xlsx':
+        icon = faFileExcel; type = 'excel'; break;
+      case 'ppt':
+      case 'pptx':
+        icon = faFilePowerpoint; type = 'powerpoint'; break;
+      case 'doc':
+      case 'docx':
+        icon = faFileWord; type = 'word'; break;
+      case 'msg':
+      case 'eml':
+        icon = faEnvelopeOpen; type = 'email'; break;
+      case 'csv':
+        icon = faFileCsv; type = 'csv'; break;
+      case 'txt':
+        icon = faFileLines; type = 'txt'; break;
+      case 'pdf':
+        icon = faFilePdf; type = 'pdf'; break;
+      case 'exe':
+        icon = faLaptopFile; type = 'exe'; break;
+      case 'vsdx':
+        icon = faProjectDiagram; type = 'project'; break;
+      case 'ai':
+        icon = faObjectGroup; type = 'design'; break;
+      case 'pbix':
+        icon = faChartColumn; type = 'pbi'; break;
+      case 'sppkg':
+        icon = faSitemap; type = 'site'; break;
+      default:
+        type = undefined; break;
+    }
+
+    const url = `${URIs.PClientes.split('/sites/')[0]}${anexo.ServerRelativePath.DecodedUrl}`;
+
+    return {
+      ...anexo,
+      formatFile,
+      icon,
+      type,
+      url
+    }
+  })
+
+  return (
+    <div className='d-flex flex-row flex-wrap justify-content-center ms-2'>
+
+      {dataAttachments.map(anexo => {
+
+        const TooltipContent = () => (
+          <div className='text-start' >
+            <img
+              src={anexo.url}
+              className={classNames('img-thumbnail my-1', { 'd-none': anexo.type !== 'image' })}
+              alt='...'
+            />
+            <p className='p-0 m-0 fw-bold' style={{ fontSize: '16px' }}>{anexo.FileName}</p>
+            <p className='p-0 m-0'>{anexo.ServerRelativePath.DecodedUrl}</p>
+            <span className='text-muted'>Clique para abrir...</span>
+          </div>
+        )
+
+        return (
+          <MDBTooltip
+            key={anexo.FileName}
+            wrapperProps={{ width: '200px' }}
+            wrapperClass='p-0 m-0 bg-transparent border-0'
+            title={<TooltipContent />}
+          >
+            <MDBBtn
+              outline
+              color='light'
+              className='mx-0 border-0'
+              href={anexo.url}
+              target='__blank'>
+
+              <FontAwesomeIcon icon={anexo.icon} />
+            </MDBBtn>
+          </MDBTooltip>
+        )
+      })}
+    </div>
+  )
+}
+const IdElm = (pr: IElmProps) => {
+
+  const color = fieldStatus(pr.chamado).Id;
+
+  const uriChamado = `${URIs.PClientes}/${pr.chamado.Cliente.InternalNameSubsite}/Lists/${pr.chamado.Cliente.InternalNameSubsiteList}/EditForm.aspx?ID=${pr.chamado.Id}`;
+
+  return (
+
+    <MDBBtn
+      href={uriChamado}
+      target='__blank'
+      title={`Abrir chamado #${pr.chamado.Id} da ${pr.chamado.Cliente.Title}...`}
+      outline
+      className={`px-3 py-2 m-0 w-100 shadow ${styles.btng}`}
+      color={color}>
+
+      <FontAwesomeIcon icon={faEdit} className='' />
+      <span>#{pr.chamado.Id}</span>
+    </MDBBtn>
+  )
+}
+const TitleElm = (pr: IElmProps) => {
+  return (
+    <span className={pr.className} style={{ lineHeight: '1em' }}>
+      {pr.chamado.Title}
+    </span>
+  )
+}
+const ClienteElm = (pr: IElmProps) => {
+
+  return (
+
+    <MDBBtn
+      outline
+      style={{ width: 'fit-content' }}
+      target='__blank'
+      title={`Ir para o portal da ${pr.chamado.Cliente.Title}...`}
+      href={`${URIs.PClientes}/${pr.chamado.Cliente.InternalNameSubsite}`}
+      className={`border-0 ${pr.className} ${styles.text_normal}`} color='light'>
+      {pr.chamado.Cliente.Title}
+
+    </MDBBtn>
+  )
+}
+const BugElm = (pr: IElmProps) => {
+
+  const comBug = pr.chamado.BugEmProducao?.toLowerCase() === 'sim';
+
+  if (comBug) return (
+    <MDBBadge
+      style={{ cursor: 'default' }}
+      color='danger'
+      className='fs-6'
+      title='Bug em Produção!'>
+      <FontAwesomeIcon icon={faBug} className='me-2' />
+      Bug
+    </MDBBadge>
+  )
+  else return <span className={styles.fs_12px}>{pr.chamado.BugEmProducao}</span>
+
+}
+const StatusElm = (pr: IElmProps) => {
+
+  const colorStatus = fieldStatus(pr.chamado).Status
+  const color = colorStatus === 'success' ? 'light' : colorStatus;
+
+  return (
+    <div className='text-center'>
+      <span className={`text-${color}`}>{pr.chamado.StatusDaQuestao}</span>
+    </div>
+  )
+}
+const ModifiedElm = (pr: IElmProps) => {
+
+  const colorDiasUteis = fieldStatus(pr.chamado).diasUteis
+  const dtModified = DateTime.fromISO(pr.chamado.Modified);
+  const formatModified = dtModified.toFormat('yy') === DateTime.now().toFormat('yy') ? 'dd/LL  HH:mm' : 'dd/LL/yy  HH:mm';
+
+  return (
+    <div
+      className={`text-center`}
+      title={`${pr.chamado.diasCorridosSemAtualizar} dias corridos sem modificar`}>
+
+      <span className='d-block'>
+        <span className={`text-${colorDiasUteis}`}>{pr.chamado.diasUteisSemAtualizar}</span> dias úteis sem modificar
+      </span>
+
+      <span className='d-block'>
+        {dtModified.toFormat(formatModified)}
+      </span>
+
+    </div>
   )
 }

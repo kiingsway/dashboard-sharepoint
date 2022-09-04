@@ -4,7 +4,7 @@ export type TAppTabs = 'tabFormChamado' | 'tabChamados' | 'tabDashboard' | 'tabC
 
 export interface IChamado {
   Attachments: boolean | undefined;
-  AttachmentFiles?: IAttachmentsSharepoint[];
+  AttachmentFiles: IAttachmentsSharepoint[] | any[];
   BugEmProducao: string;
   TipoSolicitacao: string;
   EmailCliente: string;

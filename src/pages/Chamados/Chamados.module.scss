@@ -8,6 +8,10 @@
 .btng {
     border-width: 3px !important;
     font-weight: 500 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-evenly !important;
+    flex-direction: row;
 }
 
 .th_filter {
@@ -17,8 +21,14 @@
     }
 }
 
+.fs {
+    &_12px {
+        font-size: 12px;
+    }
+}
+
 .col {
-    text-align: center;
+    // text-align: center;
     overflow: hidden;
     // border-left: 1px solid white;
     // border-right: 1px solid white;
@@ -27,15 +37,16 @@
         width: 120px;
     }
     &_Id {
-        min-width: 110px;
-        width: 130px;
+        width: 85px;
+        overflow: hidden;
     }
     &_Cliente {
         width: 100px;
     }
     &_Bug {
-        min-width: 110px;
-        width: 110px;
+        width: -moz-fit-content;
+        width: fit-content !important;
+        overflow: hidden;
     }
     &_Modified {
         min-width: 100px;
@@ -117,4 +128,26 @@
 
 .text_normal {
     text-transform: initial !important;
+}
+
+
+/* Fix table head */
+
+.tableFixHead {
+    overflow: auto;
+    height: 800px !important;
+}
+
+.tableFixHead thead {
+    position: -webkit-sticky;
+    position: sticky !important;
+    top: 0 !important;
+}
+
+
+/* Just common table stuff. */
+
+.table_chamados {
+    border-collapse: collapse;
+    width: 100%;
 }

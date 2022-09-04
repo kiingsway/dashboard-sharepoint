@@ -49,29 +49,29 @@ export default function Clientes(props: Props) {
 
   return (
     <>
-    <MDBNavbar dark style={{ backgroundColor: '#292E33' }} className='mb-4'>
-      <div/>
-      <MDBInputGroup className='my-1 mx-4 w-25 shadow' textClass='bg-transparent border-light shadow p-0' textBefore={<IconBeforeSearch />}>
-        <input
-          className='form-control py-0 px-3 bg-transparent text-white rounded-end shadow '
-          placeholder="Pesquisar..."
-          aria-label="Pesquisar cliente"
-          type='text'
-          value={search}
-          onChange={e => setSearch(e.target.value)} />
-      </MDBInputGroup>
-    </MDBNavbar>
+      <MDBNavbar dark style={{ backgroundColor: '#292E33'}} className='shadow position-relative sticky-top'>
+        <div />
+        <MDBInputGroup className='my-1 mx-4 w-25 shadow' textClass='bg-transparent border-light shadow p-0' textBefore={<IconBeforeSearch />}>
+          <input
+            className='form-control py-0 px-3 bg-transparent text-white rounded-end shadow '
+            placeholder="Pesquisar..."
+            aria-label="Pesquisar cliente"
+            type='text'
+            value={search}
+            onChange={e => setSearch(e.target.value)} />
+        </MDBInputGroup>
+      </MDBNavbar>
 
-      <MDBContainer className='text-light' breakpoint='sm'>
-        <MDBRow>
+      <MDBContainer className='text-light overflow-auto w-100 d-flex justify-content-center' style={{ height: '80vh' }} breakpoint='sm' >
+        <MDBRow style={{maxWidth: '100vm'}}>
           {filteredClientes.map(cliente => {
 
             const chamadosDoCliente = props.chamados.filter(chamado => chamado.Cliente.Id === cliente.Id);
             const qtdChamadosPorCliente = chamadosDoCliente.length;
             const chamadosPrevia = chamadosDoCliente.map(chamado => ({ Id: chamado.Id, Title: chamado.Title }))
 
-            const urlCliente = URIs.PClientes + '/' + cliente.InternalNameSubsite;
-            const urlClienteForm = URIs.PClientes + '/' + cliente.InternalNameSubsite + '/Lists/' + cliente.InternalNameSubsiteList;
+            const urlCliente = `${URIs.PClientes}/${cliente.InternalNameSubsite}`;
+            const urlClienteForm = `${urlCliente}/Lists/${cliente.InternalNameSubsiteList}`;
 
             return (
 

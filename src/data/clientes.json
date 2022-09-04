@@ -1,651 +1,678 @@
-[{
-        "Id": 10682,
-        "Title": "Adeste",
-        "logo": {
-            "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/Adeste%20160x60.png",
-            "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/Adeste%20160x60.png"
-        },
-        "ClienteInternalName": "Adeste",
-        "InternalNameSubsite": "chamadosAdeste",
-        "InternalNameSubsiteList": "SolicitacoesCliente",
-        "Created": "2020-11-30T13:19:52Z",
-        "ID": 10682
+[
+  {
+    "Id": 10682,
+    "Title": "Adeste",
+    "logo": {
+      "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/Adeste%20160x60.png",
+      "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/Adeste%20160x60.png"
     },
-    {
-        "Id": 3866,
-        "Title": "AFIP",
-        "logo": {
-            "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/AFIP.png",
-            "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/AFIP.png"
-        },
-        "ClienteInternalName": "AFIP",
-        "InternalNameSubsite": "chamadosAFIP",
-        "InternalNameSubsiteList": "SolicitacoesCliente",
-        "Created": "2018-08-10T14:32:27Z",
-        "ID": 3866
+    "ClienteInternalName": "Adeste",
+    "InternalNameSubsite": "chamadosAdeste",
+    "InternalNameSubsiteList": "SolicitacoesCliente",
+    "Created": "2020-11-30T13:19:52Z",
+    "ID": 10682
+  },
+  {
+    "Id": 3866,
+    "Title": "AFIP",
+    "logo": {
+      "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/AFIP.png",
+      "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/AFIP.png"
     },
-    {
-        "Id": 2137,
-        "Title": "Ajinomoto",
-        "logo": {
-            "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/Ajinomoto%20(1).png",
-            "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/Ajinomoto%20(1).png"
-        },
-        "ClienteInternalName": "Ajinomoto",
-        "InternalNameSubsite": "chamadosAjinomoto",
-        "InternalNameSubsiteList": "SolicitacoesCliente",
-        "Created": "2017-04-13T17:48:55Z",
-        "ID": 2137
+    "ClienteInternalName": "AFIP",
+    "InternalNameSubsite": "chamadosAFIP",
+    "InternalNameSubsiteList": "SolicitacoesCliente",
+    "Created": "2018-08-10T14:32:27Z",
+    "ID": 3866
+  },
+  {
+    "Id": 2137,
+    "Title": "Ajinomoto",
+    "logo": {
+      "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/Ajinomoto%20(1).png",
+      "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/Ajinomoto%20(1).png"
     },
-    {
-        "Id": 9701,
-        "Title": "ArcelorMittal",
-        "logo": {
-            "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/arcelomittal_160x60.png",
-            "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/arcelomittal_160x60.png"
-        },
-        "ClienteInternalName": "ArcelorMittal",
-        "InternalNameSubsite": "chamadosArcelorMittal",
-        "InternalNameSubsiteList": "SolicitacoesCliente",
-        "Created": "2020-06-02T14:15:45Z",
-        "ID": 9701
+    "ClienteInternalName": "Ajinomoto",
+    "InternalNameSubsite": "chamadosAjinomoto",
+    "InternalNameSubsiteList": "SolicitacoesCliente",
+    "Created": "2017-04-13T17:48:55Z",
+    "ID": 2137
+  },
+  {
+    "Id": 9701,
+    "Title": "ArcelorMittal",
+    "logo": {
+      "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/arcelomittal_160x60.png",
+      "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/arcelomittal_160x60.png"
     },
-    {
-        "Id": 4847,
-        "Title": "Baumgart",
-        "logo": {
-            "Description": "Baumgart",
-            "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/Baumgart.png"
-        },
-        "ClienteInternalName": "Baumgart",
-        "InternalNameSubsite": "chamadosBaumgart",
-        "InternalNameSubsiteList": "SolicitacoesCliente",
-        "Created": "2018-11-26T15:17:10Z",
-        "ID": 4847
+    "ClienteInternalName": "ArcelorMittal",
+    "InternalNameSubsite": "chamadosArcelorMittal",
+    "InternalNameSubsiteList": "SolicitacoesCliente",
+    "Created": "2020-06-02T14:15:45Z",
+    "ID": 9701
+  },
+  {
+    "Id": 11096,
+    "Title": "Banco John Deere",
+    "logo": {
+      "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/BancoJohndeere_cor.png",
+      "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/BancoJohndeere_cor.png"
     },
-    {
-        "Id": 11039,
-        "Title": "Belgo Bekaert ",
-        "logo": {
-            "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/BelgoBekaert_160x60.png",
-            "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/BelgoBekaert_160x60.png"
-        },
-        "ClienteInternalName": "BelgoBekaert",
-        "InternalNameSubsite": "chamadosBelgoBekaert",
-        "InternalNameSubsiteList": "SolicitacoesCliente",
-        "Created": "2021-08-06T18:37:25Z",
-        "ID": 11039
+    "ClienteInternalName": "BancoJohnDeere",
+    "InternalNameSubsite": "chamadosBancoJohnDeere",
+    "InternalNameSubsiteList": "SolicitacoesCliente",
+    "Created": "2022-08-29T20:42:20Z",
+    "ID": 11096
+  },
+  {
+    "Id": 4847,
+    "Title": "Baumgart",
+    "logo": {
+      "Description": "Baumgart",
+      "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/Baumgart.png"
     },
-    {
-        "Id": 11027,
-        "Title": "BR Brands",
-        "logo": {
-            "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/Brbrands_160.png",
-            "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/Brbrands_160.png"
-        },
-        "ClienteInternalName": "BRBrands",
-        "InternalNameSubsite": "chamadosBRBrands",
-        "InternalNameSubsiteList": "SolicitacoesCliente",
-        "Created": "2021-05-17T12:59:02Z",
-        "ID": 11027
+    "ClienteInternalName": "Baumgart",
+    "InternalNameSubsite": "chamadosBaumgart",
+    "InternalNameSubsiteList": "SolicitacoesCliente",
+    "Created": "2018-11-26T15:17:10Z",
+    "ID": 4847
+  },
+  {
+    "Id": 11039,
+    "Title": "Belgo Bekaert ",
+    "logo": {
+      "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/BelgoBekaert_160x60.png",
+      "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/BelgoBekaert_160x60.png"
     },
-    {
-        "Id": 11056,
-        "Title": "Caltim Fertilizantes",
-        "logo": {
-            "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/CALTIMFERTILIZANTES160x60.png",
-            "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/CALTIMFERTILIZANTES160x60.png"
-        },
-        "ClienteInternalName": "CaltimFertilizantes",
-        "InternalNameSubsite": "chamadosCaltimFertilizantes",
-        "InternalNameSubsiteList": "SolicitacoesCliente",
-        "Created": "2021-12-07T16:48:51Z",
-        "ID": 11056
+    "ClienteInternalName": "BelgoBekaert",
+    "InternalNameSubsite": "chamadosBelgoBekaert",
+    "InternalNameSubsiteList": "SolicitacoesCliente",
+    "Created": "2021-08-06T18:37:25Z",
+    "ID": 11039
+  },
+  {
+    "Id": 11027,
+    "Title": "BR Brands",
+    "logo": {
+      "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/Brbrands_160.png",
+      "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/Brbrands_160.png"
     },
-    {
-        "Id": 10648,
-        "Title": "CESP",
-        "logo": {
-            "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/cesp160.png",
-            "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/cesp160.png"
-        },
-        "ClienteInternalName": "CESP",
-        "InternalNameSubsite": "chamadosCESP",
-        "InternalNameSubsiteList": "SolicitacoesCliente",
-        "Created": "2020-11-23T17:58:32Z",
-        "ID": 10648
+    "ClienteInternalName": "BRBrands",
+    "InternalNameSubsite": "chamadosBRBrands",
+    "InternalNameSubsiteList": "SolicitacoesCliente",
+    "Created": "2021-05-17T12:59:02Z",
+    "ID": 11027
+  },
+  {
+    "Id": 11056,
+    "Title": "Caltim Fertilizantes",
+    "logo": {
+      "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/CALTIMFERTILIZANTES160x60.png",
+      "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/CALTIMFERTILIZANTES160x60.png"
     },
-    {
-        "Id": 2503,
-        "Title": "CIP",
-        "logo": {
-            "Description": "CIP",
-            "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/CIP.png"
-        },
-        "ClienteInternalName": "CIP",
-        "InternalNameSubsite": "chamadosCIP",
-        "InternalNameSubsiteList": "SolicitacoesCliente",
-        "Created": "2017-11-07T13:53:42Z",
-        "ID": 2503
+    "ClienteInternalName": "CaltimFertilizantes",
+    "InternalNameSubsite": "chamadosCaltimFertilizantes",
+    "InternalNameSubsiteList": "SolicitacoesCliente",
+    "Created": "2021-12-07T16:48:51Z",
+    "ID": 11056
+  },
+  {
+    "Id": 10648,
+    "Title": "CESP",
+    "logo": {
+      "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/cesp160.png",
+      "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/cesp160.png"
     },
-    {
-        "Id": 2150,
-        "Title": "Class",
-        "logo": {
-            "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/Class-marca.png",
-            "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/Class-marca.png"
-        },
-        "ClienteInternalName": "Class",
-        "InternalNameSubsite": "chamadosClass",
-        "InternalNameSubsiteList": "SolicitacoesCliente",
-        "Created": "2017-09-04T18:00:03Z",
-        "ID": 2150
+    "ClienteInternalName": "CESP",
+    "InternalNameSubsite": "chamadosCESP",
+    "InternalNameSubsiteList": "SolicitacoesCliente",
+    "Created": "2020-11-23T17:58:32Z",
+    "ID": 10648
+  },
+  {
+    "Id": 2503,
+    "Title": "CIP",
+    "logo": {
+      "Description": "CIP",
+      "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/CIP.png"
     },
-    {
-        "Id": 11062,
-        "Title": "CSA Advogados",
-        "logo": {
-            "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/CSA_160X60.png",
-            "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/CSA_160X60.png"
-        },
-        "ClienteInternalName": "CSAAdvogados",
-        "InternalNameSubsite": "chamadosCSAAdvogados",
-        "InternalNameSubsiteList": "SolicitacoesCliente",
-        "Created": "2022-02-15T12:10:37Z",
-        "ID": 11062
+    "ClienteInternalName": "CIP",
+    "InternalNameSubsite": "chamadosCIP",
+    "InternalNameSubsiteList": "SolicitacoesCliente",
+    "Created": "2017-11-07T13:53:42Z",
+    "ID": 2503
+  },
+  {
+    "Id": 2150,
+    "Title": "Class",
+    "logo": {
+      "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/Class-marca.png",
+      "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/Class-marca.png"
     },
-    {
-        "Id": 10449,
-        "Title": "CTG",
-        "logo": {
-            "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/ctg_160.png",
-            "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/ctg_160.png"
-        },
-        "ClienteInternalName": "CTG",
-        "InternalNameSubsite": "chamadosCTG",
-        "InternalNameSubsiteList": "SolicitacoesCliente",
-        "Created": "2020-10-23T18:36:36Z",
-        "ID": 10449
+    "ClienteInternalName": "Class",
+    "InternalNameSubsite": "chamadosClass",
+    "InternalNameSubsiteList": "SolicitacoesCliente",
+    "Created": "2017-09-04T18:00:03Z",
+    "ID": 2150
+  },
+  {
+    "Id": 11062,
+    "Title": "CSA Advogados",
+    "logo": {
+      "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/CSA_160X60.png",
+      "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/CSA_160X60.png"
     },
-    {
-        "Id": 11028,
-        "Title": "Cury",
-        "logo": {
-            "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/cury_160.png",
-            "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/cury_160.png"
-        },
-        "ClienteInternalName": "Cury",
-        "InternalNameSubsite": "chamadosCury",
-        "InternalNameSubsiteList": "SolicitacoesCliente",
-        "Created": "2021-06-08T11:32:40Z",
-        "ID": 11028
+    "ClienteInternalName": "CSAAdvogados",
+    "InternalNameSubsite": "chamadosCSAAdvogados",
+    "InternalNameSubsiteList": "SolicitacoesCliente",
+    "Created": "2022-02-15T12:10:37Z",
+    "ID": 11062
+  },
+  {
+    "Id": 10449,
+    "Title": "CTG",
+    "logo": {
+      "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/ctg_160.png",
+      "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/ctg_160.png"
     },
-    {
-        "Id": 11025,
-        "Title": "Dailus",
-        "logo": {
-            "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/dailus_160.png",
-            "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/dailus_160.png"
-        },
-        "ClienteInternalName": "Dailus",
-        "InternalNameSubsite": "chamadosDailus",
-        "InternalNameSubsiteList": "SolicitacoesCliente",
-        "Created": "2021-04-19T18:23:15Z",
-        "ID": 11025
+    "ClienteInternalName": "CTG",
+    "InternalNameSubsite": "chamadosCTG",
+    "InternalNameSubsiteList": "SolicitacoesCliente",
+    "Created": "2020-10-23T18:36:36Z",
+    "ID": 10449
+  },
+  {
+    "Id": 11028,
+    "Title": "Cury",
+    "logo": {
+      "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/cury_160.png",
+      "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/cury_160.png"
     },
-    {
-        "Id": 3751,
-        "Title": "Deloitte",
-        "logo": {
-            "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/deloitte%20160X60.png",
-            "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/deloitte%20160X60.png"
-        },
-        "ClienteInternalName": "Deloitte",
-        "InternalNameSubsite": "ChamadosDeloitte",
-        "InternalNameSubsiteList": "SolicitacoesCliente",
-        "Created": "2018-07-26T17:37:46Z",
-        "ID": 3751
+    "ClienteInternalName": "Cury",
+    "InternalNameSubsite": "chamadosCury",
+    "InternalNameSubsiteList": "SolicitacoesCliente",
+    "Created": "2021-06-08T11:32:40Z",
+    "ID": 11028
+  },
+  {
+    "Id": 11025,
+    "Title": "Dailus",
+    "logo": {
+      "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/dailus_160.png",
+      "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/dailus_160.png"
     },
-    {
-        "Id": 3092,
-        "Title": "Galmo",
-        "logo": {
-            "Description": "Galmo",
-            "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/Galmo.png"
-        },
-        "ClienteInternalName": "Galmo",
-        "InternalNameSubsite": "chamadosGalmo",
-        "InternalNameSubsiteList": "SolicitacoesCliente",
-        "Created": "2018-03-14T18:48:32Z",
-        "ID": 3092
+    "ClienteInternalName": "Dailus",
+    "InternalNameSubsite": "chamadosDailus",
+    "InternalNameSubsiteList": "SolicitacoesCliente",
+    "Created": "2021-04-19T18:23:15Z",
+    "ID": 11025
+  },
+  {
+    "Id": 3751,
+    "Title": "Deloitte",
+    "logo": {
+      "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/deloitte%20160X60.png",
+      "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/deloitte%20160X60.png"
     },
-    {
-        "Id": 2142,
-        "Title": "Gelita",
-        "logo": {
-            "Description": "https://classsolutions.sharepoint.com/sites/https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/Gelita.pngpclientes/PublishingImages/Clientes/Gelita.png",
-            "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/AGelita.png"
-        },
-        "ClienteInternalName": "Gelita",
-        "InternalNameSubsite": "chamadosGelita",
-        "InternalNameSubsiteList": "SolicitacoesCliente",
-        "Created": "2017-07-21T16:39:42Z",
-        "ID": 2142
+    "ClienteInternalName": "Deloitte",
+    "InternalNameSubsite": "ChamadosDeloitte",
+    "InternalNameSubsiteList": "SolicitacoesCliente",
+    "Created": "2018-07-26T17:37:46Z",
+    "ID": 3751
+  },
+  {
+    "Id": 3092,
+    "Title": "Galmo",
+    "logo": {
+      "Description": "Galmo",
+      "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/Galmo.png"
     },
-    {
-        "Id": 11085,
-        "Title": "Grupo EBD",
-        "logo": {
-            "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/Grupo%20EBD%20160X60.png",
-            "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/Grupo%20EBD%20160X60.png"
-        },
-        "ClienteInternalName": "GrupoEBD",
-        "InternalNameSubsite": "chamadosGrupoEBD",
-        "InternalNameSubsiteList": "SolicitacoesCliente",
-        "Created": "2022-06-21T18:12:10Z",
-        "ID": 11085
+    "ClienteInternalName": "Galmo",
+    "InternalNameSubsite": "chamadosGalmo",
+    "InternalNameSubsiteList": "SolicitacoesCliente",
+    "Created": "2018-03-14T18:48:32Z",
+    "ID": 3092
+  },
+  {
+    "Id": 2142,
+    "Title": "Gelita",
+    "logo": {
+      "Description": "https://classsolutions.sharepoint.com/sites/https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/Gelita.pngpclientes/PublishingImages/Clientes/Gelita.png",
+      "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/AGelita.png"
     },
-    {
-        "Id": 11055,
-        "Title": "Grupo Ribeiro",
-        "logo": {
-            "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/gruporibeiro_160x60.png",
-            "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/gruporibeiro_160x60.png"
-        },
-        "ClienteInternalName": "GrupoRibeiro",
-        "InternalNameSubsite": "chamadosGrupoRibeiro",
-        "InternalNameSubsiteList": "SolicitacoesCliente",
-        "Created": "2021-11-24T13:10:26Z",
-        "ID": 11055
+    "ClienteInternalName": "Gelita",
+    "InternalNameSubsite": "chamadosGelita",
+    "InternalNameSubsiteList": "SolicitacoesCliente",
+    "Created": "2017-07-21T16:39:42Z",
+    "ID": 2142
+  },
+  {
+    "Id": 11085,
+    "Title": "Grupo EBD",
+    "logo": {
+      "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/Grupo%20EBD%20160X60.png",
+      "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/Grupo%20EBD%20160X60.png"
     },
-    {
-        "Id": 5294,
-        "Title": "Helbor",
-        "logo": {
-            "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/Helbor.png",
-            "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/Helbor.png"
-        },
-        "ClienteInternalName": "Helbor",
-        "InternalNameSubsite": "chamadosHelbor",
-        "InternalNameSubsiteList": "SolicitacoesCliente",
-        "Created": "2019-01-09T17:04:34Z",
-        "ID": 5294
+    "ClienteInternalName": "GrupoEBD",
+    "InternalNameSubsite": "chamadosGrupoEBD",
+    "InternalNameSubsiteList": "SolicitacoesCliente",
+    "Created": "2022-06-21T18:12:10Z",
+    "ID": 11085
+  },
+  {
+    "Id": 11055,
+    "Title": "Grupo Ribeiro",
+    "logo": {
+      "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/gruporibeiro_160x60.png",
+      "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/gruporibeiro_160x60.png"
     },
-    {
-        "Id": 2124,
-        "Title": "Hersheys",
-        "logo": {
-            "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/hersheys%20160x60.png",
-            "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/hersheys%20160x60.png"
-        },
-        "ClienteInternalName": "Hersheys",
-        "InternalNameSubsite": "chamadoshersheys",
-        "InternalNameSubsiteList": "SolicitacoesCliente",
-        "Created": "2016-10-13T14:12:25Z",
-        "ID": 2124
+    "ClienteInternalName": "GrupoRibeiro",
+    "InternalNameSubsite": "chamadosGrupoRibeiro",
+    "InternalNameSubsiteList": "SolicitacoesCliente",
+    "Created": "2021-11-24T13:10:26Z",
+    "ID": 11055
+  },
+  {
+    "Id": 5294,
+    "Title": "Helbor",
+    "logo": {
+      "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/Helbor.png",
+      "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/Helbor.png"
     },
-    {
-        "Id": 11078,
-        "Title": "Hondatar Advogados",
-        "logo": {
-            "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/HondatarAdvogados%20-%20160X60.png",
-            "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/HondatarAdvogados%20-%20160X60.png"
-        },
-        "ClienteInternalName": "HondatarAdvogados",
-        "InternalNameSubsite": "chamadosHondatarAdvogados",
-        "InternalNameSubsiteList": "SolicitacoesCliente",
-        "Created": "2022-05-10T16:20:50Z",
-        "ID": 11078
+    "ClienteInternalName": "Helbor",
+    "InternalNameSubsite": "chamadosHelbor",
+    "InternalNameSubsiteList": "SolicitacoesCliente",
+    "Created": "2019-01-09T17:04:34Z",
+    "ID": 5294
+  },
+  {
+    "Id": 2124,
+    "Title": "Hersheys",
+    "logo": {
+      "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/hersheys%20160x60.png",
+      "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/hersheys%20160x60.png"
     },
-    {
-        "Id": 2164,
-        "Title": "Iguatemi",
-        "logo": {
-            "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/Iguatemi.png",
-            "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/Iguatemi.png"
-        },
-        "ClienteInternalName": "Iguatemi",
-        "InternalNameSubsite": "chamadosIguatemi",
-        "InternalNameSubsiteList": "SolicitacoesCliente",
-        "Created": "2017-09-05T18:05:02Z",
-        "ID": 2164
+    "ClienteInternalName": "Hersheys",
+    "InternalNameSubsite": "chamadoshersheys",
+    "InternalNameSubsiteList": "SolicitacoesCliente",
+    "Created": "2016-10-13T14:12:25Z",
+    "ID": 2124
+  },
+  {
+    "Id": 11078,
+    "Title": "Hondatar Advogados",
+    "logo": {
+      "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/HondatarAdvogados%20-%20160X60.png",
+      "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/HondatarAdvogados%20-%20160X60.png"
     },
-    {
-        "Id": 11029,
-        "Title": "INPEV",
-        "logo": {
-            "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/Inpev_160.png",
-            "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/Inpev_160.png"
-        },
-        "ClienteInternalName": "INPEV",
-        "InternalNameSubsite": "chamadosINPEV",
-        "InternalNameSubsiteList": "SolicitacoesCliente",
-        "Created": "2021-06-14T15:20:26Z",
-        "ID": 11029
+    "ClienteInternalName": "HondatarAdvogados",
+    "InternalNameSubsite": "chamadosHondatarAdvogados",
+    "InternalNameSubsiteList": "SolicitacoesCliente",
+    "Created": "2022-05-10T16:20:50Z",
+    "ID": 11078
+  },
+  {
+    "Id": 2164,
+    "Title": "Iguatemi",
+    "logo": {
+      "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/Iguatemi.png",
+      "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/Iguatemi.png"
     },
-    {
-        "Id": 10111,
-        "Title": "JAYM",
-        "logo": {
-            "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/MFUSED160.png",
-            "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/MFUSED160.png"
-        },
-        "ClienteInternalName": "JAYM",
-        "InternalNameSubsite": "chamadosJAYM",
-        "InternalNameSubsiteList": "SolicitacoesCliente",
-        "Created": "2020-08-17T14:49:06Z",
-        "ID": 10111
+    "ClienteInternalName": "Iguatemi",
+    "InternalNameSubsite": "chamadosIguatemi",
+    "InternalNameSubsiteList": "SolicitacoesCliente",
+    "Created": "2017-09-05T18:05:02Z",
+    "ID": 2164
+  },
+  {
+    "Id": 11029,
+    "Title": "INPEV",
+    "logo": {
+      "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/Inpev_160.png",
+      "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/Inpev_160.png"
     },
-    {
-        "Id": 11032,
-        "Title": "John Deere",
-        "logo": {
-            "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/JohnDeere_160.png",
-            "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/JohnDeere_160.png"
-        },
-        "ClienteInternalName": "JohnDeere",
-        "InternalNameSubsite": "chamadosJohnDeere",
-        "InternalNameSubsiteList": "SolicitacoesCliente",
-        "Created": "2021-06-24T16:30:19Z",
-        "ID": 11032
+    "ClienteInternalName": "INPEV",
+    "InternalNameSubsite": "chamadosINPEV",
+    "InternalNameSubsiteList": "SolicitacoesCliente",
+    "Created": "2021-06-14T15:20:26Z",
+    "ID": 11029
+  },
+  {
+    "Id": 10111,
+    "Title": "JAYM",
+    "logo": {
+      "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/MFUSED160.png",
+      "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/MFUSED160.png"
     },
-    {
-        "Id": 718,
-        "Title": "KPMG",
-        "logo": {
-            "Description": "KPMG",
-            "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/KPMG.png"
-        },
-        "ClienteInternalName": "KPMG",
-        "InternalNameSubsite": "chamadosKpmg",
-        "InternalNameSubsiteList": "SolicitacoesCliente",
-        "Created": "2016-01-26T18:23:13Z",
-        "ID": 718
+    "ClienteInternalName": "JAYM",
+    "InternalNameSubsite": "chamadosJAYM",
+    "InternalNameSubsiteList": "SolicitacoesCliente",
+    "Created": "2020-08-17T14:49:06Z",
+    "ID": 10111
+  },
+  {
+    "Id": 11032,
+    "Title": "John Deere",
+    "logo": {
+      "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/JohnDeere_160.png",
+      "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/JohnDeere_160.png"
     },
-    {
-        "Id": 5249,
-        "Title": "Lactalis",
-        "logo": {
-            "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/Lactalis.png",
-            "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/Lactalis.png"
-        },
-        "ClienteInternalName": "Lactalis",
-        "InternalNameSubsite": "chamadosLactalis",
-        "InternalNameSubsiteList": "SolicitacoesCliente",
-        "Created": "2019-01-04T12:48:42Z",
-        "ID": 5249
+    "ClienteInternalName": "JohnDeere",
+    "InternalNameSubsite": "chamadosJohnDeere",
+    "InternalNameSubsiteList": "SolicitacoesCliente",
+    "Created": "2021-06-24T16:30:19Z",
+    "ID": 11032
+  },
+  {
+    "Id": 718,
+    "Title": "KPMG",
+    "logo": {
+      "Description": "KPMG",
+      "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/KPMG.png"
     },
-    {
-        "Id": 11041,
-        "Title": "Lanlink",
-        "logo": {
-            "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/lanlink_160x60.png",
-            "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/lanlink_160x60.png"
-        },
-        "ClienteInternalName": "Lanlink",
-        "InternalNameSubsite": "chamadosLanlink",
-        "InternalNameSubsiteList": "SolicitacoesCliente",
-        "Created": "2021-08-20T12:43:24Z",
-        "ID": 11041
+    "ClienteInternalName": "KPMG",
+    "InternalNameSubsite": "chamadosKpmg",
+    "InternalNameSubsiteList": "SolicitacoesCliente",
+    "Created": "2016-01-26T18:23:13Z",
+    "ID": 718
+  },
+  {
+    "Id": 5249,
+    "Title": "Lactalis",
+    "logo": {
+      "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/Lactalis.png",
+      "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/Lactalis.png"
     },
-    {
-        "Id": 5237,
-        "Title": "Lobo de Rizzo",
-        "logo": {
-            "Description": "Lobo de Rizzo",
-            "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/logo_lobo2.png"
-        },
-        "ClienteInternalName": "LobodeRizzo",
-        "InternalNameSubsite": "chamadosLobodeRizzo",
-        "InternalNameSubsiteList": "SolicitacoesCliente",
-        "Created": "2019-01-04T12:33:51Z",
-        "ID": 5237
+    "ClienteInternalName": "Lactalis",
+    "InternalNameSubsite": "chamadosLactalis",
+    "InternalNameSubsiteList": "SolicitacoesCliente",
+    "Created": "2019-01-04T12:48:42Z",
+    "ID": 5249
+  },
+  {
+    "Id": 11041,
+    "Title": "Lanlink",
+    "logo": {
+      "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/lanlink_160x60.png",
+      "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/lanlink_160x60.png"
     },
-    {
-        "Id": 11092,
-        "Title": "Mars Brasil",
-        "logo": {
-            "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/MarsBrasil_Colorido.png",
-            "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/MarsBrasil_Colorido.png"
-        },
-        "ClienteInternalName": "MarsBrasil",
-        "InternalNameSubsite": "chamadosMarsBrasil",
-        "InternalNameSubsiteList": "SolicitacoesCliente",
-        "Created": "2022-08-01T12:52:52Z",
-        "ID": 11092
+    "ClienteInternalName": "Lanlink",
+    "InternalNameSubsite": "chamadosLanlink",
+    "InternalNameSubsiteList": "SolicitacoesCliente",
+    "Created": "2021-08-20T12:43:24Z",
+    "ID": 11041
+  },
+  {
+    "Id": 5237,
+    "Title": "Lobo de Rizzo",
+    "logo": {
+      "Description": "Lobo de Rizzo",
+      "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/logo_lobo2.png"
     },
-    {
-        "Id": 11033,
-        "Title": "Mattos Filho",
-        "logo": {
-            "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/MatosFilho_160.png",
-            "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/MatosFilho_160.png"
-        },
-        "ClienteInternalName": "MattosFilho",
-        "InternalNameSubsite": "chamadosMattosFilho",
-        "InternalNameSubsiteList": "SolicitacoesCliente",
-        "Created": "2021-06-25T16:52:48Z",
-        "ID": 11033
+    "ClienteInternalName": "LobodeRizzo",
+    "InternalNameSubsite": "chamadosLobodeRizzo",
+    "InternalNameSubsiteList": "SolicitacoesCliente",
+    "Created": "2019-01-04T12:33:51Z",
+    "ID": 5237
+  },
+  {
+    "Id": 11092,
+    "Title": "Mars Brasil",
+    "logo": {
+      "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/MarsBrasil_Colorido.png",
+      "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/MarsBrasil_Colorido.png"
     },
-    {
-        "Id": 11050,
-        "Title": "Maxion Wheels",
-        "logo": {
-            "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/maxion_160x60.png",
-            "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/maxion_160x60.png"
-        },
-        "ClienteInternalName": "MaxionWheels",
-        "InternalNameSubsite": "chamadosMaxionWheels",
-        "InternalNameSubsiteList": "SolicitacoesCliente",
-        "Created": "2021-11-03T20:22:48Z",
-        "ID": 11050
+    "ClienteInternalName": "MarsBrasil",
+    "InternalNameSubsite": "chamadosMarsBrasil",
+    "InternalNameSubsiteList": "SolicitacoesCliente",
+    "Created": "2022-08-01T12:52:52Z",
+    "ID": 11092
+  },
+  {
+    "Id": 11033,
+    "Title": "Mattos Filho",
+    "logo": {
+      "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/MatosFilho_160.png",
+      "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/MatosFilho_160.png"
     },
-    {
-        "Id": 6522,
-        "Title": "Messer (Linde Gases)",
-        "logo": {
-            "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/messer-logo.png",
-            "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/messer-logo.png"
-        },
-        "ClienteInternalName": "MesserLindeGases",
-        "InternalNameSubsite": "chamadosMesserLindeGases",
-        "InternalNameSubsiteList": "SolicitacoesCliente",
-        "Created": "2019-05-07T19:57:41Z",
-        "ID": 6522
+    "ClienteInternalName": "MattosFilho",
+    "InternalNameSubsite": "chamadosMattosFilho",
+    "InternalNameSubsiteList": "SolicitacoesCliente",
+    "Created": "2021-06-25T16:52:48Z",
+    "ID": 11033
+  },
+  {
+    "Id": 11050,
+    "Title": "Maxion Wheels",
+    "logo": {
+      "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/maxion_160x60.png",
+      "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/maxion_160x60.png"
     },
-    {
-        "Id": 10715,
-        "Title": "Nova8",
-        "logo": {
-            "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/Nova8-fundo-transparente-160.60.png",
-            "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/Nova8-fundo-transparente-160.60.png"
-        },
-        "ClienteInternalName": "Nova8",
-        "InternalNameSubsite": "chamadosNova8",
-        "InternalNameSubsiteList": "SolicitacoesCliente",
-        "Created": "2020-12-02T17:44:27Z",
-        "ID": 10715
+    "ClienteInternalName": "MaxionWheels",
+    "InternalNameSubsite": "chamadosMaxionWheels",
+    "InternalNameSubsiteList": "SolicitacoesCliente",
+    "Created": "2021-11-03T20:22:48Z",
+    "ID": 11050
+  },
+  {
+    "Id": 6522,
+    "Title": "Messer (Linde Gases)",
+    "logo": {
+      "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/messer-logo.png",
+      "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/messer-logo.png"
     },
-    {
-        "Id": 11094,
-        "Title": "NSK",
-        "logo": {
-            "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/NSK_LOGO1_160x60.png",
-            "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/NSK_LOGO1_160x60.png"
-        },
-        "ClienteInternalName": "NSK",
-        "InternalNameSubsite": "chamadosNSK",
-        "InternalNameSubsiteList": "SolicitacoesCliente",
-        "Created": "2022-08-08T15:31:37Z",
-        "ID": 11094
+    "ClienteInternalName": "MesserLindeGases",
+    "InternalNameSubsite": "chamadosMesserLindeGases",
+    "InternalNameSubsiteList": "SolicitacoesCliente",
+    "Created": "2019-05-07T19:57:41Z",
+    "ID": 6522
+  },
+  {
+    "Id": 10715,
+    "Title": "Nova8",
+    "logo": {
+      "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/Nova8-fundo-transparente-160.60.png",
+      "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/Nova8-fundo-transparente-160.60.png"
     },
-    {
-        "Id": 11087,
-        "Title": "Plantae",
-        "logo": {
-            "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/plante_colorido.png",
-            "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/plante_colorido.png"
-        },
-        "ClienteInternalName": "Plantae",
-        "InternalNameSubsite": "chamadosPlantae",
-        "InternalNameSubsiteList": "SolicitacoesCliente",
-        "Created": "2022-06-29T20:23:12Z",
-        "ID": 11087
+    "ClienteInternalName": "Nova8",
+    "InternalNameSubsite": "chamadosNova8",
+    "InternalNameSubsiteList": "SolicitacoesCliente",
+    "Created": "2020-12-02T17:44:27Z",
+    "ID": 10715
+  },
+  {
+    "Id": 11094,
+    "Title": "NSK",
+    "logo": {
+      "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/NSK_LOGO1_160x60.png",
+      "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/NSK_LOGO1_160x60.png"
     },
-    {
-        "Id": 10869,
-        "Title": "Polenghi",
-        "logo": {
-            "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/Polenghi160-60-cor.png",
-            "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/Polenghi160-60-cor.png"
-        },
-        "ClienteInternalName": "Polenghi",
-        "InternalNameSubsite": "chamadosPolenghi",
-        "InternalNameSubsiteList": "SolicitacoesCliente",
-        "Created": "2021-01-11T12:47:46Z",
-        "ID": 10869
+    "ClienteInternalName": "NSK",
+    "InternalNameSubsite": "chamadosNSK",
+    "InternalNameSubsiteList": "SolicitacoesCliente",
+    "Created": "2022-08-08T15:31:37Z",
+    "ID": 11094
+  },
+  {
+    "Id": 11087,
+    "Title": "Plantae",
+    "logo": {
+      "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/plante_colorido.png",
+      "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/plante_colorido.png"
     },
-    {
-        "Id": 11022,
-        "Title": "Pollux",
-        "logo": {
-            "Description": "https:https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/Pollux-160x60px.png//classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/Class_logo.png",
-            "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/Pollux-160x60px.png"
-        },
-        "ClienteInternalName": "Pollux",
-        "InternalNameSubsite": "chamadosPollux",
-        "InternalNameSubsiteList": "SolicitacoesCliente",
-        "Created": "2021-02-26T18:48:55Z",
-        "ID": 11022
+    "ClienteInternalName": "Plantae",
+    "InternalNameSubsite": "chamadosPlantae",
+    "InternalNameSubsiteList": "SolicitacoesCliente",
+    "Created": "2022-06-29T20:23:12Z",
+    "ID": 11087
+  },
+  {
+    "Id": 10869,
+    "Title": "Polenghi",
+    "logo": {
+      "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/Polenghi160-60-cor.png",
+      "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/Polenghi160-60-cor.png"
     },
-    {
-        "Id": 11024,
-        "Title": "Qriar",
-        "logo": {
-            "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/Qriar-160X60.png",
-            "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/Qriar-160X60.png"
-        },
-        "ClienteInternalName": "Qriar",
-        "InternalNameSubsite": "chamadosQriar",
-        "InternalNameSubsiteList": "SolicitacoesCliente",
-        "Created": "2021-04-12T16:55:52Z",
-        "ID": 11024
+    "ClienteInternalName": "Polenghi",
+    "InternalNameSubsite": "chamadosPolenghi",
+    "InternalNameSubsiteList": "SolicitacoesCliente",
+    "Created": "2021-01-11T12:47:46Z",
+    "ID": 10869
+  },
+  {
+    "Id": 11022,
+    "Title": "Pollux",
+    "logo": {
+      "Description": "https:https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/Pollux-160x60px.png//classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/Class_logo.png",
+      "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/Pollux-160x60px.png"
     },
-    {
-        "Id": 11045,
-        "Title": "Recicla BR",
-        "logo": {
-            "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/ReciclaBR_160x60.png",
-            "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/ReciclaBR_160x60.png"
-        },
-        "ClienteInternalName": "ReciclaBR",
-        "InternalNameSubsite": "chamadosReciclaBR",
-        "InternalNameSubsiteList": "SolicitacoesCliente",
-        "Created": "2021-10-06T14:16:51Z",
-        "ID": 11045
+    "ClienteInternalName": "Pollux",
+    "InternalNameSubsite": "chamadosPollux",
+    "InternalNameSubsiteList": "SolicitacoesCliente",
+    "Created": "2021-02-26T18:48:55Z",
+    "ID": 11022
+  },
+  {
+    "Id": 11024,
+    "Title": "Qriar",
+    "logo": {
+      "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/Qriar-160X60.png",
+      "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/Qriar-160X60.png"
     },
-    {
-        "Id": 3992,
-        "Title": "Siemens",
-        "logo": {
-            "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/Siemens.png",
-            "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/Siemens.png"
-        },
-        "ClienteInternalName": "Siemens",
-        "InternalNameSubsite": "chamadossiemens",
-        "InternalNameSubsiteList": "SolicitacoesCliente",
-        "Created": "2018-08-23T12:23:40Z",
-        "ID": 3992
+    "ClienteInternalName": "Qriar",
+    "InternalNameSubsite": "chamadosQriar",
+    "InternalNameSubsiteList": "SolicitacoesCliente",
+    "Created": "2021-04-12T16:55:52Z",
+    "ID": 11024
+  },
+  {
+    "Id": 11045,
+    "Title": "Recicla BR",
+    "logo": {
+      "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/ReciclaBR_160x60.png",
+      "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/ReciclaBR_160x60.png"
     },
-    {
-        "Id": 11040,
-        "Title": "SJK Capital",
-        "logo": {
-            "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/sjk_160x60_escuro.png",
-            "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/sjk_160x60_escuro.png"
-        },
-        "ClienteInternalName": "SJKCapital",
-        "InternalNameSubsite": "chamadosSJKCapital",
-        "InternalNameSubsiteList": "SolicitacoesCliente",
-        "Created": "2021-08-13T12:11:12Z",
-        "ID": 11040
+    "ClienteInternalName": "ReciclaBR",
+    "InternalNameSubsite": "chamadosReciclaBR",
+    "InternalNameSubsiteList": "SolicitacoesCliente",
+    "Created": "2021-10-06T14:16:51Z",
+    "ID": 11045
+  },
+  {
+    "Id": 11097,
+    "Title": "Sabiá",
+    "logo": {
+      "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/sabia_cor.png",
+      "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/sabia_cor.png"
     },
-    {
-        "Id": 11080,
-        "Title": "Sony Music",
-        "logo": {
-            "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/SonyMusic(160x60).png",
-            "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/SonyMusic(160x60).png"
-        },
-        "ClienteInternalName": "SonyMusic",
-        "InternalNameSubsite": "chamadosSonyMusic",
-        "InternalNameSubsiteList": "SolicitacoesCliente",
-        "Created": "2022-05-18T19:51:27Z",
-        "ID": 11080
+    "ClienteInternalName": "Sabia",
+    "InternalNameSubsite": "chamadosSabia",
+    "InternalNameSubsiteList": "SolicitacoesCliente",
+    "Created": "2022-08-29T21:05:08Z",
+    "ID": 11097
+  },
+  {
+    "Id": 3992,
+    "Title": "Siemens",
+    "logo": {
+      "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/Siemens.png",
+      "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/Siemens.png"
     },
-    {
-        "Id": 4700,
-        "Title": "Sturzenegger e Cavalcante",
-        "logo": {
-            "Description": "STZ",
-            "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/STZ%201.png"
-        },
-        "ClienteInternalName": "SturzeneggereCavalcante",
-        "InternalNameSubsite": "chamadosSturzeneggereCavalcante",
-        "InternalNameSubsiteList": "SolicitacoesCliente",
-        "Created": "2018-11-07T11:15:46Z",
-        "ID": 4700
+    "ClienteInternalName": "Siemens",
+    "InternalNameSubsite": "chamadossiemens",
+    "InternalNameSubsiteList": "SolicitacoesCliente",
+    "Created": "2018-08-23T12:23:40Z",
+    "ID": 3992
+  },
+  {
+    "Id": 11040,
+    "Title": "SJK Capital",
+    "logo": {
+      "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/sjk_160x60_escuro.png",
+      "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/sjk_160x60_escuro.png"
     },
-    {
-        "Id": 11035,
-        "Title": "Toyota Tsusho Argentina",
-        "logo": {
-            "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/ToyotaTsushoArgentina%20_160.png",
-            "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/ToyotaTsushoArgentina%20_160.png"
-        },
-        "ClienteInternalName": "ToyotaTsushoArgentina",
-        "InternalNameSubsite": "chamadosToyotaTsushoArgentina",
-        "InternalNameSubsiteList": "SolicitacoesCliente",
-        "Created": "2021-07-15T18:13:40Z",
-        "ID": 11035
+    "ClienteInternalName": "SJKCapital",
+    "InternalNameSubsite": "chamadosSJKCapital",
+    "InternalNameSubsiteList": "SolicitacoesCliente",
+    "Created": "2021-08-13T12:11:12Z",
+    "ID": 11040
+  },
+  {
+    "Id": 11080,
+    "Title": "Sony Music",
+    "logo": {
+      "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/SonyMusic(160x60).png",
+      "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/SonyMusic(160x60).png"
     },
-    {
-        "Id": 11083,
-        "Title": "Ulend",
-        "logo": {
-            "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/ulend_cor.png",
-            "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/ulend_cor.png"
-        },
-        "ClienteInternalName": "Ulend",
-        "InternalNameSubsite": "chamadosUlend",
-        "InternalNameSubsiteList": "SolicitacoesCliente",
-        "Created": "2022-06-07T19:11:24Z",
-        "ID": 11083
+    "ClienteInternalName": "SonyMusic",
+    "InternalNameSubsite": "chamadosSonyMusic",
+    "InternalNameSubsiteList": "SolicitacoesCliente",
+    "Created": "2022-05-18T19:51:27Z",
+    "ID": 11080
+  },
+  {
+    "Id": 4700,
+    "Title": "Sturzenegger e Cavalcante",
+    "logo": {
+      "Description": "STZ",
+      "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/STZ%201.png"
     },
-    {
-        "Id": 2120,
-        "Title": "VerzaniSandrini",
-        "logo": {
-            "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/Verzani%20e%20Sandrini%20a.png",
-            "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/Verzani%20e%20Sandrini%20a.png"
-        },
-        "ClienteInternalName": "VerzaniSandrini",
-        "InternalNameSubsite": "chamadosVerzaniSandrini",
-        "InternalNameSubsiteList": "SolicitacoesCliente",
-        "Created": "2016-10-07T17:04:04Z",
-        "ID": 2120
+    "ClienteInternalName": "SturzeneggereCavalcante",
+    "InternalNameSubsite": "chamadosSturzeneggereCavalcante",
+    "InternalNameSubsiteList": "SolicitacoesCliente",
+    "Created": "2018-11-07T11:15:46Z",
+    "ID": 4700
+  },
+  {
+    "Id": 11035,
+    "Title": "Toyota Tsusho Argentina",
+    "logo": {
+      "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/ToyotaTsushoArgentina%20_160.png",
+      "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/ToyotaTsushoArgentina%20_160.png"
     },
-    {
-        "Id": 11090,
-        "Title": "Vita IT",
-        "logo": {
-            "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/VITA%20IT_cor.png",
-            "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/VITA%20IT_cor.png"
-        },
-        "ClienteInternalName": "VitaIT",
-        "InternalNameSubsite": "chamadosVitaIT",
-        "InternalNameSubsiteList": "SolicitacoesCliente",
-        "Created": "2022-07-22T13:00:58Z",
-        "ID": 11090
-    }
+    "ClienteInternalName": "ToyotaTsushoArgentina",
+    "InternalNameSubsite": "chamadosToyotaTsushoArgentina",
+    "InternalNameSubsiteList": "SolicitacoesCliente",
+    "Created": "2021-07-15T18:13:40Z",
+    "ID": 11035
+  },
+  {
+    "Id": 11083,
+    "Title": "Ulend",
+    "logo": {
+      "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/ulend_cor.png",
+      "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/ulend_cor.png"
+    },
+    "ClienteInternalName": "Ulend",
+    "InternalNameSubsite": "chamadosUlend",
+    "InternalNameSubsiteList": "SolicitacoesCliente",
+    "Created": "2022-06-07T19:11:24Z",
+    "ID": 11083
+  },
+  {
+    "Id": 2120,
+    "Title": "VerzaniSandrini",
+    "logo": {
+      "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/Verzani%20e%20Sandrini%20a.png",
+      "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/Verzani%20e%20Sandrini%20a.png"
+    },
+    "ClienteInternalName": "VerzaniSandrini",
+    "InternalNameSubsite": "chamadosVerzaniSandrini",
+    "InternalNameSubsiteList": "SolicitacoesCliente",
+    "Created": "2016-10-07T17:04:04Z",
+    "ID": 2120
+  },
+  {
+    "Id": 11090,
+    "Title": "Vita IT",
+    "logo": {
+      "Description": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/VITA%20IT_cor.png",
+      "Url": "https://classsolutions.sharepoint.com/sites/pclientes/PublishingImages/Clientes/VITA%20IT_cor.png"
+    },
+    "ClienteInternalName": "VitaIT",
+    "InternalNameSubsite": "chamadosVitaIT",
+    "InternalNameSubsiteList": "SolicitacoesCliente",
+    "Created": "2022-07-22T13:00:58Z",
+    "ID": 11090
+  }
 ]

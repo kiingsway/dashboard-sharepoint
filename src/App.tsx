@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react';
 import Chamados from './pages/Chamados';
 import Clientes from './pages/Clientes';
 import Dashboard from './pages/Dashboard';
-import FormChamados from './pages/FormChamados';
+// import FormChamados from './pages/FormChamados';
 
-import HeaderErrors from 'components/HeaderErrors';
+// import HeaderErrors from 'components/HeaderErrors';
 import HeaderApp from 'components/HeaderApp';
 import { obterClientes, obterChamados, obterFeriados } from 'services/GetDashboardHelper'
 import { IChamado, ICliente, IChamadoSelecionado, TAppTabs, ILocalStorageFeriado, IAtualizacaoSecao } from 'interfaces'
@@ -12,12 +12,12 @@ import { diffBusinessDays } from 'services/FunctionHelpers';
 
 import 'mdb-react-ui-kit/dist/css/mdb.min.css'
 import './App.css';
-import { MDBBtn, MDBTabsContent, MDBTabsPane } from 'mdb-react-ui-kit';
+import { MDBTabsContent, MDBTabsPane } from 'mdb-react-ui-kit';
 import { v4 as uuidv4 } from 'uuid';
 import { DateTime } from 'luxon';
 
 import bClientes from './data/clientes.json'
-import bChamados from './data/chamados.json'
+import bChamados from './data/chamados_big.json'
 
 function App() {
 
@@ -26,7 +26,7 @@ function App() {
   const [chamadoSelecionado, setChamadoSelecionado] = useState<IChamadoSelecionado>({ Id: 0 })
   const [feriados, setFeriados] = useState<ILocalStorageFeriado>({});
   const [appTab, setAppTab] = useState<TAppTabs>('tabChamados');
-  const [erros, setErros] = useState([]);
+  // const [erros, setErros] = useState([]);
   const [atualizacaoSecao, setAtualizacaoSecao] = useState<IAtualizacaoSecao>({ clientes: false, chamados: false, slcChamados: false, formChamados: false });
 
   function handleAtualizarChamadoLista(cliente: any, chamado: any) {
@@ -55,15 +55,17 @@ function App() {
   function handleGetClientesChamados() {
 
     setClientes(bClientes)
-    setChamados(bChamados.map((chamado: any) => (
-      {
+    setChamados((bChamados as any[]).map(chamado => {
+      const agora = DateTime.now();
+      const modificado = DateTime.fromISO(chamado.Modified);
+      return {
         ...chamado,
-        diasUteisSemAtualizar: parseFloat(chamado.diasUteisSemAtualizar),
-        diasCorridosSemAtualizar: parseFloat(chamado.diasCorridosSemAtualizar),
+        diasCorridosSemAtualizar: parseFloat(agora.diff(modificado, 'days').days.toFixed(1)),
+        diasUteisSemAtualizar: parseFloat(diffBusinessDays(modificado, agora, feriados?.Datas).toFixed(1)),
         ClienteTitle: chamado.Cliente.Title,
         AtribuidaTitle: chamado.Atribuida?.Title || null,
       }
-    )))
+    }))
     return
 
     setAtualizacaoSecao(prevAtt => ({ ...prevAtt, clientes: true, chamados: true }));
@@ -150,7 +152,7 @@ function App() {
    * @returns void
    */
   function handleErrors(e: any) {
-    setErros(prevErros => prevErros.length === 0 ? e : [{ ...e, id: uuidv4() }, ...prevErros]);
+    // setErros(prevErros => prevErros.length === 0 ? e : [{ ...e, id: uuidv4() }, ...prevErros]);
   }
 
   function handleSelecionarChamado(chamado: IChamadoSelecionado, tab: TAppTabs = 'tabFormChamado') {

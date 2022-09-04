@@ -22,7 +22,7 @@ export function sortNumberDesc(a: any, b: any) {
 export function diffBusinessDays(dataAntes: DateTime, dataDepois: DateTime, feriados?: string[]) {
 
   const hoje = DateTime.now()
-  const maxCont = 400;
+  const maxCont = 600;
 
   let cont = 1;
   let dataAtual = dataDepois;
