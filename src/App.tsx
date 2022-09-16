@@ -197,7 +197,7 @@ function App() {
         </MDBTabsPane>
 
         <MDBTabsPane className='container mt-4' show={appTab === 'tabClientes'}>
-          <Clientes clientes={clientes} />
+          <Clientes clientes={clientes} chamados={chamados} />
         </MDBTabsPane>
 
       </MDBTabsContent>

@@ -64,7 +64,7 @@ export default function Clientes(props: Props) {
 
       <MDBContainer className='text-light overflow-auto w-100 d-flex justify-content-center' style={{ height: '80vh' }} breakpoint='sm' >
         <MDBRow style={{maxWidth: '100vm'}}>
-          {filteredClientes.map(cliente => {
+          {filteredClientes?.map(cliente => {
 
             const chamadosDoCliente = props.chamados.filter(chamado => chamado.Cliente.Id === cliente.Id);
             const qtdChamadosPorCliente = chamadosDoCliente.length;
