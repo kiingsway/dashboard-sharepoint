@@ -13,9 +13,11 @@ hr {
     border-color: #DDD !important
 }
 
-body {
+body,
+.body {
     background-color: #333 !important;
     font-family: "Roboto", sans-serif !important;
+    color: white;
 }
 
 .navTitle {

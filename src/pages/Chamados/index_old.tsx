@@ -6,7 +6,7 @@ import URIs from '../../services/uris.json'
 import classNames from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell, faBug, faClipboard, faEdit, faPaperclip, faTableList } from '@fortawesome/free-solid-svg-icons';
-import { MDBBadge, MDBBtn, MDBDropdown, MDBDropdownItem, MDBDropdownLink, MDBDropdownMenu, MDBDropdownToggle, MDBPopover, MDBPopoverBody, MDBPopoverHeader } from 'mdb-react-ui-kit';
+import { MDBBadge, MDBBtn, MDBDropdown, MDBDropdownItem, MDBDropdownMenu, MDBDropdownToggle, MDBPopover, MDBPopoverBody, MDBPopoverHeader } from 'mdb-react-ui-kit';
 import { DateTime } from 'luxon';
 
 
@@ -113,10 +113,10 @@ function buttonID(chamado: any, handleChamadoSelecionado: any, chamadoSelecionad
       </MDBDropdownToggle>
       <MDBDropdownMenu>
         <MDBDropdownItem>
-          <MDBDropdownLink
+          <a
             href={uriChamado}
             target='__blank'
-          ><FontAwesomeIcon icon={faTableList} className='me-2' />Abrir formulário no PClientes</MDBDropdownLink>
+          ><FontAwesomeIcon icon={faTableList} className='me-2' />Abrir formulário no PClientes</a>
         </MDBDropdownItem>
       </MDBDropdownMenu>
     </MDBDropdown>

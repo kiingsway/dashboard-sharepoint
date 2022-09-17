@@ -1,0 +1,113 @@
+* {
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+}
+
+.sidebar-container {
+    display: flex;
+}
+
+main {
+    width: 100% !important;
+    height: 100vh;
+    overflow: auto;
+}
+
+.sidebar {
+    background: #222;
+    color: #ddd;
+    height: 100vh;
+    max-height: -webkit-fill-available !important;
+    transition: all .1s linear;
+}
+
+.top_section {
+    display: flex;
+    align-items: center;
+    padding: 20px 15px;
+    justify-content: start;
+    justify-content: space-between;
+}
+
+.logo {
+    font-size: 22px;
+    line-height: 1em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.bars {
+    display: flex;
+    font-size: 20px;
+    margin-bottom: 10px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+.bars:hover {
+    background-color: #444;
+    transition: all .15s linear;
+    cursor: pointer;
+    box-shadow: 0;
+}
+
+.link {
+    display: flex;
+    color: #ddd;
+    padding: 10px 15px;
+    gap: 15px;
+    transition: all .15s linear;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+.link:hover {
+    background-color: #444;
+    transition: all .15s linear;
+    color: #ddd !important;
+    box-shadow: 0;
+}
+
+.active {
+    transition: all .15s linear;
+    background-color: #333;
+    color: #ddd !important;
+    box-shadow: rgb(30, 30, 30) 3px 3px 2px 0px inset, rgba(10, 10, 10, 0.5) -3px -3px 2px 1px inset;
+}
+
+.icon,
+.link_text {
+    font-size: 18px;
+}
+
+.btnAtualizar {
+    background-color: transparent;
+    border: 0;
+    color: #ddd;
+    transition: all .05s linear;
+}
+
+.btnAtualizar:hover {
+    background-color: #444;
+    transition: all .05s linear;
+    color: #ddd !important;
+    box-shadow: 0;
+}
+
+.btnAtualizar:active:enabled {
+    background-color: #555;
+    transition: all .05s linear;
+    box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px inset;
+}
+
+.btnAtualizar:disabled {
+    background-color: #555;
+    box-shadow: 0;
+    transition: all .05s linear;
+    box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px inset;
+    cursor: wait;
+}
+
+.small {
+    font-size: 10px !important;
+}

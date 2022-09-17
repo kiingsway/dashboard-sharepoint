@@ -1,0 +1,133 @@
+.nav {
+    width: 96%;
+    height: 60px;
+    background-color: #444;
+    padding: 10px 15px;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 10px 20px, rgba(0, 0, 0, 0.5) 0px 9px 4px;
+}
+
+.container {
+    margin-top: 20px;
+    width: 100%;
+}
+
+.fs_13px {
+    font-size: 13px;
+}
+
+.clienteCard {
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 5px 13px, rgba(0, 0, 0, 0.4) 0px 7px 8px;
+    height: 100% !important;
+    color: #EEE;
+    &>.img {
+        display: flex;
+        justify-content: center;
+        height: 100px;
+        overflow: hidden;
+        background-color: #EEE;
+        &>img {
+            padding: 20px;
+            object-fit: contain;
+            color: #444;
+        }
+    }
+    &>.footer {
+        padding: 7px 5px 5px 5px;
+        display: flex;
+        border: 0;
+        box-shadow: inset 0px 1px 4px -1px rgba(0, 0, 0, 0.75);
+    }
+}
+
+.footer {
+    &_button:hover {
+        box-shadow: 0px 1px 4px -1px rgba(0, 0, 0, 0.75);
+    }
+}
+
+.icon {
+    border-right: 0px;
+    margin-right: -2px;
+    margin-bottom: 1px;
+    width: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 3px 5px inset, rgba(0, 0, 0, 0.23) 0px 2px 2px inset;
+    transition: all .1s linear;
+    &_del {
+        cursor: pointer;
+    }
+    &_btn:active {
+        box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px inset, rgba(0, 0, 0, 0.23) 0px 6px 6px inset;
+        transition: all .05s linear;
+    }
+}
+
+.inputtext {
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 3px 5px inset, rgba(0, 0, 0, 0.23) 0px 2px 2px inset;
+    border: 0;
+    color: white;
+    transition: all .1s linear;
+    padding: 6px 20px;
+    background-color: transparent;
+    &:focus-visible {
+        box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px inset, rgba(0, 0, 0, 0.23) 0px 6px 6px inset;
+        border: 0;
+        outline: 0;
+        transition: all .1s linear;
+    }
+    &::placeholder {
+        /* Chrome, Firefox, Opera, Safari 10.1+ */
+        color: #CCC;
+        opacity: 1;
+        /* Firefox */
+    }
+    &:-ms-input-placeholder {
+        /* Internet Explorer 10-11 */
+        color: #CCC;
+    }
+    &::-ms-input-placeholder {
+        /* Microsoft Edge */
+        color: #CCC;
+    }
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted #aaa;
+    cursor: help;
+    &_text {
+        visibility: hidden;
+        width: 120px;
+        background-color: black;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px 0;
+        /* Position the tooltip */
+        position: absolute;
+        z-index: 1;
+        top: 100%;
+        left: 50%;
+        margin-left: -60px;
+        /* Use half of the width (120/2 = 60), to center the tooltip */
+    }
+    &:hover &_text {
+        visibility: visible;
+        transition: all 1s linear;
+    }
+}
+
+.lh {
+    &_0 {
+        line-height: 1.3em;
+        text-transform: uppercase;
+    }
+}
+
+.divTooltip {
+    max-height: 100px;
+    overflow: auto;
+}

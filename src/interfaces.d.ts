@@ -52,7 +52,7 @@ export interface ICliente {
   Id: number;
   ID?: number;
   Title: string;
-  logo?: {
+  logo: {
     Description: string;
     Url: string;
   };
