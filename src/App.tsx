@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import './App.css';
 
 import Chamados from './pages/Chamados';
@@ -12,6 +12,7 @@ import bChamados from './data/chamados_big.json'
 import { IChamado, ICliente } from './interfaces';
 import { DateTime } from 'luxon';
 import { diffBusinessDays } from './services/FunctionHelpers';
+import { AnimatePresence, motion } from 'framer-motion';
 
 
 export default function App() {
@@ -43,16 +44,17 @@ export default function App() {
   }
 
   useEffect(() => obterClientesChamados(), [])
-
   return (
     <BrowserRouter>
-      <Sidebar clientes={clientes} chamados={chamados}>
-        <Routes>
-          <Route path='/' element={<Chamados />} />
-          <Route path='/dashboard' element={<Dashboard chamados={chamados} clientes={clientes} />} />
-          <Route path='/clientes' element={<Clientes clientes={clientes} chamados={chamados} />} />
-        </Routes>
-      </Sidebar>
+      <AnimatePresence>
+        <Sidebar clientes={clientes} chamados={chamados}>
+          <Routes>
+            <Route path='/' element={<Chamados />} />
+            <Route path='/dashboard' element={<Dashboard chamados={chamados} clientes={clientes} />} />
+            <Route path='/clientes' element={<Clientes clientes={clientes} chamados={chamados} />} />
+          </Routes>
+        </Sidebar>
+      </AnimatePresence>
     </BrowserRouter>
   )
 }

@@ -3,9 +3,10 @@ import { AiTwotonePieChart, AiOutlineBars } from 'react-icons/ai'
 import { BsCardList } from 'react-icons/bs'
 import { TbBuilding, TbRotate } from 'react-icons/tb'
 import { NavLink } from 'react-router-dom'
-import './Sidebar.css'
 import { MDBBadge } from 'mdb-react-ui-kit'
 import { IChamado, ICliente } from '../../interfaces'
+import styles from './Sidebar.module.scss'
+import classNames from 'classnames'
 
 interface IMenuItem {
   path: string;
@@ -33,23 +34,35 @@ export default function Sidebar(props: Props) {
   ]
 
   return (
-    <div className="sidebar-container rounded-end">
-      <div className="sidebar d-flex flex-column justify-content-between " style={{ width: isExpanded ? '250px' : '65px' }}>
+    <div className={styles.app}>
+      <div
+        className={classNames(
+          styles.sidebar,
+          'd-flex flex-column justify-content-between',
+          { [styles.sidebar_collapsed]: !isExpanded },
+          { [styles.sidebar_expanded]: isExpanded }
+        )}>
         <div>
 
-          <div className="top_section">
-            <h1 className={`logo ${isExpanded ? '' : 'invisible'}`}>Dashboard 22</h1>
-            <div className="bars p-2 rounded" onClick={toggleExpand}>
+          <div className={styles.sidebar_top}>
+            <h1 className={classNames(styles.sidebar_logo, { invisible: !isExpanded })}>Dashboard 22</h1>
+            <div className={`${styles.btn_expand} ${styles.btn_slowTransition} p-2 rounded`} onClick={toggleExpand}>
               <AiOutlineBars />
             </div>
           </div>
           {
             menuItems.map((item, index) => (
               <div className='px-2 py-1' key={index}>
-                <NavLink to={item.path} className='link rounded d-flex align-items-center justify-content-between'>
-                  <div className='d-flex flex-nowrap'>
-                    <div className="icon me-3">{item.icon}</div>
-                    <div className={`link_text ${isExpanded ? '' : 'invisible'}`}>{item.name}</div>
+                <NavLink
+                  to={item.path}
+                  className={classNames(styles.btn_nav, styles.btn_fastTransition, 'rounded')}>
+                  <div className={styles.btn_nav_text}>
+                    <span className='me-3'>
+                      {item.icon}
+                    </span>
+                    <span className={classNames({ invisible: !isExpanded })}>
+                      {item.name}
+                    </span>
                   </div>
                   {
                     item.count && isExpanded ?
@@ -62,56 +75,19 @@ export default function Sidebar(props: Props) {
             ))
           }
         </div>
-        <div className='p-0'>
-
-          <UpdateCountdown />
-
-          {
-            isExpanded ?
-              <div className='p-2'>
-
-                <button
-                  title='Atualizar'
-                  type='button'
-                  className='btnAtualizar rounded px-4 py-2 mb-1 rounded d-flex flex-row align-items-center justify-content-between w-100'
-                  onClick={() => console.log('foi')}
-                  disabled
-                >
-                  <TbRotate />
-                  <span>Atualizar</span>
-                  <MDBBadge className='text-dark' color='light'>
-                    <span className='small'>00:00</span>
-                  </MDBBadge>
-                </button>
-              </div>
-              :
-              <div className='rounded d-flex flex-column align-items-center justify-content-between p-2'>
-                <button
-                  title='Atualizar'
-                  type='button'
-                  className='btnAtualizar rounded px-2 py-1 mb-1'
-                  onClick={() => console.log('foi')}
-                  disabled>
-                  <TbRotate />
-                  <MDBBadge className='text-dark' color='light'>
-                    <span className='small'>00:00</span>
-                  </MDBBadge>
-                </button>
-              </div>
-          }
-        </div>
+        <UpdateCountdown isExpanded={isExpanded} />
       </div>
-      <main>
+      <main className={styles.main}>
         {props.children}
       </main>
-    </div>
+    </div >
   )
 }
 
 
-const UpdateCountdown = () => {
+const UpdateCountdown = (pr: { isExpanded: boolean }) => {
   const tempoAtualizacao: number = 15 * 60 // Tempo (segundos) para atualização dos clientes e chamados.
-  const tempoHabilitarAtualizar: number = 3 // Tempo (segundos) para remover o disabled do botão para evitar muitas requisições feitas pelo usuário.
+  const tempoHabilitarAtualizar: number = 15 // Tempo (segundos) para remover o disabled do botão para evitar muitas requisições feitas pelo usuário.
 
   const [segundosAtualizacao, setSegundosAtualizacao] = useState<number>(tempoAtualizacao);
   useEffect(() => {
@@ -137,25 +113,28 @@ const UpdateCountdown = () => {
   const handleSetSegundosAtualizacao = () => setSegundosAtualizacao(0)
 
   return (
-    <div className='p-2'>
+    <div className='px-2 pb-2'>
 
       <button
-        // className='d-flex justify-content-between rounded w-100 p-2 bg-dark text-light align-items-center'
-        className='link'
+        className={classNames(
+          styles.btn_reset,
+          styles.btn_update,
+          styles.btn_slowTransition,
+          'rounded',
+          { 'flex-row': pr.isExpanded },
+          { 'flex-column': !pr.isExpanded },
+        )}
         type='button'
         title='Atualizar...'
         onClick={handleSetSegundosAtualizacao}
+        disabled={segundosAtualizacao >= tempoAtualizacao - tempoHabilitarAtualizar }
       >
-        <div>
-          <TbRotate style={{ marginBottom: 3 }} className='mx-2' />
-          Atualizar
-        </div>
+        <TbRotate style={{ marginBottom: 3 }} className='' />
+        <span className={classNames({ 'd-none': !pr.isExpanded })}>Atualizar</span>
 
-        <MDBBadge className='text-dark' color='light'>
-          <span className='small'>
+        <span className={styles.btn_update_badge}>
             {`${String(Math.floor(segundosAtualizacao / 60)).padStart(2, '0')}:${String(segundosAtualizacao % 60).padStart(2, '0')}`}
-          </span>
-        </MDBBadge>
+        </span>
 
       </button>
     </div>

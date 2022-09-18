@@ -2,16 +2,21 @@ import { useState, useRef } from 'react'
 import styles from './Clientes.module.scss'
 import { IChamado, ICliente } from '../../interfaces';
 import { IoMdClose } from 'react-icons/io';
+import { TbListDetails } from 'react-icons/tb'
 import { TbSearch } from 'react-icons/tb'
 import { BsGlobe, BsCardList, BsCalendar } from 'react-icons/bs'
-import {
-  MDBCard, MDBCardBody, MDBCol,
-  MDBRow, MDBCardImage, MDBContainer,
-  MDBCardTitle, MDBBtn, MDBCardFooter
-} from 'mdb-react-ui-kit'
-import { motion } from 'framer-motion'
+import { MDBCol, MDBRow, MDBContainer, MDBBtn, MDBCardFooter } from 'mdb-react-ui-kit'
+import { motion, AnimatePresence } from 'framer-motion'
 import URIs from '../../services/uris.json'
 import { DateTime } from 'luxon';
+import classNames from 'classnames'
+import {
+  MDBTabs,
+  MDBTabsItem,
+  MDBTabsLink,
+  MDBTabsContent,
+  MDBTabsPane
+} from 'mdb-react-ui-kit';
 
 interface Props { clientes: ICliente[]; chamados: IChamado[]; }
 
@@ -19,6 +24,10 @@ export default function Clientes(props: Props) {
 
   // useState para pesquisa em Clientes
   const [search, setSearch] = useState('');
+
+  // Use State para expandir card do cliente
+  const [selectedCliente, selectCliente] = useState<ICliente | null>(null);
+
 
   // useRef para quando clique na Lupa, focar o texto de pesquisa.
   const searchRef = useRef(null);
@@ -32,64 +41,66 @@ export default function Clientes(props: Props) {
       .includes(search.toLowerCase()))
 
   return (
-    <div className='d-flex flex-column w-100 align-items-center'>
-      <nav className={`rounded-bottom ${styles.nav} sticky-top`}>
-        <MDBContainer breakpoint='sm'>
-          <MDBRow>
-            <MDBCol size={12}>
-              <div className='d-flex'>
-                <div className={`${styles.icon} ${styles.icon_btn} text-light rounded-start`} onClick={handleClickSearch}>
-                  <TbSearch />
-                  {clientesFiltrados.length !== props.clientes.length ? clientesFiltrados.length : <></>}
+
+    <AnimatePresence>
+      <div className='d-flex flex-column w-100 align-items-center'>
+        <nav className={classNames('rounded-bottom sticky-top', styles.search_bar)}>
+          <MDBContainer breakpoint='sm'>
+            <MDBRow>
+              <MDBCol size={12}>
+                <div className='d-flex'>
+                  <div className={classNames(styles.search_icon, 'rounded-start')} onClick={handleClickSearch}>
+                    <TbSearch />
+                    {clientesFiltrados.length !== props.clientes.length ? clientesFiltrados.length : <></>}
+                  </div>
+                  <input
+                    type="text"
+                    value={search}
+                    ref={searchRef}
+                    title='Pesquisar...'
+                    placeholder='Pesquisar...'
+                    className={styles.search_text}
+                    onChange={e => setSearch(e.target.value)}
+                  />
+                  <div className={classNames(styles.search_icon, 'rounded-end')} onClick={() => setSearch('')}>
+                    <IoMdClose />
+                  </div>
                 </div>
-                <input
-                  type="text"
-                  value={search}
-                  ref={searchRef}
-                  title='Pesquisar...'
-                  placeholder='Pesquisar...'
-                  className={`w-100 ${styles.inputtext}`}
-                  onChange={e => setSearch(e.target.value)}
-                />
-                <div className={`${styles.icon} ${styles.icon_btn} ${styles.icon_del} text-light rounded-end`} onClick={() => setSearch('')}>
-                  <IoMdClose />
-                </div>
-              </div>
-            </MDBCol>
-          </MDBRow>
-        </MDBContainer>
-      </nav>
+              </MDBCol>
+            </MDBRow>
+          </MDBContainer>
+        </nav>
 
-      <MDBContainer breakpoint='xxl'>
+        <MDBContainer breakpoint='xxl'>
 
-        <motion.div
-          layout
-          className='row px-3 pt-3 w-100 m-0 flex-row'>
+          <motion.div
+            layout
+            className='row px-3 pt-3 w-100 m-0 flex-row'>
 
-          {clientesFiltrados.map(cliente => {
+            {clientesFiltrados.map(cliente => {
 
-            const chamadosDoCliente = props.chamados.filter(chamado => chamado.Cliente.Id === cliente.Id);
-            const qtdChamadosPorCliente = chamadosDoCliente.length;
-            const chamadosPrevia = chamadosDoCliente.map(chamado => ({ Id: chamado.Id, Title: chamado.Title }))
+              const chamadosDoCliente = props.chamados.filter(chamado => chamado.Cliente.Id === cliente.Id);
+              const qtdChamadosPorCliente = chamadosDoCliente.length;
+              const chamadosPrevia = chamadosDoCliente.map(chamado => ({ Id: chamado.Id, Title: chamado.Title }))
 
-            const urlCliente = `${URIs.PClientes}/${cliente.InternalNameSubsite}`;
-            const urlClienteForm = `${urlCliente}/Lists/${cliente.InternalNameSubsiteList}`;
+              const urlCliente = `${URIs.PClientes}/${cliente.InternalNameSubsite}`;
+              const urlClienteForm = `${urlCliente}/Lists/${cliente.InternalNameSubsiteList}`;
 
-            return (
-              <ClienteCard
+              return <ClienteCard
+                selectedCliente={selectedCliente}
+                selectCliente={selectCliente}
                 key={cliente.Id}
                 cliente={cliente}
                 url={urlCliente}
                 urlForm={urlClienteForm}
                 qtdChamadosPorCliente={qtdChamadosPorCliente}
                 chamadosPrevia={chamadosPrevia}
-              />)
-          })}
-
-
-        </motion.div>
-      </MDBContainer>
-    </div >
+              />
+            })}
+          </motion.div>
+        </MDBContainer>
+      </div >
+    </AnimatePresence>
   )
 }
 
@@ -99,9 +110,12 @@ interface IClienteCardProps {
   urlForm: string;
   qtdChamadosPorCliente: number;
   chamadosPrevia: Pick<IChamado, 'Id' | 'Title'>[];
+  selectedCliente: ICliente | null;
+  selectCliente: any
 }
 
 const ClienteCard = (pr: IClienteCardProps) => {
+
 
   const btnLinksClasses = 'shadow-inner w-50 border-0 text-center align-items-center d-flex flex-row flex-wrap justify-content-evenly ' + styles.footer_button
 
@@ -110,44 +124,94 @@ const ClienteCard = (pr: IClienteCardProps) => {
     dmy: DateTime.fromISO(pr.cliente.Created, { locale: 'pt-BR' }).toFormat('dd LLL yyyy')
   }
 
+  const isSelectedCliente = pr.selectedCliente?.Id === pr.cliente.Id;
+
+
   return (
     <motion.div
       layout
-      animate={{ opacity: 1, scale: 1 }}
-      initial={{ opacity: 0, scale: 0 }}
-      exit={{ opacity: 0, scale: 0 }}
-      whileHover={{ scale: 1.05 }}
-      className='col-12 col-md-6 col-xl-3 col-xxl-2 p-2'>
+      transition={{ layout: { duration: .25, type: 'tween' } }}
+      className={classNames([
+        'col-12',
+        `col-md-${(+isSelectedCliente + 1) * 6}`,
+        `col-xl-${(+isSelectedCliente + 1) * 3}`,
+        `col-xxl-${(+isSelectedCliente + 1) * 2}`,
+        'p-2'])}>
 
-      <MDBCard background='dark' className={styles.clienteCard}>
-
-        <div className={`rounded-top ${styles.img}`}>
-
-          <MDBCardImage
+      <motion.div layout className={classNames('rounded-top', styles.card_img)}>
+          <motion.img
+            layout
             src={pr.cliente.logo.Url}
             alt={`Logo do cliente "${pr.cliente.Title}"`}
-            position='top'
-          />
-
-        </div>
-        <MDBCardBody>
-          <MDBCardTitle>{pr.cliente.Title}</MDBCardTitle>
+            onClick={() => pr.selectCliente(isSelectedCliente ? null : pr.cliente)}/>
+      </motion.div>
 
 
-          <Tooltip tooltip={<small className='text-muted'>{Created.dmy}</small>}>
+      <motion.div layout className={'card bg-dark ' + styles.clienteCard}>
 
-            <BsCalendar className='me-2' style={{ marginBottom: 3 }} />
-            <span className='fw-ligt'>Criado em {Created.my}</span>
+        <motion.div layout className={`rounded-top ${styles.img}`}>
 
-          </Tooltip>
-          <Tooltip
-            tooltip={<>{pr.chamadosPrevia.map(ch => <p key={ch.Id + ch.Title} className={styles.fs_13px}><b>#{ch.Id}</b> | {ch.Title}</p>)}</>}>
-            <BsCardList className='me-2' />
-            {pr.qtdChamadosPorCliente} {pr.qtdChamadosPorCliente > 1 ? 'chamados abertos' : 'chamado aberto'}
-          </Tooltip>
+          <motion.img
+            layout
+            onClick={() => pr.selectCliente(isSelectedCliente ? null : pr.cliente)}
+            src={pr.cliente.logo.Url}
+            alt={`Logo do cliente "${pr.cliente.Title}"`}
+            className="card-img-top" />
+
+        </motion.div>
 
 
-        </MDBCardBody>
+        <motion.div layout className='card-body'>
+          <motion.div className="d-flex flex-row justify-content-between align-items-top mb-4">
+            <motion.div
+              className='d-flex justify-content-between align-items-center w-100'>
+
+              <motion.h5
+                onClick={() => pr.selectCliente(isSelectedCliente ? null : pr.cliente)}
+                className={styles.card_title} >
+                {pr.cliente.Title}
+              </motion.h5>
+
+              <motion.small className={classNames('text-muted', { 'd-none': !isSelectedCliente })}>
+                <BsCalendar className='me-2' style={{ marginBottom: 3 }} />
+                <span className='fw-light'>Criado em {Created.my}</span>
+              </motion.small>
+
+            </motion.div>
+            <motion.div
+              layout
+              title={`${pr.qtdChamadosPorCliente} ${pr.qtdChamadosPorCliente > 1 ? 'chamados abertos' : 'chamado aberto'} para esse cliente`}
+              className={classNames('d-flex align-items-center', { 'd-none': isSelectedCliente })}>
+              <BsCardList className='me-2' style={{ marginTop: 3 }} /> {pr.qtdChamadosPorCliente}
+            </motion.div>
+          </motion.div>
+          {
+            isSelectedCliente &&
+            <motion.div>
+
+              <ClienteDetailsTabs
+                qtdChamadosPorCliente={pr.qtdChamadosPorCliente}
+                chamadosPrevia={pr.chamadosPrevia}
+                cliente={pr.cliente}
+              />
+
+              <motion.div
+                initial={{ opacity: 0, height: 'initial' }}
+                animate={{ opacity: +isSelectedCliente, height: 200 }}
+                exit={{ opacity: 0, height: 'initial' }}
+                transition={{ duration: 1 }}
+                layout
+                className={styles.summChamados}
+              >
+                {pr.chamadosPrevia
+                  .map(ch => <p key={ch.Id + ch.Title} ><b>#{ch.Id}</b> | {ch.Title}</p>)
+                }
+
+              </motion.div>
+            </motion.div>
+          }
+
+        </motion.div>
         <MDBCardFooter className={styles.footer}>
           <MDBBtn
             outline
@@ -172,46 +236,58 @@ const ClienteCard = (pr: IClienteCardProps) => {
             <span className={styles.lh_0}>Lista</span>
           </MDBBtn>
         </MDBCardFooter>
-      </MDBCard>
-    </motion.div >
+      </motion.div>
+    </motion.div>
   )
 }
 
-const Tooltip = (pr: { tooltip: string | JSX.Element; children: any; }) => {
+interface IClienteDetails {
+  qtdChamadosPorCliente: number;
+  chamadosPrevia: Pick<IChamado, "Id" | "Title">[];
+  cliente: ICliente;
+}
 
-  const textMotion = {
-    rest: {
-      x: 0,
-      transition: { duration: 2, type: "tween", ease: "easeIn" }
-    },
-    hover: {
-      x: 10,
-      transition: { duration: 0.4, type: "tween", ease: "easeOut" }
-    }
-  };
-
-  const slashMotion = {
-    rest: { opacity: 0, ease: "easeOut", duration: 0.2, type: "tween" },
-    hover: {
-      opacity: 1,
-      transition: { duration: 0.4, type: "tween", ease: "easeIn" }
-    }
-  };
+const ClienteDetailsTabs = (pr: IClienteDetails) => {
+  type TTabs = 'chamados' | 'detalhes'
+  const [tab, changeTab] = useState<TTabs>('chamados');
+  const setTab = (value: TTabs) => { if (value === tab) return; else changeTab(value) }
 
   return (
-    <motion.div
-      initial='rest'
-      whileHover='hover'
-      animate='rest'
-    >
-      <motion.div variants={textMotion} className='mb-1'>
-        {pr.children}
-      </motion.div>
+    <>
+      <MDBTabs fill className='mb-3'>
 
-      <motion.div variants={slashMotion} className={[styles.lh_0, styles.divTooltip].join(' ')}>
-        {pr.tooltip}
-      </motion.div>
+        <MDBTabsItem>
+          <MDBTabsLink onClick={() => setTab('chamados')} active={tab === 'chamados'} className='bg-dark shadow-0'>
+            <BsCardList className='me-2' style={{ marginBottom: 3 }} />
+            {pr.qtdChamadosPorCliente} {pr.qtdChamadosPorCliente > 1 ? 'chamados abertos' : 'chamado aberto'}
+          </MDBTabsLink>
+        </MDBTabsItem>
 
-    </motion.div>
+        <MDBTabsItem>
+          <MDBTabsLink onClick={() => setTab('detalhes')} active={tab === 'detalhes'}>
+            <TbListDetails className='me-2' style={{ marginBottom: 3 }} />
+            Detalhes
+          </MDBTabsLink>
+        </MDBTabsItem>
+
+      </MDBTabs>
+
+      <MDBTabsContent>
+        <MDBTabsPane show={tab === 'chamados'}>
+          {pr.chamadosPrevia
+            .map(ch => <small key={ch.Id + ch.Title} ><b>#{ch.Id}</b> | {ch.Title}</small>)
+          }
+        </MDBTabsPane>
+        <MDBTabsPane show={tab === 'detalhes'}>
+          <ul>
+            <li>#{pr.cliente.Id}</li>
+            <li>Título: {pr.cliente.Title}</li>
+            <li>Nome Interno: {pr.cliente.ClienteInternalName}</li>
+            <li>Criado: {DateTime.fromISO(pr.cliente.Created, { locale: 'pt-br' }).toFormat(`dd LLL${DateTime.fromISO(pr.cliente.Created).hasSame(DateTime.now(), 'year') ? '' : ' yyyy'}`)}</li>
+            <li>URL Relativa: /sites/PClientes/{pr.cliente.InternalNameSubsite}/Lists/{pr.cliente.InternalNameSubsiteList}</li>
+          </ul>
+        </MDBTabsPane>
+      </MDBTabsContent>
+    </>
   )
 }

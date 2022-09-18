@@ -1,0 +1,139 @@
+.app {
+    display: flex;
+}
+
+.sidebar {
+    background: #303030;
+    color: #ddd;
+    height: 100vh;
+    max-height: -webkit-fill-available !important;
+    transition: all .1s ease;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    &_collapsed {
+        width: 65px
+    }
+    &_expanded {
+        width: 350px
+    }
+    &_top {
+        display: flex;
+        align-items: center;
+        padding: 10px 15px;
+        justify-content: space-between;
+    }
+    &_logo {
+        font-size: 22px;
+        line-height: 1em;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+.btn {
+    &_reset {
+        border: none;
+        margin: 0;
+        padding: 0;
+        width: auto;
+        overflow: visible;
+        background: transparent;
+        /* inherit font & color from ancestor */
+        color: inherit;
+        font: inherit;
+        /* Normalize `line-height`. Cannot be changed from `normal` in Firefox 4+. */
+        line-height: normal;
+        /* Corrects font smoothing for webkit */
+        -webkit-font-smoothing: inherit;
+        -moz-osx-font-smoothing: inherit;
+        /* Corrects inability to style clickable `input` types in iOS */
+        -webkit-appearance: none;
+    }
+    &_slowTransition {
+        &:hover {
+            background-color: #444;
+            transition: all .5s linear;
+            cursor: pointer;
+            box-shadow: 0;
+        }
+        &:active {
+            background-color: #353435;
+            transition: all .1s linear;
+            -webkit-box-shadow: inset 0px 4px 7px -1px rgba(0, 0, 0, 0.45);
+            box-shadow: inset 0px 4px 7px -1px rgba(0, 0, 0, 0.45);
+        }
+    }
+    &_fastTransition {
+        &:hover {
+            background-color: #444;
+            transition: all .15s linear;
+            cursor: pointer;
+            box-shadow: 0;
+            color: #DDD !important;
+        }
+        &:active {
+            background-color: #353435;
+            transition: all .15s linear;
+            -webkit-box-shadow: inset 0px 4px 7px -1px rgba(0, 0, 0, 0.45);
+            box-shadow: inset 0px 4px 7px -1px rgba(0, 0, 0, 0.45);
+        }
+    }
+    &_expand {
+        display: flex;
+        font-size: 20px;
+        margin-bottom: 10px;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+        transition: all .5s linear;
+    }
+    &_nav {
+        text-transform: none !important;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: #ddd;
+        padding: 10px 15px;
+        gap: 15px;
+        transition: all .15s linear;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+        text-decoration: none !important;
+        &_text {
+            font-size: 18px;
+            display: flex;
+        }
+    }
+    &_update {
+        display: flex;
+        font-size: 18px;
+        transition: all .15s linear;
+        width: 100%;
+        justify-content: space-between;
+        align-items: center;
+        padding: 7px 15px;
+        gap: 5px;
+        &:disabled {
+            cursor: wait;
+            background-color: #444;
+            transition: all .15s linear;
+            -webkit-box-shadow: inset 0px 4px 3px -1px rgba(0, 0, 0, 0.45);
+            box-shadow: inset 0px 4px 3px -1px rgba(0, 0, 0, 0.45);
+        }
+        &_badge {
+            display: inline-block;
+            font-size: 12px;
+            font-weight: 600;
+            line-height: 1;
+            background-color: white;
+            color: #303030;
+            white-space: nowrap;
+            text-align: center;
+            padding: 3px 6px;
+            border-radius: 0.375em;
+        }
+    }
+}
+
+.main {
+    width: 100% !important;
+    height: 100vh;
+    overflow: auto;
+}
