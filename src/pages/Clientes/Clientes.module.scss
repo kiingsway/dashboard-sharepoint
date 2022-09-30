@@ -55,6 +55,57 @@
 }
 
 .card {
+    &_chamados {
+        &_table {
+            table-layout: fixed;
+        }
+        &_id {
+            width: 10px;
+            overflow: hidden;
+            padding: 4px;
+            font-size: 13px;
+            border-radius: 4px 0 0 4px;
+        }
+        &_title {
+            max-width: 110px;
+            overflow: hidden;
+            padding-left: 4px;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            font-size: 12px;
+        }
+        &_atribuida {
+            padding-left: 10px;
+            border-radius: 0 4px 4px 0;
+            max-width: 10px;
+            overflow: hidden;
+            font-size: 12px;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+        &_row {
+            &:hover {
+                background-color: #CCC;
+                color: #444;
+            }
+        }
+    }
+    &_details {
+        &_title {
+            font-size: 20px;
+            display: block;
+        }
+        &_subtitle {
+            color: #DDD;
+            font-size: 14px;
+            display: block;
+        }
+        &_uri {
+            color: #999;
+            font-size: 13px;
+            display: block;
+        }
+    }
     &_img {
         -webkit-background-clip: border-box;
         background-clip: border-box;
@@ -62,7 +113,7 @@
         cursor: pointer;
         display: flex;
         flex-direction: column;
-        height: 100px;
+        align-items: center;
         justify-content: center;
         overflow: hidden;
         position: relative;
@@ -70,6 +121,8 @@
         &>img {
             object-fit: contain;
             color: #444;
+            padding: 20px;
+            max-height: 100px;
         }
     }
     &>.footer {
@@ -128,5 +181,69 @@
     &_0 {
         line-height: 1.3em;
         text-transform: uppercase;
+    }
+}
+
+.responsive_table {
+    padding: 0;
+    .table_body {
+        height: 400px;
+        overflow: auto;
+    }
+    li {
+        border-radius: 3px;
+        padding: 15px;
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        font-size: 13px;
+        border: 1px solid #69767F;
+    }
+    .table_header {
+        padding: 0;
+        border: 0;
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+    }
+    .table_row {
+        &:hover {
+            background-color: #30353A;
+        }
+    }
+    .col_1 {
+        flex-basis: 6%;
+    }
+    .col_2 {
+        flex-basis: 54%;
+    }
+    .col_3 {
+        flex-basis: 25%;
+    }
+    .col_4 {
+        flex-basis: 25%;
+    }
+    @media all and (max-width: 767px) {
+        .table_header {
+            display: none;
+        }
+        .table_row {}
+        li {
+            display: block;
+        }
+        .col {
+            flex-basis: 100%;
+        }
+        .col {
+            display: flex;
+            padding: 5px 0;
+            &:before {
+                color: #6C7A89;
+                padding-right: 10px;
+                content: attr(data-label);
+                flex-basis: 50%;
+                text-align: right;
+            }
+        }
     }
 }

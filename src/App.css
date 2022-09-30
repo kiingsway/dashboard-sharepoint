@@ -51,3 +51,8 @@ body,
 .dev {
     font-family: 'Consolas, monaco, monospace' !important;
 }
+
+ol,
+ul {
+    padding: 0 !important;
+}

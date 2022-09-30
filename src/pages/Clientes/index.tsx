@@ -81,7 +81,7 @@ export default function Clientes(props: Props) {
 
               const chamadosDoCliente = props.chamados.filter(chamado => chamado.Cliente.Id === cliente.Id);
               const qtdChamadosPorCliente = chamadosDoCliente.length;
-              const chamadosPrevia = chamadosDoCliente.map(chamado => ({ Id: chamado.Id, Title: chamado.Title }))
+              const chamadosPrevia = chamadosDoCliente.map(chamado => ({ Id: chamado.Id, Title: chamado.Title, Atribuida: chamado.Atribuida }))
 
               const urlCliente = `${URIs.PClientes}/${cliente.InternalNameSubsite}`;
               const urlClienteForm = `${urlCliente}/Lists/${cliente.InternalNameSubsiteList}`;
@@ -109,7 +109,7 @@ interface IClienteCardProps {
   url: string;
   urlForm: string;
   qtdChamadosPorCliente: number;
-  chamadosPrevia: Pick<IChamado, 'Id' | 'Title'>[];
+  chamadosPrevia: Pick<IChamado, 'Id' | 'Title' | 'Atribuida'>[];
   selectedCliente: ICliente | null;
   selectCliente: any
 }
@@ -139,27 +139,15 @@ const ClienteCard = (pr: IClienteCardProps) => {
         'p-2'])}>
 
       <motion.div layout className={classNames('rounded-top', styles.card_img)}>
-          <motion.img
-            layout
-            src={pr.cliente.logo.Url}
-            alt={`Logo do cliente "${pr.cliente.Title}"`}
-            onClick={() => pr.selectCliente(isSelectedCliente ? null : pr.cliente)}/>
+        <motion.img
+          layout
+          src={pr.cliente.logo.Url}
+          alt={`Logo do cliente "${pr.cliente.Title}"`}
+          onClick={() => pr.selectCliente(isSelectedCliente ? null : pr.cliente)} />
       </motion.div>
 
 
       <motion.div layout className={'card bg-dark ' + styles.clienteCard}>
-
-        <motion.div layout className={`rounded-top ${styles.img}`}>
-
-          <motion.img
-            layout
-            onClick={() => pr.selectCliente(isSelectedCliente ? null : pr.cliente)}
-            src={pr.cliente.logo.Url}
-            alt={`Logo do cliente "${pr.cliente.Title}"`}
-            className="card-img-top" />
-
-        </motion.div>
-
 
         <motion.div layout className='card-body'>
           <motion.div className="d-flex flex-row justify-content-between align-items-top mb-4">
@@ -195,7 +183,7 @@ const ClienteCard = (pr: IClienteCardProps) => {
                 cliente={pr.cliente}
               />
 
-              <motion.div
+              {/* <motion.div
                 initial={{ opacity: 0, height: 'initial' }}
                 animate={{ opacity: +isSelectedCliente, height: 200 }}
                 exit={{ opacity: 0, height: 'initial' }}
@@ -207,7 +195,7 @@ const ClienteCard = (pr: IClienteCardProps) => {
                   .map(ch => <p key={ch.Id + ch.Title} ><b>#{ch.Id}</b> | {ch.Title}</p>)
                 }
 
-              </motion.div>
+              </motion.div> */}
             </motion.div>
           }
 
@@ -243,7 +231,7 @@ const ClienteCard = (pr: IClienteCardProps) => {
 
 interface IClienteDetails {
   qtdChamadosPorCliente: number;
-  chamadosPrevia: Pick<IChamado, "Id" | "Title">[];
+  chamadosPrevia: Pick<IChamado, "Id" | "Title" | "Atribuida">[];
   cliente: ICliente;
 }
 
@@ -273,19 +261,101 @@ const ClienteDetailsTabs = (pr: IClienteDetails) => {
       </MDBTabs>
 
       <MDBTabsContent>
-        <MDBTabsPane show={tab === 'chamados'}>
-          {pr.chamadosPrevia
-            .map(ch => <small key={ch.Id + ch.Title} ><b>#{ch.Id}</b> | {ch.Title}</small>)
-          }
-        </MDBTabsPane>
-        <MDBTabsPane show={tab === 'detalhes'}>
-          <ul>
-            <li>#{pr.cliente.Id}</li>
-            <li>Título: {pr.cliente.Title}</li>
-            <li>Nome Interno: {pr.cliente.ClienteInternalName}</li>
-            <li>Criado: {DateTime.fromISO(pr.cliente.Created, { locale: 'pt-br' }).toFormat(`dd LLL${DateTime.fromISO(pr.cliente.Created).hasSame(DateTime.now(), 'year') ? '' : ' yyyy'}`)}</li>
-            <li>URL Relativa: /sites/PClientes/{pr.cliente.InternalNameSubsite}/Lists/{pr.cliente.InternalNameSubsiteList}</li>
+
+
+        <MDBTabsPane show={tab === 'chamados'} className='px-4'>
+
+
+
+          <ul className={styles.responsive_table}>
+            <li className={styles.table_header}>
+              <div className={`${styles.col} ${styles.col_1}`}>ID</div>
+              <div className={`${styles.col} ${styles.col_2}`}>Título</div>
+              <div className={`${styles.col} ${styles.col_3}`}>Atribuído</div>
+            </li>
+
+            <div className={styles.table_body}>
+              {pr.chamadosPrevia
+                .map(ch => (
+                  <li className={styles.table_row} key={ch.Id + ch.Title}>
+                    <div className={`${styles.col} ${styles.col_1}`} data-label="ID">#{ch.Id}</div>
+                    <div className={`${styles.col} ${styles.col_2}`} data-label="Título" title={ch.Title}>{ch.Title}</div>
+                    <div className={`${styles.col} ${styles.col_3}`} data-label="Atribuído" title={ch.Atribuida?.Title}>{ch.Atribuida?.Title}</div>
+                  </li>
+                ))
+              }
+            </div>
           </ul>
+
+
+          <table className={classNames('w-100 d-none', styles.card_chamados_table)}>
+            <thead className='fw-bold border-2 border-bottom'>
+              <tr>
+                <th>ID</th>
+                <th>Título</th>
+                <th>Atribuído a</th>
+              </tr>
+            </thead>
+            <tbody>
+
+
+              {/* {pr.chamadosPrevia
+                .map(ch => (
+                  <tr key={ch.Id + ch.Title} className={styles.card_chamados_row}>
+
+                    <td className={styles.card_chamados_id}>
+                      #{ch.Id}
+                    </td>
+
+                    <td
+                      className={styles.card_chamados_title}
+                      title={ch.Title}>
+                      {ch.Title}
+                    </td>
+
+                    <td
+                      className={styles.card_chamados_atribuida}
+                      title={ch.Atribuida?.Title}>
+                      {ch.Atribuida?.Title}
+                    </td>
+
+                  </tr>
+                ))
+              } */}
+
+            </tbody>
+          </table>
+          {/* {pr.chamadosPrevia
+            .map(ch => <small key={ch.Id + ch.Title} ><b>#{ch.Id}</b> | {ch.Title}</small>)
+          } */}
+        </MDBTabsPane>
+
+
+        <MDBTabsPane show={tab === 'detalhes'} className='px-4'>
+          <div>
+            <div className="d-flex align-items-center justify-content-between">
+              <div>
+                <span className={styles.card_details_title}>
+                  {pr.cliente.Title}
+                </span>
+
+              </div>
+              <div>
+                <span className={styles.card_details_subtitle}>
+                  {DateTime.fromISO(pr.cliente.Created, { locale: 'pt-br' }).toFormat(`dd LLL${DateTime.fromISO(pr.cliente.Created).hasSame(DateTime.now(), 'year') ? '' : ' yyyy'}`)}
+                </span>
+
+              </div>
+            </div>
+
+            <span className={styles.card_details_subtitle}>
+              {pr.cliente.ClienteInternalName}
+            </span>
+            <span className={styles.card_details_uri}>
+              /sites/PClientes/{pr.cliente.InternalNameSubsite}/Lists/{pr.cliente.InternalNameSubsiteList}
+            </span>
+
+          </div>
         </MDBTabsPane>
       </MDBTabsContent>
     </>
